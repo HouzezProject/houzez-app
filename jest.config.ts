@@ -20,7 +20,15 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    "<rootDir>/src/**/*.{tsx,ts}",
+    "!<rootDir>/src/styles/**",
+    "!<rootDir>/src/pages/_app.tsx",
+    "!<rootDir>/src/pages/_document.tsx",
+    "!<rootDir>/node_modules/**",
+    "!<rootDir>/**/__tests__/**",
+    "!<rootDir>/**/*.d.ts",
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -42,7 +50,14 @@ export default {
   // ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+    "global": {
+      "branches": 50,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,
@@ -88,7 +103,11 @@ export default {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/layouts/(.*)$": "<rootDir>/src/layouts/$1",
+    "^@/pages/(.*)$": "<rootDir>/src/pages/$1"
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -138,7 +157,7 @@ export default {
   // setupFilesAfterEnv: [],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
-  // slowTestThreshold: 5,
+  slowTestThreshold: 5,
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
