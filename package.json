@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --colors --config jest.config.js --watch",
+    "test": "jest --colors --config jest.config.ts --watch",
     "test-c": "jest --colors --config jest.config.ts --coverage"
   },
   "dependencies": {
