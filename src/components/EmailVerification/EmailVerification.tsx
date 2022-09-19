@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 
 const EmailVerification = () => {
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Container maxWidth="sm">
         <Box
@@ -47,7 +47,7 @@ const EmailVerification = () => {
           </Box>
         </Box>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 
