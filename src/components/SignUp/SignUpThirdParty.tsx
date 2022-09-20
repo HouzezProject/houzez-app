@@ -1,9 +1,6 @@
 /* eslint-disable prettier/prettier */
 import "./SignUp";
 import { Button, Stack } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import AppleIcon from "@mui/icons-material/Apple";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
 import GoogleLogo from "../../assets/icon/google_icon.png";
@@ -17,13 +14,14 @@ const SignUpThirdpartyButton = styled(Button)({
     fontSize: "0.9rem",
     fontWeight: "400",
     height: "50px",
+    paddingTop: "10px",
     "&::before": {
         content: `""`,
         position: "absolute",
         left: "15px",
-        top: "10px",
-        height: "30px",
-        width: "30px",
+        top: "13px",
+        height: "24px",
+        width: "24px",
     },
 })
 
@@ -35,13 +33,13 @@ const SignUpThirdpartyButtonGoogle = styled(SignUpThirdpartyButton)({
         backgroundColor: light,
     },
     "&::before": {
-        backgroundImage: "url(" + {GoogleLogo} + ")",
+        backgroundImage: `url(${GoogleLogo.src})`,
     },
 });
 
 const SignUpThirdpartyButtonFacebook = styled(SignUpThirdpartyButton)({
     "&::before": {
-        backgroundImage: "url(" + {FacebookLogo} + ")",
+        backgroundImage: `url(${FacebookLogo.src})`,
     },
 });
 
@@ -51,16 +49,16 @@ const SignUpThirdPartyButtonApple = styled(SignUpThirdpartyButton)({
         backgroundColor: dark,
     },
     "&::before": {
-        backgroundImage: "url(" + {AppleLogo} + ")",
+        backgroundImage: `url(${AppleLogo.src})`,
     },
 });
 
 const SignUpThirdParty = () => {
     return (
         <Stack spacing={2} direction="column" width="100%" mt="15px">
-            <SignUpThirdpartyButtonGoogle variant="outlined" startIcon={<GoogleIcon />}>continue with Google</SignUpThirdpartyButtonGoogle>
-            <SignUpThirdpartyButtonFacebook variant="contained" startIcon={<FacebookIcon />}>continue with facebook</SignUpThirdpartyButtonFacebook>
-            <SignUpThirdPartyButtonApple variant="contained" startIcon={<AppleIcon />}>continue with apple</SignUpThirdPartyButtonApple>
+            <SignUpThirdpartyButtonGoogle variant="outlined">continue with Google</SignUpThirdpartyButtonGoogle>
+            <SignUpThirdpartyButtonFacebook variant="contained">continue with facebook</SignUpThirdpartyButtonFacebook>
+            <SignUpThirdPartyButtonApple variant="contained">continue with apple</SignUpThirdPartyButtonApple>
         </Stack>
     );
 };
