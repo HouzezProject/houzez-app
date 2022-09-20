@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     <DialogTitle>
       This is where we start to develop our frontend.
       <Link href="/signup">
-        <a>&nbsp;&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;Sign up</a>
+        <a>Sign up</a>
       </Link>
     </DialogTitle>
   );
