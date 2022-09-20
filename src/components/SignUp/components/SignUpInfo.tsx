@@ -47,7 +47,7 @@ const SignUpInfo = () => {
                     size="small"
                 />
             </FormControl>
-            <HzButton variant="contained" color="primary" fullWidth sx={{marginTop: "10px"}}>continue with apple</HzButton>
+            <HzButton variant="contained" color="primary" fullWidth sx={{marginTop: "10px"}}>Create account</HzButton>
         </Box>
     );
 };

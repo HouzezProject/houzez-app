@@ -13,45 +13,46 @@ import { Typography } from "@mui/material";
 import Link from "next/link";
 
 const SignUpCard = styled(HzCard)({
-    minWidth: 450,
-    minHeight: 600,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-})
+  minWidth: 450,
+  minHeight: 600,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+});
 
 const SignUpBox = styled(Box)({
-    width: "350px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "5px",
-})
+  width: "350px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "5px"
+});
 
 const SignUp = () => {
-    return (
-        <HzContainer>
-            <SignUpCard>
-                <SignUpBox>
-                    <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
-                    <Typography variant="h4" mt="15px" sx={{fontSize: "28px"}}>Create account</Typography>
+  return (
+    <HzContainer>
+      <SignUpCard>
+        <SignUpBox>
+          <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+          <Typography variant="h4" mt="15px" sx={{ fontSize: "28px" }}>
+            Create account
+          </Typography>
 
-                    <SignUpInfo />
+          <SignUpInfo />
 
-                    <Typography variant="body2" mt="10px" mb="10px">
-                        Already have an account?&nbsp;&nbsp;
-                        <Link href="/signin">Sign in</Link>
-                    </Typography>
+          <Typography variant="body2" mt="10px" mb="10px">
+            Already have an account?&nbsp;&nbsp;
+            <Link href="/signin">Sign in</Link>
+          </Typography>
 
-                    <HzDivider>OR</HzDivider>
+          <HzDivider>OR</HzDivider>
 
-                    <SignUpThirdPart />
-
-                </SignUpBox>
-            </SignUpCard>
-        </HzContainer>
-    );
+          <SignUpThirdPart />
+        </SignUpBox>
+      </SignUpCard>
+    </HzContainer>
+  );
 };
 
 export default SignUp;
