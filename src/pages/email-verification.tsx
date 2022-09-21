@@ -27,7 +27,7 @@ const BoxEmailOpen = styled(Card)({
   border: "1px solid " + light
 });
 
-const ContinueButton = styled(Button)({
+const GeneralButton = styled(Button)({
   textTransform: "none",
   height: "50px",
   marginTop: "10px",
@@ -60,10 +60,10 @@ const EmailVerificationPage: NextPage = () => {
             validation request.
           </DescriptionTypography>
           <Box mt="20px">
-            <ContinueButton variant="contained">CONTINUE</ContinueButton>
+            <GeneralButton variant="contained">CONTINUE</GeneralButton>
           </Box>
           <Box mt="20px">
-            <ContinueButton variant="contained">Resend verification email</ContinueButton>
+            <GeneralButton variant="contained">Resend verification email</GeneralButton>
           </Box>
         </BoxEmailOpen>
       </Container>
