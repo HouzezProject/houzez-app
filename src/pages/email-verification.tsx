@@ -9,6 +9,7 @@ import theme from "../styles/theme";
 
 const {
   palette: {
+    primary: { main: pmain },
     secondary: { light, main },
     background: { paper: backgroundPaper }
   }
@@ -26,6 +27,24 @@ const BoxEmailOpen = styled(Card)({
   border: "1px solid " + light
 });
 
+const ContinueButton = styled(Button)({
+  textTransform: "none",
+  height: "50px",
+  marginTop: "10px",
+  fontWeight: "800"
+});
+
+const ConfirmTypography = styled(Typography)({
+  color: pmain,
+  marginTop: "10px",
+  fontWeight: "800"
+});
+
+const DescriptionTypography = styled(Typography)({
+  margin: "16px 50px 0 50px",
+  textAlign: "center"
+});
+
 const EmailVerificationPage: NextPage = () => {
   return (
     <>
@@ -35,18 +54,16 @@ const EmailVerificationPage: NextPage = () => {
           <Box mt="60px">
             <Image src={IconImg} alt="IconImg" width="100px" height="100px" />
           </Box>
-          <Typography variant="h6" color="primary" mt="10px">
-            Confirm Your Email
-          </Typography>
-          <Typography variant="body2" mt="16px" textAlign="center" ml="80px" mr="80px">
+          <ConfirmTypography variant="h6">Confirm Your Email</ConfirmTypography>
+          <DescriptionTypography variant="body2">
             Your account has been successfully registered. To complete the process please check your email for a
             validation request.
-          </Typography>
+          </DescriptionTypography>
           <Box mt="20px">
-            <Button variant="contained">CONTINUE</Button>
+            <ContinueButton variant="contained">CONTINUE</ContinueButton>
           </Box>
           <Box mt="20px">
-            <Button variant="contained">Resend verification email</Button>
+            <ContinueButton variant="contained">Resend verification email</ContinueButton>
           </Box>
         </BoxEmailOpen>
       </Container>
