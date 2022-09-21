@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { Button, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 
-const { palette: { error: {main, dark}} } = theme;
+const { palette: { red: {main, dark}} } = theme;
 
 const SignUpInfoTextField = styled(TextField)({
     width: "inherit",

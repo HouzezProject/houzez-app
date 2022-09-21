@@ -11,7 +11,9 @@ import theme from "../../styles/theme";
 
 const {
   palette: {
-    secondary:  {light, main, dark, contrastText}}
+    secondary:  {light, main, dark},
+    background: {default: background, paper: backgroundPaper}
+  }
 } = theme;
 
 const SignUpContainer = styled(Container)({
@@ -20,7 +22,7 @@ const SignUpContainer = styled(Container)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: light,
+  backgroundColor: background,
 });
 
 const SignUpCard = styled(Card)({
@@ -36,7 +38,7 @@ const SignUpCard = styled(Card)({
   fontWeight: "400",
   lineHeight: "1.5",
   color: dark,
-  backgroundColor: contrastText,
+  backgroundColor: backgroundPaper,
   boxShadow: main + " 0 1px 5px 0px;",
 });
 

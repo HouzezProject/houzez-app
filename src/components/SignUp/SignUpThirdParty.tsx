@@ -23,7 +23,7 @@ const SignUpThirdpartyButton = styled(Button)({
         height: "24px",
         width: "24px",
     },
-})
+});
 
 const SignUpThirdpartyButtonGoogle = styled(SignUpThirdpartyButton)({
     color: dark,
