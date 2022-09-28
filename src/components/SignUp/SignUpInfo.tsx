@@ -13,7 +13,7 @@ const SignUpInfoTextField = styled(TextField)({
     width: "inherit",
     height: "40px",
     lineHeight: "30px",
-    marginBottom: "30px",
+    marginBottom: "45px",
     paddingLeft: "0",
     letterSpacing: "2rem",
     borderRadius: "3px",
@@ -39,6 +39,9 @@ const validationSchema = yup.object({
     password: yup
       .string('Enter your password')
       .min(8, 'Password should be of minimum 8 characters length')
+      .matches(/[A-Z]+/, 'One uppercase character')
+      .matches(/\d+/, 'One number')
+      .matches(/[@#$%^&+=]+/,'at least one special character')
       .required('Password is required'),
   });
 
@@ -49,9 +52,9 @@ const SignUpInfo = () => {
         password: '',
       },
       validationSchema: validationSchema,
-      onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
-      },
+//       onSubmit: (values) => {
+//         alert(JSON.stringify(values, null, 2));
+//       },
     });
 
     return (
@@ -70,8 +73,7 @@ const SignUpInfo = () => {
                         error={formik.touched.email && Boolean(formik.errors.email)}
                         helperText={formik.touched.email && formik.errors.email}
                     />
-                    <br/>
-                    <br/>
+
                     <SignUpInfoTextField
                         required
                         label="Password"
