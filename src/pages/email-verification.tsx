@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Card, Container, Box, Typography } from "@mui/material";
 import theme from "../styles/theme";
+import { requestAgentById } from "../services/agents";
 
 const {
   palette: {
@@ -46,6 +47,11 @@ const DescriptionTypography = styled(Typography)({
 });
 
 const EmailVerificationPage: NextPage = () => {
+  const onClickButton = async () => {
+    const result = await requestAgentById(1);
+    console.log(result);
+  };
+
   return (
     <>
       <CssBaseline />
@@ -63,7 +69,9 @@ const EmailVerificationPage: NextPage = () => {
             <GeneralButton variant="contained">CONTINUE</GeneralButton>
           </Box>
           <Box mt="20px">
-            <GeneralButton variant="contained">Resend verification email</GeneralButton>
+            <GeneralButton variant="contained" onClick={onClickButton}>
+              Resend verification email
+            </GeneralButton>
           </Box>
         </BoxEmailOpen>
       </Container>
