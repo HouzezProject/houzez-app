@@ -16,9 +16,11 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.5",
     "@reduxjs/toolkit": "^1.8.5",
+    "formik": "^2.2.9",
     "next": "12.3.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "yup": "^0.32.11"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,json,md}": [
