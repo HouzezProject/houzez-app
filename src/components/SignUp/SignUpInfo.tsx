@@ -6,7 +6,7 @@ import { Button, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import visitBackEnd from "../../utils/axios";
+import axiosClient from "../../utils/axios";
 
 const {
   palette: {
@@ -55,7 +55,7 @@ const SignUpInfo = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      emailCheck(values.email);
+      console.log(JSON.stringify(values, null, 2));
     }
   });
 
@@ -63,9 +63,10 @@ const SignUpInfo = () => {
   const [emailErrorHelperText, setEmailErrorHelperText] = useState("");
 
   const emailCheck = async (e: string) => {
+    formik.handleBlur(e);
     try {
       const url = `/agents?email=${e}`;
-      await visitBackEnd.head(url);
+      await axiosClient.head(url);
       setEmailErrorStatus(true);
       setEmailErrorHelperText("The email is already exist...");
     } catch (error) {
@@ -89,7 +90,8 @@ const SignUpInfo = () => {
           label="Email address"
           value={formik.values.email}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onBlur={(event) => emailCheck(event.target.value)}
+          onBlurCapture={formik.handleBlur}
           error={(formik.touched.email && Boolean(formik.errors.email)) || emailErrorStatus}
           helperText={(formik.touched.email && formik.errors.email) || emailErrorHelperText}
           onKeyDown={resetEmailTextFieldStatus}
