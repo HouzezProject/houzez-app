@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
@@ -7,6 +7,11 @@ import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
+
+interface EmailError {
+  status: boolean;
+  helperText: string;
+}
 
 const {
   palette: {
@@ -59,24 +64,17 @@ const SignUpInfo = () => {
     }
   });
 
-  const [emailErrorStatus, setEmailErrorStatus] = useState(false);
-  const [emailErrorHelperText, setEmailErrorHelperText] = useState("");
+  const initialEmailError: EmailError = { status: false, helperText: "" };
+  const [emailError, setEmailError] = useState(initialEmailError);
 
-  const emailCheck = async (e: string) => {
-    formik.handleBlur(e);
+  const checkIfEmailIsUnique = async (e: FocusEvent<HTMLInputElement>) => {
     try {
-      const url = `/agents?email=${e}`;
+      const url = `/agents?email=${e.target.value}`;
       await axiosClient.head(url);
-      setEmailErrorStatus(true);
-      setEmailErrorHelperText("The email is already exist...");
+      setEmailError({ status: true, helperText: "The email is already exist..." });
     } catch (error) {
-      resetEmailTextFieldStatus();
+      setEmailError(initialEmailError);
     }
-  };
-
-  const resetEmailTextFieldStatus = () => {
-    setEmailErrorStatus(false);
-    setEmailErrorHelperText("");
   };
 
   return (
@@ -90,11 +88,11 @@ const SignUpInfo = () => {
           label="Email address"
           value={formik.values.email}
           onChange={formik.handleChange}
-          onBlur={(event) => emailCheck(event.target.value)}
+          onBlur={checkIfEmailIsUnique}
           onBlurCapture={formik.handleBlur}
-          error={(formik.touched.email && Boolean(formik.errors.email)) || emailErrorStatus}
-          helperText={(formik.touched.email && formik.errors.email) || emailErrorHelperText}
-          onKeyDown={resetEmailTextFieldStatus}
+          error={(formik.touched.email && Boolean(formik.errors.email)) || emailError.status}
+          helperText={(formik.touched.email && formik.errors.email) || emailError.helperText}
+          onKeyDown={() => setEmailError(initialEmailError)}
         />
         <SignUpInfoTextField
           required
