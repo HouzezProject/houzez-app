@@ -22,6 +22,14 @@ const theme = createTheme({
       default: "#edeff0",
       paper: "#fefefe"
     }
+  },
+
+  typography: {
+    fontFamily: `"Noto Sans", "Open Sans", sans-serif`,
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500
   }
 });
 

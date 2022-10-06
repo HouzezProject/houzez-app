@@ -25,7 +25,7 @@ const SignUpInfoTextField = styled(TextField)({
   lineHeight: "30px",
   marginBottom: "45px",
   paddingLeft: "0",
-  letterSpacing: "2rem",
+  letterSpacing: "0.05rem",
   borderRadius: "3px",
   fontSize: "1.5rem",
   fontWeight: "400"
