@@ -1,51 +1,58 @@
-/* eslint-disable prettier/prettier */
+import React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useFormik } from "formik";
+import * as yup from "yup";
+import axiosClient from "../../utils/axios";
 import { Box } from "@mui/system";
 import theme from "../../styles/theme";
 import React from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 
-const { palette: { red: {main, dark}} } = theme;
+interface EmailError {
+  status: boolean;
+  helperText: string;
+}
+
+const {
+  palette: {
+    red: { main, dark }
+  }
+} = theme;
 
 const SignUpInfoTextField = styled(TextField)({
-    width: "100%",
-    height: "40px",
-    lineHeight: "30px",
-    marginBottom: "45px",
-    paddingLeft: "0",
-    letterSpacing: "2rem",
-    borderRadius: "3px",
-    fontSize: "1.5rem",
-    fontWeight: "400",
+  width: "100%",
+  height: "40px",
+  lineHeight: "30px",
+  marginBottom: "45px",
+  paddingLeft: "0",
+  letterSpacing: "0.05rem",
+  borderRadius: "3px",
+  fontSize: "1.5rem",
+  fontWeight: "400"
 });
 
 const SignUpInfoButton = styled(Button)({
-    width: "100%",
-    height: "50px",
-    marginTop: "10px",
-    backgroundColor: main,
-    "&:hover": {
-        backgroundColor: dark,
-    }
+  width: "100%",
+  height: "50px",
+  marginTop: "10px",
+  backgroundColor: main,
+  "&:hover": {
+    backgroundColor: dark
+  }
 });
 
 const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email('Enter a valid email')
-      .required('Email is required'),
-    password: yup
-      .string()
-      .min(8, 'Password should be of minimum 8 characters length')
-      .matches(/[A-Z]+/, 'At least One uppercase character required')
-      .matches(/\d+/, 'At least One number required')
-      .matches(/[@#$%^&+=]+/,'At least one special character required')
-      .required('Password is required'),
-  });
+  email: yup.string().email("Enter a valid email").required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password should be of minimum 8 characters length")
+    .matches(/[A-Z]+/, "At least One uppercase character required")
+    .matches(/\d+/, "At least One number required")
+    .matches(/[@#$%^&+=]+/, "At least one special character required")
+    .required("Password is required")
+});
 
 const SignUpInfo = () => {
     const [values, setValues] = React.useState<State>({
