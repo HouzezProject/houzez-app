@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Container } from "@mui/material";
 import React from "react";
+import HomeBg from "../../assets/images/homeBg.jpg";
 import theme from "../../styles/theme";
 import Header from "./Header";
 import HomeSearch from "./HomeSearch";
@@ -17,7 +18,17 @@ const HomeBody = styled(Box)({
   display: "flex",
   alignItems: "start",
   justifyContent: "center",
+  backgroundImage: `url(${HomeBg.src})`,
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
   backgroundColor: background
+});
+
+const HomeLayer = styled(Box)({
+  width: "100%",
+  height: "100vh",
+  backgroundColor: "#1b21277f"
 });
 
 const HomeContainer = styled(Container)({
@@ -27,10 +38,12 @@ const HomeContainer = styled(Container)({
 const Home = () => {
   return (
     <HomeBody>
-      <HomeContainer>
-        <Header />
-        <HomeSearch />
-      </HomeContainer>
+      <HomeLayer>
+        <HomeContainer>
+          <Header />
+          <HomeSearch />
+        </HomeContainer>
+      </HomeLayer>
     </HomeBody>
   );
 };
