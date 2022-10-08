@@ -62,11 +62,11 @@ const SignUpInfo = () => {
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
       axiosClient({
-        method: 'post',
-        url: '/agents',
+        method: "post",
+        url: "/agents",
         data: {
-          email: (values.email),
-          password: (values.password),
+          email: values.email,
+          password: values.password
         }
       });
     }
