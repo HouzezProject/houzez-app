@@ -22,9 +22,6 @@ const HomeSearch = () => {
     setCategories(event.target.value);
   };
 
-  // const buttonHandler=()=>{
-
-  // }
   return (
     <HomeSearchContainer>
       <HomeSearchBox>
@@ -33,7 +30,7 @@ const HomeSearch = () => {
       <HomeSearchBox>
         <h2>Your Property, Our Priority and From as low as $10 per day with limited time offer discounts</h2>
       </HomeSearchBox>
-      <div className="searchInput">
+      <div>
         <label htmlFor="Search keyword"></label>
         <input name="Search keyword" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
         <Box sx={{ minWidth: 80, ml: 2 }}>
@@ -47,7 +44,7 @@ const HomeSearch = () => {
             </Select>
           </FormControl>
         </Box>
-        <button onClick={buttonHandler}>Search</button>
+        <button>Search</button>
       </div>
     </HomeSearchContainer>
   );
