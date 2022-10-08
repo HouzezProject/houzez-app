@@ -39,8 +39,8 @@ const Home = () => {
   return (
     <HomeBody>
       <HomeLayer>
+        <Header />
         <HomeContainer>
-          <Header />
           <HomeSearch />
         </HomeContainer>
       </HomeLayer>
