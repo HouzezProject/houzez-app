@@ -1,4 +1,3 @@
-
 import axiosClient from "../../utils/axios";
 
 describe("<SignUpInfo />", () =>{
