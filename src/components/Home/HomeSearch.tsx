@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container, InputLabel, TextField } from "@mui/material";
 import React, { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -9,9 +8,46 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 const HomeSearchContainer = styled(Container)({
   width: "1050px"
 });
+const IntroBox = styled(Box)({
+  marginTop: "100px",
+  padding: "2px",
+  color: "white",
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center"
+});
+const DetailBox = styled(Box)({
+  padding: "2px",
+  color: "white",
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center"
+});
+
 const HomeSearchBox = styled(Box)({
-  marginTop: "30px",
-  padding: "2px"
+  padding: "2px",
+  color: "white",
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center"
+});
+
+const InputText = styled(TextField)({
+  width: "400px",
+  height: "56px",
+  backgroundColor: "white",
+  justifyContent: "center"
+});
+const CategoriesBox = styled(Box)({
+  height: "auto",
+  backgroundColor: "white"
+});
+
+const SearchButton = styled(Button)({
+  width: "150px",
+  height: "56px",
+  backgroundColor: "blue",
+  color: "white"
 });
 
 const HomeSearch = () => {
@@ -24,28 +60,34 @@ const HomeSearch = () => {
 
   return (
     <HomeSearchContainer>
-      <HomeSearchBox>
+      <IntroBox>
         <h1>Find Your Dream House</h1>
-      </HomeSearchBox>
+      </IntroBox>
+      <DetailBox>
+        <p>Your Property, Our Priority and From as low as $10 per day with limited time offer discounts</p>
+      </DetailBox>
       <HomeSearchBox>
-        <h2>Your Property, Our Priority and From as low as $10 per day with limited time offer discounts</h2>
-      </HomeSearchBox>
-      <div>
         <label htmlFor="Search keyword"></label>
-        <input name="Search keyword" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-        <Box sx={{ minWidth: 80, ml: 2 }}>
-          <FormControl>
-            <InputLabel>Categories</InputLabel>
-            <Select labelId="categories" id="categories" value={categories} label="Categories" onChange={handleChange}>
+        <InputText
+          name="Search keyword"
+          type="text"
+          value={userInput}
+          placeholder="Search home"
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+        <CategoriesBox>
+          <FormControl sx={{ Width: 200 }}>
+            <Select labelId="Categories" id="Categories" label="Categories" value={categories} onChange={handleChange}>
+              <MenuItem value="All categories">All categories</MenuItem>
               <MenuItem value="House">House</MenuItem>
               <MenuItem value="Apartment">Apartment</MenuItem>
               <MenuItem value="Townhouse">Townhouse</MenuItem>
               <MenuItem value="Land">Land</MenuItem>
             </Select>
           </FormControl>
-        </Box>
-        <button>Search</button>
-      </div>
+        </CategoriesBox>
+        <SearchButton>Search</SearchButton>
+      </HomeSearchBox>
     </HomeSearchContainer>
   );
 };
