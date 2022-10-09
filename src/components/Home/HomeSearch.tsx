@@ -39,6 +39,7 @@ const InputText = styled(TextField)({
   justifyContent: "center"
 });
 const CategoriesBox = styled(Box)({
+  width: "150px",
   height: "auto",
   backgroundColor: "white"
 });
@@ -76,8 +77,15 @@ const HomeSearch = () => {
           onChange={(e) => setUserInput(e.target.value)}
         />
         <CategoriesBox>
-          <FormControl sx={{ Width: 200 }}>
-            <Select labelId="Categories" id="Categories" label="Categories" value={categories} onChange={handleChange}>
+          <FormControl fullWidth>
+            <Select
+              sx={{ Width: 200 }}
+              labelId="Categories"
+              id="Categories"
+              label="Categories"
+              value={categories}
+              onChange={handleChange}
+            >
               <MenuItem value="All categories">All categories</MenuItem>
               <MenuItem value="House">House</MenuItem>
               <MenuItem value="Apartment">Apartment</MenuItem>
