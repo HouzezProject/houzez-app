@@ -59,16 +59,8 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-      axiosClient({
-        method: "post",
-        url: "/agents",
-        data: {
-          email: values.email,
-          password: values.password
-        }
-      });
+    onSubmit: ({ email, password }) => {
+      axiosClient.post("/agents", { email, password });
     }
   });
 
@@ -107,6 +99,7 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
+          role="password"
           type="password"
           value={formik.values.password}
           onChange={formik.handleChange}
