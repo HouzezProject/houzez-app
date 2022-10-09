@@ -64,10 +64,6 @@ const HeaderButtonSignUp = styled(HeaderButton)({
 });
 
 const Header = () => {
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  };
   return (
     <HeaderContainer>
       <Grid container spacing={2}>
@@ -76,7 +72,7 @@ const Header = () => {
         </HeaderGrid>
 
         <HeaderGrid item xs={6}>
-          <Breadcrumbs separator="" onClick={handleClick}>
+          <Breadcrumbs separator="">
             <HeaderLink href="/">
               <HomeIcon sx={{ mr: 0.5 }} />
               Home
