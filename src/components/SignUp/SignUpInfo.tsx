@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import axiosClient from "../../utils/axios";
 import { Box } from "@mui/system";
 import theme from "../../styles/theme";
+import React from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+
+interface EmailError {
+  status: boolean;
+  helperText: string;
+}
 
 const {
   palette: {
@@ -48,78 +55,99 @@ const validationSchema = yup.object({
 });
 
 const SignUpInfo = () => {
-  const [values, setValues] = React.useState<State>({
-    password: "",
-    showPassword: false
-  });
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword
+    const [values, setValues] = React.useState<State>({
+      password: "",
+      showPassword: false
     });
-  };
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+    const handleClickShowPassword = () => {
+      setValues({
+        ...values,
+        showPassword: !values.showPassword
+      });
+    };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: ""
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    }
-  });
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+    };
 
-  return (
-    <Box width="100%">
-      <form onSubmit={formik.handleSubmit} noValidate>
-        <SignUpInfoTextField
-          required
-          label="Email address"
-          type="email"
-          fullWidth
-          id="email"
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema: validationSchema,
+      onSubmit: (values) => {
+        alert(JSON.stringify(values, null, 2));
+      }});
 
-        <FormControl required sx={{ m: 0, width: "100%" }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={values.showPassword ? "text" : "password"}
-            value={formik.values.password}
-            onChange={formik.handleChange("password")}
+    return (
+      <Box width="100%">
+        <form onSubmit={formik.handleSubmit} noValidate>
+          <SignUpInfoTextField
+            required
+            label="Email address"
+            type="email"
+            fullWidth
+            id="email"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
-        </FormControl>
-        <SignUpInfoButton variant="contained">Create account</SignUpInfoButton>
-      </form>
-    </Box>
-  );
-};
+
+          <FormControl required sx={{ m: 0, width: "100%" }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={values.showPassword ? "text" : "password"}
+              // value={values.password}
+              // onChange={handleChange("password")}
+              value={formik.values.password}
+              onChange={formik.handleChange("password")}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              // helperText={formik.touched.password && formik.errors.password}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
+
+          <SignUpInfoButton variant="contained">Create account</SignUpInfoButton>
+        </form>
+      </Box>
+    );
+}
+
+
+
 
 export default SignUpInfo;
+
+
+{/* <SignUpInfoTextField
+  required
+  label="Password"
+  type="password"
+  fullWidth
+  id="password"
+  name="password"
+  value={formik.values.password}
+  onChange={formik.handleChange}
+  onBlur={formik.handleBlur}
+  error={formik.touched.password && Boolean(formik.errors.password)}
+  helperText={formik.touched.password && formik.errors.password}
+/>; */}
