@@ -35,7 +35,7 @@ const HeaderLink = styled(Link)({
   alignItems: "center",
   color: contrastTextS,
   margin: "0 20px",
-  gap: "10px",
+  gap: "20px",
   fontWeight: "700"
 });
 
@@ -74,15 +74,15 @@ const Header = () => {
         <HeaderGrid item xs={6}>
           <Breadcrumbs separator="">
             <HeaderLink href="/">
-              <HomeIcon sx={{ mr: 0.5 }} />
+              <HomeIcon />
               Home
             </HeaderLink>
             <HeaderLink href="/">
-              <SegmentIcon sx={{ mr: 0.5 }} />
+              <SegmentIcon />
               List
             </HeaderLink>
             <HeaderLink href="/">
-              <MapIcon sx={{ mr: 0.5 }} />
+              <MapIcon />
               Map
             </HeaderLink>
           </Breadcrumbs>
