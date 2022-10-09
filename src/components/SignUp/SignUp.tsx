@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 import Image from "next/image";
@@ -10,8 +11,8 @@ import theme from "../../styles/theme";
 
 const {
   palette: {
-    secondary: { light, main, dark },
-    background: { default: background, paper: backgroundPaper }
+    secondary:  {light, main, dark},
+    background: {default: background, paper: backgroundPaper}
   }
 } = theme;
 
@@ -21,7 +22,7 @@ const SignUpContainer = styled(Container)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: background
+  backgroundColor: background,
 });
 
 const SignUpCard = styled(Card)({
@@ -38,7 +39,7 @@ const SignUpCard = styled(Card)({
   lineHeight: "1.5",
   color: dark,
   backgroundColor: backgroundPaper,
-  boxShadow: main + " 0 1px 5px 0px;"
+  boxShadow: main + " 0 1px 5px 0px;",
 });
 
 const SignUpBox = styled(Box)({
@@ -48,12 +49,12 @@ const SignUpBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   gap: "5px",
-  margin: "40px 0"
+  margin: "40px 0",
 });
 
 const SignUpDivider = styled(Divider)({
   width: "100%",
-  fontWeight: "600"
+  fontWeight: "600",
 });
 
 const SignUp = () => {
@@ -61,6 +62,7 @@ const SignUp = () => {
     <SignUpContainer>
       <SignUpCard>
         <SignUpBox>
+
           <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
           <Typography variant="h4" mt="25px" mb="15px" sx={{ fontSize: "28px" }}>
             Create account
@@ -76,6 +78,7 @@ const SignUp = () => {
           <SignUpDivider>OR</SignUpDivider>
 
           <SignUpThirdPart />
+
         </SignUpBox>
       </SignUpCard>
     </SignUpContainer>
