@@ -66,7 +66,11 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
+<<<<<<< HEAD
     onSubmit: (email, password) => {
+=======
+    onSubmit: ({ email, password }) => {
+>>>>>>> c4b48dc1f96da7eba86e88f366d8a4c783d3ff1f
       axiosClient.post("/agents", { email, password });
     }
   });
@@ -97,8 +101,8 @@ const SignUpInfo = () => {
           onChange={formik.handleChange}
           onBlur={checkIfEmailIsUnique}
           onBlurCapture={formik.handleBlur}
-          error={(formik.touched.email && Boolean(formik.errors.email)) || emailError.status}
-          helperText={(formik.touched.email && formik.errors.email) || emailError.helperText}
+          error={Boolean(formik.errors.email) || emailError.status}
+          helperText={formik.errors.email || emailError.helperText}
           onKeyDown={() => setEmailError(initialEmailError)}
         />
         <SignUpInfoTextField
@@ -106,15 +110,23 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          role="password"
           type="password"
+          role="password"
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
+          error={Boolean(formik.errors.password)}
+          helperText={formik.errors.password}
         />
+<<<<<<< HEAD
         <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification">
+=======
+        <SignUpInfoButton
+          variant="contained"
+          type="submit"
+          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}
+        >
+>>>>>>> c4b48dc1f96da7eba86e88f366d8a4c783d3ff1f
           Create account
         </SignUpInfoLink>
       </form>
