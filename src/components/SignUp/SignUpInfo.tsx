@@ -60,7 +60,7 @@ const SignUpInfo = () => {
       email: "",
       password: ""
     },
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: ({ email, password }) => {
       axiosClient.post("/agents", { email, password });
       router.push("/email-verification");
@@ -98,10 +98,9 @@ const SignUpInfo = () => {
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={checkIfEmailIsUnique}
-          onBlurCapture={formik.handleBlur}
+          onKeyDown={() => setEmailError(initialEmailError)}
           error={Boolean(formik.errors.email) || emailError.status}
           helperText={formik.errors.email || emailError.helperText}
-          onKeyDown={() => setEmailError(initialEmailError)}
         />
         <SignUpInfoTextField
           required
@@ -112,7 +111,6 @@ const SignUpInfo = () => {
           role="password"
           value={formik.values.password}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           error={Boolean(formik.errors.password)}
           helperText={formik.errors.password}
         />

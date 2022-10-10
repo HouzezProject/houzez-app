@@ -1,9 +1,9 @@
-import axiosClient from "../../utils/axios";
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SignUpInfo from "./SignUpInfo";
 import * as nextRouter from "next/router";
 import { AxiosError, AxiosResponse } from "axios";
+import axiosClient from "../../utils/axios";
+import SignUpInfo from "./SignUpInfo";
 
 describe("<SignUpInfo />", () => {
   it("should post user's input to backend", async () => {
@@ -21,7 +21,7 @@ describe("<SignUpInfo />", () => {
 
     await waitFor(() => {
       expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
-      expect(mockPush).toBeCalled();
+      expect(mockPush).toBeCalledWith("/email-verification");
     });
   });
 });
