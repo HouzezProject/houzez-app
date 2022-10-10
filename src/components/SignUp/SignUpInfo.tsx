@@ -109,7 +109,7 @@ const SignUpInfo = () => {
         <SignUpInfoButton
           variant="contained"
           type="submit"
-          disabled={Boolean(formik.errors.email) || Boolean(formik.errors.password)}
+          disabled={Boolean(formik.errors.email) || Boolean(formik.errors.password) || emailError.status}
         >
           Create account
         </SignUpInfoButton>
