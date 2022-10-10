@@ -85,7 +85,11 @@ const SignUpInfo = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <SignUpInfoButton variant="contained" type="submit">
+        <SignUpInfoButton
+          variant="contained"
+          type="submit"
+          disabled={Boolean(formik.errors.email) || Boolean(formik.errors.password)}
+        >
           Sign In
         </SignUpInfoButton>
       </form>
