@@ -94,7 +94,7 @@ const SignUpInfo = () => {
           fullWidth
           id="email"
           type="email"
-          label="Email address"
+          placeholder="Email address"
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={checkIfEmailIsUnique}
@@ -106,9 +106,8 @@ const SignUpInfo = () => {
           required
           fullWidth
           id="password"
-          label="Password"
+          placeholder="Password"
           type="password"
-          role="password"
           value={formik.values.password}
           onChange={formik.handleChange}
           error={Boolean(formik.errors.password)}

@@ -15,8 +15,8 @@ describe("<SignUpInfo />", () => {
     jest.spyOn(nextRouter, "useRouter").mockReturnValue({ push: mockPush } as any);
     render(<SignUpInfo />);
 
-    await userEvent.type(screen.getByRole("textbox", { name: "Email address" }), "a@gmail.com");
-    await userEvent.type(screen.getByRole("password").querySelector("input") as HTMLInputElement, "a@QA1212123");
+    await userEvent.type(screen.getByPlaceholderText("Email address"), "a@gmail.com");
+    await userEvent.type(screen.getByPlaceholderText("Password"), "a@QA1212123");
     await userEvent.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
