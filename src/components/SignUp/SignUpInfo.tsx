@@ -114,7 +114,7 @@ const SignUpInfo = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification" >
+        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification">
           Create account
         </SignUpInfoLink>
       </form>
