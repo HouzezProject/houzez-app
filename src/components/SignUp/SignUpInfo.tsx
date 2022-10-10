@@ -66,11 +66,7 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
-<<<<<<< HEAD
-    onSubmit: (email, password) => {
-=======
     onSubmit: ({ email, password }) => {
->>>>>>> c4b48dc1f96da7eba86e88f366d8a4c783d3ff1f
       axiosClient.post("/agents", { email, password });
     }
   });
@@ -118,15 +114,8 @@ const SignUpInfo = () => {
           error={Boolean(formik.errors.password)}
           helperText={formik.errors.password}
         />
-<<<<<<< HEAD
-        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification">
-=======
-        <SignUpInfoButton
-          variant="contained"
-          type="submit"
-          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}
-        >
->>>>>>> c4b48dc1f96da7eba86e88f366d8a4c783d3ff1f
+        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification"
+          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}>
           Create account
         </SignUpInfoLink>
       </form>
