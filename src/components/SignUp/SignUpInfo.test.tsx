@@ -1,4 +1,4 @@
-import { screen, render, waitFor } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as nextRouter from "next/router";
 import { AxiosError, AxiosResponse } from "axios";
@@ -19,9 +19,7 @@ describe("<SignUpInfo />", () => {
     await userEvent.type(screen.getByPlaceholderText("Password"), "a@QA1212123");
     await userEvent.click(screen.getByRole("button", { name: "Create account" }));
 
-    await waitFor(() => {
-      expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
-      expect(mockPush).toBeCalledWith("/email-verification");
-    });
+    expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
+    expect(mockPush).toBeCalledWith("/email-verification");
   });
 });
