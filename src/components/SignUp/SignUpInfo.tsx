@@ -61,7 +61,9 @@ const SignUpInfo = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (email, password) => {
-      axiosClient.post("/agents", { email, password });
+      if (emailError.status === false) {
+        axiosClient.post("/agents", { email, password });
+      }
     }
   });
 
