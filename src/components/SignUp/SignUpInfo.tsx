@@ -1,15 +1,14 @@
 import { useState, FocusEvent } from "react";
 import { useRouter } from "next/router";
-import "./SignUp";
+import { useFormik } from "formik";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Link, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import theme from "../../styles/theme";
-import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
-import React from "react";
 import { AxiosError } from "axios";
+import "./SignUp";
 
 interface EmailError {
   status: boolean;
@@ -34,15 +33,10 @@ const SignUpInfoTextField = styled(TextField)({
   fontWeight: "400"
 });
 
-const SignUpInfoLink = styled(Link)({
+const SignUpInfoButton = styled(Button)({
   width: "100%",
   height: "50px",
   marginTop: "10px",
-  color: "white",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderRadius: "3px",
   backgroundColor: main,
   "&:hover": {
     backgroundColor: dark
@@ -122,10 +116,13 @@ const SignUpInfo = () => {
           error={Boolean(formik.errors.password)}
           helperText={formik.errors.password}
         />
-        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification"
-          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}>
+        <SignUpInfoButton
+          variant="contained"
+          type="submit"
+          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}
+        >
           Create account
-        </SignUpInfoLink>
+        </SignUpInfoButton>
       </form>
     </Box>
   );
