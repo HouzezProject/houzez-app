@@ -60,10 +60,8 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
-    onSubmit: (email, password) => {
-      if (emailError.status === false) {
-        axiosClient.post("/agents", { email, password });
-      }
+    onSubmit: ({ email, password }) => {
+      axiosClient.post("/agents", { email, password });
     }
   });
 
@@ -93,8 +91,8 @@ const SignUpInfo = () => {
           onChange={formik.handleChange}
           onBlur={checkIfEmailIsUnique}
           onBlurCapture={formik.handleBlur}
-          error={(formik.touched.email && Boolean(formik.errors.email)) || emailError.status}
-          helperText={(formik.touched.email && formik.errors.email) || emailError.helperText}
+          error={Boolean(formik.errors.email) || emailError.status}
+          helperText={formik.errors.email || emailError.helperText}
           onKeyDown={() => setEmailError(initialEmailError)}
         />
         <SignUpInfoTextField
@@ -102,15 +100,19 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          role="password"
           type="password"
+          role="password"
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
+          error={Boolean(formik.errors.password)}
+          helperText={formik.errors.password}
         />
-        <SignUpInfoButton variant="contained" type="submit">
+        <SignUpInfoButton
+          variant="contained"
+          type="submit"
+          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}
+        >
           Create account
         </SignUpInfoButton>
       </form>
