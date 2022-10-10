@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useState, FocusEvent } from "react";
-=======
-import React, { useState, FocusEvent } from "react";
->>>>>>> 05530a4436163fea72ecf1fb56c9366191497022
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
