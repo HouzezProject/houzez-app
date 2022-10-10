@@ -2,12 +2,13 @@ import { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Button, TextField } from "@mui/material";
+import { Link, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
 import React from "react";
+import "../../pages/email-verification";
 
 interface EmailError {
   status: boolean;
@@ -32,10 +33,15 @@ const SignUpInfoTextField = styled(TextField)({
   fontWeight: "400"
 });
 
-const SignUpInfoButton = styled(Button)({
+const SignUpInfoLink = styled(Link)({
   width: "100%",
   height: "50px",
   marginTop: "10px",
+  color: "white",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "3px",
   backgroundColor: main,
   "&:hover": {
     backgroundColor: dark
@@ -61,9 +67,7 @@ const SignUpInfo = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (email, password) => {
-      if (emailError.status === false) {
-        axiosClient.post("/agents", { email, password });
-      }
+      axiosClient.post("/agents", { email, password });
     }
   });
 
@@ -110,9 +114,9 @@ const SignUpInfo = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <SignUpInfoButton variant="contained" type="submit">
+        <SignUpInfoLink variant="button" underline="none" type="submit" href="email-verification" >
           Create account
-        </SignUpInfoButton>
+        </SignUpInfoLink>
       </form>
     </Box>
   );
