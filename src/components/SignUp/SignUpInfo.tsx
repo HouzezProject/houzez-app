@@ -60,7 +60,9 @@ const SignUpInfo = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      if (emailError.status === false) {
+        console.log(JSON.stringify(values, null, 2));
+      }
     }
   });
 
