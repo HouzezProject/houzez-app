@@ -2,10 +2,17 @@ import axiosClient from "../../utils/axios";
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpInfo from "./SignUpInfo";
+import * as nextRouter from "next/router";
+import { AxiosError, AxiosResponse } from "axios";
 
 describe("<SignUpInfo />", () => {
   it("should post user's input to backend", async () => {
     jest.spyOn(axiosClient, "post").mockResolvedValue({ status: 201 });
+    jest
+      .spyOn(axiosClient, "head")
+      .mockRejectedValue(new AxiosError(undefined, undefined, undefined, undefined, { status: 404 } as AxiosResponse));
+    const mockPush = jest.fn();
+    jest.spyOn(nextRouter, "useRouter").mockReturnValue({ push: mockPush } as any);
     render(<SignUpInfo />);
 
     await userEvent.type(screen.getByRole("textbox", { name: "Email address" }), "a@gmail.com");
@@ -13,7 +20,8 @@ describe("<SignUpInfo />", () => {
     await userEvent.click(screen.getByRole("button", { name: "Create account" }));
 
     await waitFor(() => {
-      expect(axiosClient.post).toBeCalled();
+      expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
+      expect(mockPush).toBeCalled();
     });
   });
 });

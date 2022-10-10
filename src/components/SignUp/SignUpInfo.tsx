@@ -1,4 +1,5 @@
 import { useState, FocusEvent } from "react";
+import { useRouter } from "next/router";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
@@ -8,6 +9,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
 import React from "react";
+import { AxiosError } from "axios";
 
 interface EmailError {
   status: boolean;
@@ -62,8 +64,11 @@ const SignUpInfo = () => {
     validationSchema: validationSchema,
     onSubmit: ({ email, password }) => {
       axiosClient.post("/agents", { email, password });
+      router.push("/email-verification");
     }
   });
+
+  const router = useRouter();
 
   const initialEmailError: EmailError = { status: false, helperText: "" };
   const [emailError, setEmailError] = useState(initialEmailError);
@@ -74,7 +79,11 @@ const SignUpInfo = () => {
       await axiosClient.head(url);
       setEmailError({ status: true, helperText: "The email is already exist..." });
     } catch (error) {
-      setEmailError(initialEmailError);
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        setEmailError(initialEmailError);
+      } else {
+        setEmailError({ status: true, helperText: "Internal server error, please try later" });
+      }
     }
   };
 
