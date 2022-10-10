@@ -1,4 +1,4 @@
-import React, { useState, FocusEvent } from "react";
+limport React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
@@ -59,8 +59,8 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+    onSubmit: (email,password) => {
+        axiosClient.post("/agents",{email,password})  
     }
   });
 
