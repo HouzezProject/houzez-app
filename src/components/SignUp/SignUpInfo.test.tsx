@@ -4,15 +4,16 @@ import userEvent from "@testing-library/user-event";
 import SignUpInfo from "./SignUpInfo";
 
 describe("<SignUpInfo />", () => {
-  it("should post user's input to backend", () => {
+  it("should post user's input to backend", async () => {
     jest.spyOn(axiosClient, "post").mockResolvedValue({ status: 201 });
     render(<SignUpInfo />);
 
-    userEvent.type(screen.getByRole("textbox", { name: "Email address" }), "a@gmail.com");
-    userEvent.type(screen.getByRole("password", { name: "" }), "a@QA1212123");
-    userEvent.click(screen.getByRole("button", { name: "Create account" }));
-    waitFor(() => {
-      expect(axiosClient.post).toHaveBeenCalled();
+    await userEvent.type(screen.getByRole("textbox", { name: "Email address" }), "a@gmail.com");
+    await userEvent.type(screen.getByRole("password").querySelector("input") as HTMLInputElement, "a@QA1212123");
+    await userEvent.click(screen.getByRole("button", { name: "Create account" }));
+
+    await waitFor(() => {
+      expect(axiosClient.post).toBeCalled();
     });
   });
 });
