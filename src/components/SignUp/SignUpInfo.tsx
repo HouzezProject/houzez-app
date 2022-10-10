@@ -1,4 +1,4 @@
-limport React, { useState, FocusEvent } from "react";
+import { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
@@ -7,6 +7,7 @@ import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
+import React from "react";
 
 interface EmailError {
   status: boolean;
@@ -59,8 +60,8 @@ const SignUpInfo = () => {
       password: ""
     },
     validationSchema: validationSchema,
-    onSubmit: (email,password) => {
-        axiosClient.post("/agents",{email,password})  
+    onSubmit: (email, password) => {
+      axiosClient.post("/agents", { email, password });
     }
   });
 
