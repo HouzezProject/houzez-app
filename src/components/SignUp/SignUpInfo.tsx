@@ -70,10 +70,10 @@ const SignUpInfo = () => {
 
   const router = useRouter();
 
-  const [values, setValues] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleClickShowPassword = () => {
-    setValues(!values);
+    setPasswordVisible((previousState) => !previousState);
   };
 
   const initialEmailError: EmailError = { status: false, helperText: "" };
@@ -114,14 +114,13 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           placeholder="Password"
-          type={values ? "text" : "password"}
+          type={passwordVisible ? "text" : "password"}
           value={formik.values.password}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword}>
-                  {values && <Visibility />}
-                  {!values && <VisibilityOff />}
+                  {passwordVisible ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             )
