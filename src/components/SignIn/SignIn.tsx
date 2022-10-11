@@ -78,7 +78,7 @@ const SignIn = () => {
 
           <Typography variant="body2" mt="10px" mb="10px" gap="10px">
             Not Signed up?
-            <Link href="/signUp"> Create an account</Link>
+            <Link href="/signup"> Create an account</Link>
           </Typography>
         </SignInBox>
       </SignInCard>
