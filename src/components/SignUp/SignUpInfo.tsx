@@ -65,12 +65,10 @@ const SignUpInfo = () => {
     }
   });
 
-  const [values, setValues] = useState({
-    showPassword: false
-  });
+  const [values, setValues] = useState(false);
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setValues(!values);
   };
 
   const initialEmailError: EmailError = { status: false, helperText: "" };
@@ -108,14 +106,14 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          type={values.showPassword ? "text" : "password"}
+          type={values ? "text" : "password"}
           onChange={formik.handleChange}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword}>
-                  {values.showPassword && <Visibility />}
-                  {!values.showPassword && <VisibilityOff />}
+                  {values && <Visibility />}
+                  {!values && <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             )
