@@ -65,17 +65,12 @@ const SignUpInfo = () => {
     }
   });
 
-  const [values, setValues] = React.useState({
-    password: "",
+  const [values, setValues] = useState({
     showPassword: false
   });
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
   };
 
   const initialEmailError: EmailError = { status: false, helperText: "" };
@@ -118,7 +113,7 @@ const SignUpInfo = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                <IconButton onClick={handleClickShowPassword}>
                   {values.showPassword && <Visibility />}
                   {!values.showPassword && <VisibilityOff />}
                 </IconButton>
