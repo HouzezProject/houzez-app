@@ -1,13 +1,14 @@
 import { useState, FocusEvent } from "react";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
+import { AxiosError } from "axios";
+import * as yup from "yup";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import theme from "../../styles/theme";
-import * as yup from "yup";
 import axiosClient from "../../utils/axios";
-import { AxiosError } from "axios";
 import "./SignUp";
 
 interface EmailError {
@@ -69,6 +70,12 @@ const SignUpInfo = () => {
 
   const router = useRouter();
 
+  const [values, setValues] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setValues(!values);
+  };
+
   const initialEmailError: EmailError = { status: false, helperText: "" };
   const [emailError, setEmailError] = useState(initialEmailError);
 
@@ -107,8 +114,18 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           placeholder="Password"
-          type="password"
+          type={values ? "text" : "password"}
           value={formik.values.password}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowPassword}>
+                  {values && <Visibility />}
+                  {!values && <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
           onChange={formik.handleChange}
           error={Boolean(formik.errors.password)}
           helperText={formik.errors.password}
