@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 import Image from "next/image";
 import LogoImg from "../../assets/logo/logo_black.png";
-import SignUpInfo from "./SignInInfo";
-import SignUpThirdPart from "./SignInThirdParty";
+import SignInInfo from "./SignInInfo";
+import SignInThirdPart from "./SignInThirdParty";
 import { Card, Container, Divider, Typography } from "@mui/material";
 import Link from "next/link";
 import theme from "../../styles/theme";
@@ -15,7 +15,7 @@ const {
   }
 } = theme;
 
-const SignUpContainer = styled(Container)({
+const SignInContainer = styled(Container)({
   width: "100%",
   height: "100vh",
   display: "flex",
@@ -24,7 +24,7 @@ const SignUpContainer = styled(Container)({
   backgroundColor: background
 });
 
-const SignUpCard = styled(Card)({
+const SignInCard = styled(Card)({
   minWidth: 500,
   minHeight: 700,
   display: "flex",
@@ -41,7 +41,7 @@ const SignUpCard = styled(Card)({
   boxShadow: main + " 0 1px 5px 0px;"
 });
 
-const SignUpBox = styled(Box)({
+const SignInBox = styled(Box)({
   width: "400px",
   display: "flex",
   flexDirection: "column",
@@ -51,39 +51,39 @@ const SignUpBox = styled(Box)({
   margin: "40px 0"
 });
 
-const SignUpDivider = styled(Divider)({
+const SignInDivider = styled(Divider)({
   width: "100%",
   fontWeight: "600"
 });
 
-const SignUp = () => {
+const SignIn = () => {
   return (
-    <SignUpContainer>
-      <SignUpCard>
-        <SignUpBox>
+    <SignInContainer>
+      <SignInCard>
+        <SignInBox>
           <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
           <Typography variant="h4" mt="25px" mb="15px" sx={{ fontSize: "28px" }}>
             Sign In
           </Typography>
 
-          <SignUpInfo />
+          <SignInInfo />
 
           <Typography variant="body2" mt="10px" mb="10px" gap="10px">
             <Link href="/forgot-password">Forgot your Password?</Link>
           </Typography>
 
-          <SignUpDivider>OR</SignUpDivider>
+          <SignInDivider>OR</SignInDivider>
 
-          <SignUpThirdPart />
+          <SignInThirdPart />
 
           <Typography variant="body2" mt="10px" mb="10px" gap="10px">
             Not Signed up?
-            <Link href="/signup"> Create an account</Link>
+            <Link href="/signUp"> Create an account</Link>
           </Typography>
-        </SignUpBox>
-      </SignUpCard>
-    </SignUpContainer>
+        </SignInBox>
+      </SignInCard>
+    </SignInContainer>
   );
 };
 
-export default SignUp;
+export default SignIn;

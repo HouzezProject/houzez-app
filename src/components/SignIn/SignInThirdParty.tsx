@@ -12,7 +12,7 @@ const {
   }
 } = theme;
 
-const SignUpThirdPartyButton = styled(Button)({
+const SignInThirdPartyButton = styled(Button)({
   borderRadius: "3px",
   fontSize: "0.9rem",
   fontWeight: "400",
@@ -28,7 +28,7 @@ const SignUpThirdPartyButton = styled(Button)({
   }
 });
 
-const SignUpThirdPartyButtonGoogle = styled(SignUpThirdPartyButton)({
+const SignInThirdPartyButtonGoogle = styled(SignInThirdPartyButton)({
   color: dark,
   borderColor: main,
   "&:hover": {
@@ -40,13 +40,13 @@ const SignUpThirdPartyButtonGoogle = styled(SignUpThirdPartyButton)({
   }
 });
 
-const SignUpThirdPartyButtonFacebook = styled(SignUpThirdPartyButton)({
+const SignInThirdPartyButtonFacebook = styled(SignInThirdPartyButton)({
   "&::before": {
     backgroundImage: `url(${FacebookLogo.src})`
   }
 });
 
-const SignUpThirdPartyButtonApple = styled(SignUpThirdPartyButton)({
+const SignInThirdPartyButtonApple = styled(SignInThirdPartyButton)({
   backgroundColor: dark,
   "&:hover": {
     backgroundColor: dark
@@ -56,14 +56,14 @@ const SignUpThirdPartyButtonApple = styled(SignUpThirdPartyButton)({
   }
 });
 
-const SignUpThirdParty = () => {
+const SignInThirdParty = () => {
   return (
     <Stack spacing={2} direction="column" width="100%" mt="15px">
-      <SignUpThirdPartyButtonGoogle variant="outlined">continue with Google</SignUpThirdPartyButtonGoogle>
-      <SignUpThirdPartyButtonFacebook variant="contained">continue with facebook</SignUpThirdPartyButtonFacebook>
-      <SignUpThirdPartyButtonApple variant="contained">continue with apple</SignUpThirdPartyButtonApple>
+      <SignInThirdPartyButtonGoogle variant="outlined">continue with Google</SignInThirdPartyButtonGoogle>
+      <SignInThirdPartyButtonFacebook variant="contained">continue with facebook</SignInThirdPartyButtonFacebook>
+      <SignInThirdPartyButtonApple variant="contained">continue with apple</SignInThirdPartyButtonApple>
     </Stack>
   );
 };
 
-export default SignUpThirdParty;
+export default SignInThirdParty;

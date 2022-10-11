@@ -13,7 +13,7 @@ const {
   }
 } = theme;
 
-const SignUpInfoTextField = styled(TextField)({
+const SignInInfoTextField = styled(TextField)({
   width: "100%",
   height: "40px",
   lineHeight: "30px",
@@ -25,7 +25,7 @@ const SignUpInfoTextField = styled(TextField)({
   fontWeight: "400"
 });
 
-const SignUpInfoButton = styled(Button)({
+const SignInInfoButton = styled(Button)({
   width: "100%",
   height: "50px",
   marginTop: "10px",
@@ -46,7 +46,7 @@ const validationSchema = yup.object({
     .required("Password is required")
 });
 
-const SignUpInfo = () => {
+const SignInInfo = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -61,7 +61,7 @@ const SignUpInfo = () => {
   return (
     <Box width="100%">
       <form onSubmit={formik.handleSubmit} noValidate>
-        <SignUpInfoTextField
+        <SignInInfoTextField
           required
           fullWidth
           id="email"
@@ -73,7 +73,7 @@ const SignUpInfo = () => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-        <SignUpInfoTextField
+        <SignInInfoTextField
           required
           fullWidth
           id="password"
@@ -85,16 +85,16 @@ const SignUpInfo = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <SignUpInfoButton
+        <SignInInfoButton
           variant="contained"
           type="submit"
           disabled={Boolean(formik.errors.email) || Boolean(formik.errors.password)}
         >
           Sign In
-        </SignUpInfoButton>
+        </SignInInfoButton>
       </form>
     </Box>
   );
 };
 
-export default SignUpInfo;
+export default SignInInfo;
