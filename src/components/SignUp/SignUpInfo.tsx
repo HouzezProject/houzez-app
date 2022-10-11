@@ -106,7 +106,7 @@ const SignUpInfo = () => {
           required
           fullWidth
           id="password"
-          placeholder="Pa55word"
+          placeholder="password"
           type="password"
           value={formik.values.password}
           onChange={formik.handleChange}

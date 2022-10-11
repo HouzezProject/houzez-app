@@ -15,11 +15,13 @@ describe("<SignUpInfo />", () => {
     jest.spyOn(nextRouter, "useRouter").mockReturnValue({ push: mockPush } as any);
     render(<SignUpInfo />);
 
+    // replace 55 with ss
+
     await userEvent.type(screen.getByPlaceholderText("Email address"), "a@gmail.com");
-    await userEvent.type(screen.getByPlaceholderText("Pa55word"), "a@QA1212123");
+    await userEvent.type(screen.getByPlaceholderText("pa55word"), "a@QA1212123");
     await userEvent.click(screen.getByRole("button", { name: "Create account" }));
 
-    expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
+    expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", pa55word: "a@QA1212123" });
     expect(mockPush).toBeCalledWith("/email-verification");
   });
 });
