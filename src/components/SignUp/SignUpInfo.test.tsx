@@ -6,6 +6,15 @@ import axiosClient from "../../utils/axios";
 import SignUpInfo from "./SignUpInfo";
 
 describe("<SignUpInfo />", () => {
+  it("should show email already exits when user type a registed email", async () => {
+    jest.spyOn(axiosClient, "head").mockResolvedValue({ status: 200 });
+    render(<SignUpInfo />);
+
+    await userEvent.type(screen.getByPlaceholderText("Email address"), "a@gmail.com");
+    await userEvent.tab();
+
+    expect(await screen.findByText("The email already exists...")).toBeInTheDocument();
+  });
   it("should post user's input to backend", async () => {
     jest.spyOn(axiosClient, "post").mockResolvedValue({ status: 201 });
     jest

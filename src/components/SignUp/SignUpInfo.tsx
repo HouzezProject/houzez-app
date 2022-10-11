@@ -76,7 +76,7 @@ const SignUpInfo = () => {
     try {
       const url = `/agents?email=${e.target.value}`;
       await axiosClient.head(url);
-      setEmailError({ status: true, helperText: "The email is already exist..." });
+      setEmailError({ status: true, helperText: "The email already exists..." });
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 404) {
         setEmailError(initialEmailError);
