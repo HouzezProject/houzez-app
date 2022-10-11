@@ -36,14 +36,7 @@ const SignInInfoButton = styled(Button)({
 });
 
 const validationSchema = yup.object({
-  email: yup.string().email("Enter a valid email").required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password should be of minimum 8 characters length")
-    .matches(/[A-Z]+/, "At least One uppercase character required")
-    .matches(/\d+/, "At least One number required")
-    .matches(/[@#$%^&+=]+/, "At least one special character required")
-    .required("Password is required")
+  email: yup.string().email("Enter a valid email").required("Email is required")
 });
 
 const SignInInfo = () => {
@@ -81,15 +74,8 @@ const SignInInfo = () => {
           type="password"
           value={formik.values.password}
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
         />
-        <SignInInfoButton
-          variant="contained"
-          type="submit"
-          disabled={Boolean(formik.errors.email) || Boolean(formik.errors.password)}
-        >
+        <SignInInfoButton variant="contained" type="submit" disabled={Boolean(formik.errors.email)}>
           Sign In
         </SignInInfoButton>
       </form>
