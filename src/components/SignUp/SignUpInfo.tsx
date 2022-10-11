@@ -2,11 +2,12 @@ import React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface EmailError {
   status: boolean;
@@ -64,6 +65,19 @@ const SignUpInfo = () => {
     }
   });
 
+  const [values, setValues] = React.useState({
+    password: "",
+    showPassword: false
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+  };
+
   const initialEmailError: EmailError = { status: false, helperText: "" };
   const [emailError, setEmailError] = useState(initialEmailError);
 
@@ -99,9 +113,19 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          type="password"
-          value={formik.values.password}
+          type={values.showPassword ? "text" : "password"}
           onChange={formik.handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  {values.showPassword && <Visibility />}
+                  {!values.showPassword && <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+          value={formik.values.password}
           onBlur={formik.handleBlur}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
