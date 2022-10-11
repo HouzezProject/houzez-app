@@ -1,7 +1,8 @@
-import * as React from "react";
+import type { NextPage } from "next";
+import SignIn from "../components/SignIn";
 
-const SignUp = () => {
-  return <p>This is Sign in page.</p>;
+const SignInPage: NextPage = () => {
+  return <SignIn />;
 };
 
-export default SignUp;
+export default SignInPage;
