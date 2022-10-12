@@ -1,30 +1,53 @@
 import styled from "@emotion/styled";
-import { Box, Button, Container, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Container, InputBase, Typography } from "@mui/material";
+import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
+import theme from "../../styles/theme";
+import SearchIcon from "@mui/icons-material/Search";
+
+const {
+  palette: {
+    primary: { main, dark }
+  },
+  typography: { fontFamily }
+} = theme;
 
 const HomeSearchContainer = styled(Container)({
   width: "1050px"
 });
-const IntroBox = styled(Box)({
+
+const IntroTypography = styled(Typography)({
   marginTop: "100px",
+  marginBottom: "8px",
   padding: "2px",
   color: "white",
-  display: "flex",
-  alignItems: "start",
-  justifyContent: "center"
+  boxSizing: "border-box",
+  display: "block",
+  lineHeight: "31.2px",
+  textAlign: "center",
+  fontFamily: fontFamily,
+  fontSize: "2.75rem",
+  fontWeight: "700"
 });
-const DetailBox = styled(Box)({
+
+const DetailTypography = styled(Typography)({
+  marginTop: "20px",
+  marginBottom: "40px",
   padding: "2px",
   color: "white",
-  display: "flex",
-  alignItems: "start",
-  justifyContent: "center"
+  boxSizing: "border-box",
+  display: "block",
+  lineHeight: "1.5",
+  textAlign: "center",
+  fontFamily: fontFamily,
+  fontSize: "20px",
+  fontWeight: "400"
 });
 
 const HomeSearchBox = styled(Box)({
+  marginTop: "30px",
   padding: "2px",
   color: "white",
   display: "flex",
@@ -32,59 +55,50 @@ const HomeSearchBox = styled(Box)({
   justifyContent: "center"
 });
 
-const InputText = styled(TextField)({
-  width: "400px",
-  height: "56px",
+const HomeInputBase = styled(InputBase)({
+  paddingLeft: "20px",
+  width: "50%",
+  height: "60px",
   backgroundColor: "white",
-  justifyContent: "center"
+  justifyContent: "center",
+  borderRadius: "0"
 });
 const CategoriesBox = styled(Box)({
-  width: "150px",
-  height: "auto",
+  width: "25%",
+  height: "60px",
   backgroundColor: "white"
 });
 
 const SearchButton = styled(Button)({
-  width: "150px",
-  height: "56px",
-  backgroundColor: "blue",
-  color: "white"
+  width: "25%",
+  height: "60px",
+  backgroundColor: main,
+  color: "white",
+  borderRadius: "0",
+  display: "flex",
+  gap: "6px",
+  "&:hover": {
+    backgroundcolor: dark
+  }
 });
 
 const HomeSearch = () => {
-  const [userInput, setUserInput] = useState("");
-
-  const [categories, setCategories] = useState("Categories");
-  const handleChange = (event: SelectChangeEvent) => {
-    setCategories(event.target.value);
-  };
-
   return (
     <HomeSearchContainer>
-      <IntroBox>
-        <h1>Find Your Dream House</h1>
-      </IntroBox>
-      <DetailBox>
-        <p>Your Property, Our Priority and From as low as $10 per day with limited time offer discounts</p>
-      </DetailBox>
+      <IntroTypography variant="h1">Find Your Dream House</IntroTypography>
+      <DetailTypography variant="body1">
+        Your Property, Our Priority and From as low as $10 per day with limited time offer discounts
+      </DetailTypography>
       <HomeSearchBox>
-        <label htmlFor="Search keyword"></label>
-        <InputText
-          name="Search keyword"
-          type="text"
-          value={userInput}
-          placeholder="Search home"
-          onChange={(e) => setUserInput(e.target.value)}
-        />
+        <HomeInputBase placeholder="Search home"></HomeInputBase>
         <CategoriesBox>
-          <FormControl fullWidth>
+          <FormControl sx={{ width: "220px", borderLeft: "0.1px groove" }}>
             <Select
-              sx={{ Width: 200 }}
               labelId="Categories"
               id="Categories"
               label="Categories"
-              value={categories}
-              onChange={handleChange}
+              variant="standard"
+              sx={{ borderRadius: 0, height: "61px", paddingLeft: "20px" }}
             >
               <MenuItem value="All categories">All categories</MenuItem>
               <MenuItem value="House">House</MenuItem>
@@ -94,7 +108,10 @@ const HomeSearch = () => {
             </Select>
           </FormControl>
         </CategoriesBox>
-        <SearchButton>Search</SearchButton>
+        <SearchButton variant="contained">
+          <SearchIcon sx={{ color: "white" }} />
+          Search
+        </SearchButton>
       </HomeSearchBox>
     </HomeSearchContainer>
   );
