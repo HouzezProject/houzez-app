@@ -97,6 +97,7 @@ const HomeSearch = () => {
               labelId="Categories"
               id="Categories"
               label="Categories"
+              disableUnderline
               variant="standard"
               sx={{ borderRadius: 0, height: "61px", paddingLeft: "20px" }}
             >
