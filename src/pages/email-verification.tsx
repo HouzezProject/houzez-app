@@ -31,7 +31,8 @@ const GeneralButton = styled(Button)({
   textTransform: "none",
   height: "50px",
   marginTop: "10px",
-  fontWeight: "800"
+  fontWeight: "800",
+  width: "215px"
 });
 
 const ConfirmTypography = styled(Typography)({
