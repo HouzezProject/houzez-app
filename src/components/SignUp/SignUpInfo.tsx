@@ -2,11 +2,12 @@ import React, { useState, FocusEvent } from "react";
 import "./SignUp";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axiosClient from "../../utils/axios";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface EmailError {
   status: boolean;
@@ -64,6 +65,12 @@ const SignUpInfo = () => {
     }
   });
 
+  const [values, setValues] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setValues(!values);
+  };
+
   const initialEmailError: EmailError = { status: false, helperText: "" };
   const [emailError, setEmailError] = useState(initialEmailError);
 
@@ -99,9 +106,19 @@ const SignUpInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          type="password"
-          value={formik.values.password}
+          type={values ? "text" : "password"}
           onChange={formik.handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowPassword}>
+                  {values && <Visibility />}
+                  {!values && <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+          value={formik.values.password}
           onBlur={formik.handleBlur}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
