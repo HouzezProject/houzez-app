@@ -6,11 +6,12 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Card, Container, Box, Typography } from "@mui/material";
 import theme from "../styles/theme";
+import Link from "@mui/material/Link";
 
 const {
   palette: {
     primary: { main: pmain },
-    secondary: { light, main },
+    secondary: { light, main, contrastText },
     background: { paper: backgroundPaper }
   }
 } = theme;
@@ -32,7 +33,13 @@ const GeneralButton = styled(Button)({
   height: "50px",
   marginTop: "10px",
   fontWeight: "800",
+  color: contrastText,
   width: "215px"
+});
+
+const GeneralButtonLink = styled(Link)({
+  color: contrastText,
+  textDecoration: "none"
 });
 
 const ConfirmTypography = styled(Typography)({
@@ -61,7 +68,9 @@ const EmailVerificationPage: NextPage = () => {
             validation request.
           </DescriptionTypography>
           <Box mt="20px">
-            <GeneralButton variant="contained">CONTINUE</GeneralButton>
+            <GeneralButton variant="contained">
+              <GeneralButtonLink href="/signin">CONTINUE</GeneralButtonLink>
+            </GeneralButton>
           </Box>
           <Box mt="20px">
             <GeneralButton variant="contained">Resend verification email</GeneralButton>
