@@ -31,14 +31,14 @@ const customJestConfig = {
   collectCoverageFrom: [
     "<rootDir>/src/**/*.{tsx,ts}",
     "!<rootDir>/src/styles/**",
-    "!<rootDir>/src/pages/_app.tsx",
-    "!<rootDir>/src/pages/_document.tsx",
+    "!<rootDir>/src/components/**/index.tsx",
+    "!<rootDir>/src/pages/**",
     "!<rootDir>/node_modules/**",
     "!<rootDir>/**/__tests__/**",
     "!<rootDir>/**/*.d.ts"
   ],
-  clearMocks: true
-  // collectCoverage: true
+  clearMocks: true,
+  collectCoverage: true
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
