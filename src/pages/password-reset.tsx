@@ -1,10 +1,22 @@
-import { Box, Container, Button, Divider, InputBase, Typography, Card } from "@mui/material";
+import {
+  Box,
+  Container,
+  Button,
+  Divider,
+  Typography,
+  Card,
+  IconButton,
+  InputAdornment,
+  TextField
+} from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../src/assets/logo/logo_black.png";
 import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const {
   palette: {
@@ -41,7 +53,6 @@ const ResetCard = styled(Card)({
 });
 
 const ResetBox = styled(Box)({
-  borderRadius: "10px",
   marginBottom: "2rem",
   width: "400px",
   display: "flex",
@@ -67,19 +78,7 @@ const DetailTypo = styled(Typography)({
   color: "black"
 });
 
-const PasswordInputBase = styled(InputBase)({
-  alignItems: "center",
-  backgroundColor: "white",
-  fontWeight: "400",
-  border: "1px solid" + light,
-  width: "85%",
-  padding: "6px 10px",
-  borderRadius: "5px",
-  boxShadow: "none",
-  marginBottom: "1rem"
-});
-
-const ConfirmInputBase = styled(InputBase)({
+const PasswordInputBase = styled(TextField)({
   alignItems: "center",
   backgroundColor: "white",
   fontWeight: "400",
@@ -111,17 +110,29 @@ const ResetDivider = styled(Divider)({
 });
 
 const RestPasswordPage: NextPage = () => {
+  const [isShown, setIsShown] = useState(false);
   return (
     <ResetContainer>
       <ResetCard>
         <ResetBox>
-          <Image src={logo} alt="Houzez" width="200px" height="50px"/>
+          <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="body1">Reset your password</InfoTypo>
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your new password details
           </DetailTypo>
-          <PasswordInputBase placeholder="New password" />
-          <ConfirmInputBase placeholder="Confirm new password" />
+          <PasswordInputBase
+            placeholder="New password"
+            type={isShown ? "text" : "password"}
+            inputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setIsShown((previousState) => !previousState)}>
+                    {isShown ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
           <SubmitButton variant="contained">Change Password</SubmitButton>
           <ResetDivider />
           <DetailTypo variant="body2">
