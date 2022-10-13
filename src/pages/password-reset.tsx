@@ -1,12 +1,10 @@
-import { Box, Container, Button, Divider, Typography, Card, IconButton, InputAdornment } from "@mui/material";
+import { Box, Container, Button, Divider, Typography, Card, InputBase } from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../src/assets/logo/logo_black.png";
 import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const {
   palette: {
@@ -100,7 +98,6 @@ const ResetDivider = styled(Divider)({
 });
 
 const RestPasswordPage: NextPage = () => {
-  const [isShown, setIsShown] = useState(false);
   return (
     <ResetContainer>
       <ResetCard>
@@ -110,19 +107,7 @@ const RestPasswordPage: NextPage = () => {
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your new password details
           </DetailTypo>
-          <PasswordInputBase
-            placeholder="New password"
-            type={isShown ? "text" : "password"}
-            inputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => setIsShown((previousState) => !previousState)}>
-                    {isShown ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
+          <PasswordInputBase placeholder="New password" type="password" />
           <SubmitButton variant="contained">Change Password</SubmitButton>
           <ResetDivider />
           <DetailTypo variant="body2">
