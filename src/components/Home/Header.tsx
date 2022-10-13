@@ -7,6 +7,7 @@ import LogoImg from "../../assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
+import { useRouter } from "next/router";
 
 const {
   palette: {
@@ -64,6 +65,7 @@ const HeaderButtonSignUp = styled(HeaderButton)({
 });
 
 const Header = () => {
+  const router = useRouter();
   return (
     <HeaderContainer>
       <Grid container spacing={2}>
@@ -89,10 +91,10 @@ const Header = () => {
         </HeaderGrid>
 
         <HeaderGrid item xs={3}>
-          <HeaderButtonSignIn href="/signin" variant="text">
+          <HeaderButtonSignIn variant="text" onClick={() => router.push("/signin")}>
             Sign in
           </HeaderButtonSignIn>
-          <HeaderButtonSignUp href="/signup" variant="contained">
+          <HeaderButtonSignUp variant="contained" onClick={() => router.push("/signup")}>
             Sign Up
           </HeaderButtonSignUp>
         </HeaderGrid>

@@ -32,7 +32,11 @@ const HomeLayer = styled(Box)({
 });
 
 const HomeContainer = styled(Container)({
-  width: "1050px"
+  width: "100%",
+  height: "calc(100vh - 90px)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
 });
 
 const Home = () => {
