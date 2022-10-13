@@ -1,14 +1,4 @@
-import {
-  Box,
-  Container,
-  Button,
-  Divider,
-  Typography,
-  Card,
-  IconButton,
-  InputAdornment,
-  TextField
-} from "@mui/material";
+import { Box, Container, Button, Divider, Typography, Card, IconButton, InputAdornment } from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../src/assets/logo/logo_black.png";
@@ -78,7 +68,7 @@ const DetailTypo = styled(Typography)({
   color: "black"
 });
 
-const PasswordInputBase = styled(TextField)({
+const PasswordInputBase = styled(InputBase)({
   alignItems: "center",
   backgroundColor: "white",
   fontWeight: "400",
