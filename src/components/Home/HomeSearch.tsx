@@ -87,25 +87,30 @@ const HomeSearch = () => {
     <HomeSearchContainer>
       <IntroTypography variant="h1">Find Your Dream House</IntroTypography>
       <DetailTypography variant="body1">
-        Your Property, Our Priority and From as low as $10 per day with limited time offer discounts
+        Houzez Will Assist You In The Best And Comfortable Property Services For You.
       </DetailTypography>
       <HomeSearchBox>
         <HomeInputBase placeholder="Search home"></HomeInputBase>
         <CategoriesBox>
-          <FormControl sx={{ width: "220px", borderLeft: "0.1px groove" }}>
+          <FormControl sx={{ width: "220px", borderLeft: "0.1px groove", backgroundColor: "white" }}>
             <Select
-              labelId="Categories"
-              id="Categories"
-              label="Categories"
+              labelId="types"
+              id="types"
+              label="types"
               disableUnderline
               variant="standard"
-              sx={{ borderRadius: 0, height: "61px", paddingLeft: "20px" }}
+              sx={{ borderRadius: 0, height: "60px", paddingLeft: "20px", backgroundColor: "white" }}
             >
-              <MenuItem value="All categories">All categories</MenuItem>
+              <MenuItem value="All types">All types</MenuItem>
               <MenuItem value="House">House</MenuItem>
               <MenuItem value="Apartment">Apartment</MenuItem>
               <MenuItem value="Townhouse">Townhouse</MenuItem>
+              <MenuItem value="Villa">Villa</MenuItem>
               <MenuItem value="Land">Land</MenuItem>
+              <MenuItem value="Acreage">Acreage</MenuItem>
+              <MenuItem value="Rural">Rural</MenuItem>
+              <MenuItem value="Block of Units">Block of Units</MenuItem>
+              <MenuItem value="Retirement Living">Retirement Living</MenuItem>
             </Select>
           </FormControl>
         </CategoriesBox>
