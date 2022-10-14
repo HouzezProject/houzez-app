@@ -7,12 +7,12 @@ import LogoImg from "../../assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
-import { useRouter } from "next/router";
 
 const {
   palette: {
     primary: { main: mainP, dark: darkP },
-    secondary: { light: lightS, dark: darkS, contrastText: contrastTextS }
+    secondary: { light: lightS, dark: darkS, contrastText: contrastTextS },
+    background: { paper }
   }
 } = theme;
 
@@ -56,6 +56,10 @@ const HeaderButtonSignIn = styled(HeaderButton)({
     color: mainP
   }
 });
+const GeneralButtonLink = styled(Link)({
+  textDecoration: "none",
+  color: paper
+});
 
 const HeaderButtonSignUp = styled(HeaderButton)({
   backgroundColor: mainP,
@@ -65,7 +69,6 @@ const HeaderButtonSignUp = styled(HeaderButton)({
 });
 
 const Header = () => {
-  const router = useRouter();
   return (
     <HeaderContainer>
       <Grid container spacing={2}>
@@ -91,11 +94,11 @@ const Header = () => {
         </HeaderGrid>
 
         <HeaderGrid item xs={3}>
-          <HeaderButtonSignIn variant="text" onClick={() => router.push("/signin")}>
-            Sign in
+          <HeaderButtonSignIn variant="text">
+            <GeneralButtonLink href="/signin"> Sign in</GeneralButtonLink>
           </HeaderButtonSignIn>
-          <HeaderButtonSignUp variant="contained" onClick={() => router.push("/signup")}>
-            Sign Up
+          <HeaderButtonSignUp variant="contained">
+            <GeneralButtonLink href="/signup">Sign up</GeneralButtonLink>
           </HeaderButtonSignUp>
         </HeaderGrid>
       </Grid>

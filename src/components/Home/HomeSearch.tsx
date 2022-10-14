@@ -26,7 +26,7 @@ const HomeSearchContainer = styled(Container)({
 const IntroTypography = styled(Typography)({
   marginBottom: "8px",
   padding: "2px",
-  color: "white",
+  color: paper,
   boxSizing: "border-box",
   display: "block",
   lineHeight: "31.2px",
@@ -39,7 +39,7 @@ const DetailTypography = styled(Typography)({
   marginTop: "20px",
   marginBottom: "40px",
   padding: "2px",
-  color: "white",
+  color: paper,
   boxSizing: "border-box",
   lineHeight: "1.5",
   textAlign: "center",
@@ -51,7 +51,7 @@ const HomeSearchBox = styled(Box)({
   marginTop: "30px",
   marginBottom: "15%",
   padding: "2px",
-  color: "white",
+  color: paper,
   display: "flex",
   justifyContent: "center"
 });
@@ -74,7 +74,7 @@ const SearchButton = styled(Button)({
   width: "25%",
   height: "60px",
   backgroundColor: main,
-  color: "white",
+  color: paper,
   borderRadius: "0",
   display: "flex",
   gap: "6px"
@@ -83,7 +83,7 @@ const SearchButton = styled(Button)({
 const CategFormControl = styled(FormControl)({
   width: "220px",
   borderLeft: "0.1px groove",
-  backgroundColor: "white"
+  backgroundColor: paper
 });
 
 const CategSelect = styled(Select)({
@@ -141,7 +141,7 @@ const HomeSearch = () => {
           </CategFormControl>
         </CategoriesBox>
         <SearchButton variant="contained">
-          <SearchIcon sx={{ color: "white" }} />
+          <SearchIcon sx={{ color: paper }} />
           Search
         </SearchButton>
       </HomeSearchBox>
