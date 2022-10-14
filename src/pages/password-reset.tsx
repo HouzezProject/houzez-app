@@ -5,6 +5,8 @@ import logo from "../../src/assets/logo/logo_black.png";
 import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 const {
   palette: {
@@ -67,6 +69,7 @@ const DetailTypo = styled(Typography)({
 const PasswordTextField = styled(TextField)({
   width: "400px",
   height: "56px",
+  marginBottom: "30px",
   lineHeight: "30px",
   letterSpacing: "0.05rem",
   borderRadius: "3px",
@@ -93,7 +96,27 @@ const ResetDivider = styled(Divider)({
   fontWeight: "600"
 });
 
+const validationSchema = yup.object({
+  password: yup
+    .string()
+    .min(8, "Password should be of minimum 8 characters length")
+    .matches(/[A-Z]+/, "At least One uppercase character required")
+    .matches(/\d+/, "At least One number required")
+    .matches(/[@#$%^&+=]+/, "At least one special character required")
+    .required("Password is required")
+});
+
 const RestPasswordPage: NextPage = () => {
+  const formik = useFormik({
+    initialValues: {
+      password: ""
+    },
+    validationSchema,
+    onSubmit: (value) => {
+      console.log(value);
+    }
+  });
+
   return (
     <ResetContainer>
       <ResetCard>
@@ -101,8 +124,20 @@ const RestPasswordPage: NextPage = () => {
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="h4">Reset your password</InfoTypo>
           <DetailTypo variant="body1">Enter your new password details</DetailTypo>
-          <PasswordTextField placeholder="New password" type="password" />
-          <SubmitButton variant="contained">Change Password</SubmitButton>
+          <form onSubmit={formik.handleSubmit} noValidate>
+            <PasswordTextField
+              required
+              fullWidth
+              id="password"
+              placeholder="Password"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={Boolean(formik.errors.password)}
+              helperText={formik.errors.password}
+            />
+            <SubmitButton variant="contained">Change Password</SubmitButton>
+          </form>
           <ResetDivider />
           <DetailTypo variant="body1">
             Go back to
