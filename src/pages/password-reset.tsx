@@ -1,4 +1,4 @@
-import { Box, Container, Button, Divider, Typography, Card, InputBase } from "@mui/material";
+import { Box, Container, Button, Divider, Typography, Card, TextField } from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../src/assets/logo/logo_black.png";
@@ -24,8 +24,8 @@ const ResetContainer = styled(Container)({
 });
 
 const ResetCard = styled(Card)({
-  minWidth: 500,
-  minHeight: 700,
+  minWidth: 400,
+  minHeight: 550,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -41,49 +41,45 @@ const ResetCard = styled(Card)({
 });
 
 const ResetBox = styled(Box)({
-  marginBottom: "2rem",
   width: "400px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "10px"
+  gap: "12px"
 });
 
 const InfoTypo = styled(Typography)({
-  marginTop: "1rem",
-  marginBottom: "2rem",
+  marginTop: "25px",
+  marginBottom: "15px",
   textAlign: "center",
-  fontWeight: "600",
-  fontSize: "1.8rem",
+  fontSize: "28px",
   color: "black"
 });
 const DetailTypo = styled(Typography)({
-  marginBottom: "1rem",
+  marginTop: "10px",
+  marginBottom: "10px",
   textAlign: "center",
-  fontWeight: "400",
-  fontSize: "1.2rem",
+  gap: "10px",
   color: "black"
 });
 
-const PasswordInputBase = styled(InputBase)({
-  alignItems: "center",
-  backgroundColor: "white",
-  fontWeight: "400",
-  border: "1px solid" + light,
-  width: "85%",
-  padding: "6px 10px",
-  borderRadius: "5px",
-  boxShadow: "none",
-  marginBottom: "1rem"
+const PasswordTextField = styled(TextField)({
+  width: "400px",
+  height: "56px",
+  lineHeight: "30px",
+  letterSpacing: "0.05rem",
+  borderRadius: "3px",
+  fontSize: "1.5rem",
+  fontWeight: "400"
 });
 
 const SubmitButton = styled(Button)({
-  width: "85%",
-  heigh: "50px",
-  inlineHeight: "20px",
-  color: "white",
-  padding: "6px 10px",
+  width: "400px",
+  height: "50px",
+  padding: "6px 16px",
+  marginTop: "10px",
+  color: backgroundPaper,
   backgroundColor: redMain,
   "&:hover": {
     backgroundColor: dark
@@ -92,7 +88,7 @@ const SubmitButton = styled(Button)({
 });
 
 const ResetDivider = styled(Divider)({
-  margin: "15px",
+  margin: "10px 10px 10px 5px",
   width: "100%",
   fontWeight: "600"
 });
@@ -103,14 +99,12 @@ const RestPasswordPage: NextPage = () => {
       <ResetCard>
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
-          <InfoTypo variant="body1">Reset your password</InfoTypo>
-          <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
-            Enter your new password details
-          </DetailTypo>
-          <PasswordInputBase placeholder="New password" type="password" />
+          <InfoTypo variant="h4">Reset your password</InfoTypo>
+          <DetailTypo variant="body1">Enter your new password details</DetailTypo>
+          <PasswordTextField placeholder="New password" type="password" />
           <SubmitButton variant="contained">Change Password</SubmitButton>
           <ResetDivider />
-          <DetailTypo variant="body2">
+          <DetailTypo variant="body1">
             Go back to
             <Link href="/signin"> sign in</Link>
           </DetailTypo>
