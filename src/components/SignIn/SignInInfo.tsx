@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SignIn";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import theme from "../../styles/theme";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const {
   palette: {
@@ -34,11 +35,32 @@ const SignInInfoButton = styled(Button)({
 });
 
 const SignInInfo = () => {
+  const [values, setValues] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setValues(!values);
+  };
   return (
     <Box width="100%">
       <form noValidate>
         <SignInInfoTextField required fullWidth id="email" type="email" label="Email address" />
-        <SignInInfoTextField required fullWidth id="password" label="Password" type="password" />
+        <SignInInfoTextField
+          required
+          fullWidth
+          id="password"
+          label="Password"
+          type={values ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowPassword}>
+                  {values && <Visibility />}
+                  {!values && <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
         <SignInInfoButton variant="contained" type="submit">
           Sign In
         </SignInInfoButton>
