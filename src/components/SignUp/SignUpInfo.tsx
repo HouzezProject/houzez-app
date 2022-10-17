@@ -116,7 +116,7 @@ const SignUpInfo = () => {
           placeholder="Password"
           type={passwordVisible ? "text" : "password"}
           value={formik.values.password}
-          InputProps={{
+          inputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword}>
