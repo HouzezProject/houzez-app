@@ -26,7 +26,7 @@ const ResetContainer = styled(Container)({
 });
 
 const ResetCard = styled(Card)({
-  minWidth: 400,
+  minWidth: 500,
   minHeight: 550,
   display: "flex",
   justifyContent: "center",
@@ -87,7 +87,8 @@ const SubmitButton = styled(Button)({
   "&:hover": {
     backgroundColor: dark
   },
-  marginBottom: "1rem"
+  marginBottom: "1rem",
+  textTransform: "none"
 });
 
 const ResetDivider = styled(Divider)({
