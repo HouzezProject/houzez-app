@@ -38,7 +38,7 @@ pipeline {
         stage('Run Tests') {
           steps {   
             sh 'echo no tests now'
-//             sh 'npm run test'
+            sh 'npm run test'
           }
         }
         stage('Create Build Artifacts') {
