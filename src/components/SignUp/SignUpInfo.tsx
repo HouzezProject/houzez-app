@@ -1,13 +1,15 @@
-import React, { useState, FocusEvent } from "react";
-import "./SignUp";
+import { useState, FocusEvent } from "react";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import { AxiosError } from "axios";
+import * as yup from "yup";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import theme from "../../styles/theme";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import axiosClient from "../../utils/axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import theme from "../../styles/theme";
+import axiosClient from "../../utils/axios";
+import "./SignUp";
 
 interface EmailError {
   status: boolean;
@@ -59,16 +61,19 @@ const SignUpInfo = () => {
       email: "",
       password: ""
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+    validationSchema,
+    onSubmit: ({ email, password }) => {
+      axiosClient.post("/agents", { email, password });
+      router.push("/email-verification");
     }
   });
 
-  const [values, setValues] = useState(false);
+  const router = useRouter();
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleClickShowPassword = () => {
-    setValues(!values);
+    setPasswordVisible((previousState) => !previousState);
   };
 
   const initialEmailError: EmailError = { status: false, helperText: "" };
@@ -78,9 +83,13 @@ const SignUpInfo = () => {
     try {
       const url = `/agents?email=${e.target.value}`;
       await axiosClient.head(url);
-      setEmailError({ status: true, helperText: "The email is already exist..." });
+      setEmailError({ status: true, helperText: "The email already exists..." });
     } catch (error) {
-      setEmailError(initialEmailError);
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        setEmailError(initialEmailError);
+      } else {
+        setEmailError({ status: true, helperText: "Internal server error, please try later" });
+      }
     }
   };
 
@@ -92,38 +101,39 @@ const SignUpInfo = () => {
           fullWidth
           id="email"
           type="email"
-          label="Email address"
+          placeholder="Email address"
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={checkIfEmailIsUnique}
-          onBlurCapture={formik.handleBlur}
-          error={(formik.touched.email && Boolean(formik.errors.email)) || emailError.status}
-          helperText={(formik.touched.email && formik.errors.email) || emailError.helperText}
           onKeyDown={() => setEmailError(initialEmailError)}
+          error={Boolean(formik.errors.email) || emailError.status}
+          helperText={formik.errors.email || emailError.helperText}
         />
         <SignUpInfoTextField
           required
           fullWidth
           id="password"
-          label="Password"
-          type={values ? "text" : "password"}
-          onChange={formik.handleChange}
-          InputProps={{
+          placeholder="Password"
+          type={passwordVisible ? "text" : "password"}
+          value={formik.values.password}
+          inputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword}>
-                  {values && <Visibility />}
-                  {!values && <VisibilityOff />}
+                  {passwordVisible ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             )
           }}
-          value={formik.values.password}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
+          onChange={formik.handleChange}
+          error={Boolean(formik.errors.password)}
+          helperText={formik.errors.password}
         />
-        <SignUpInfoButton variant="contained" type="submit">
+        <SignUpInfoButton
+          variant="contained"
+          type="submit"
+          disabled={Boolean(formik.errors.password || formik.errors.email) || emailError.status}
+        >
           Create account
         </SignUpInfoButton>
       </form>
