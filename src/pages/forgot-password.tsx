@@ -6,6 +6,8 @@ import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 const {
   palette: {
@@ -75,8 +77,11 @@ const StateTypo = styled(Typography)({
   color: "black"
 });
 
+const Form = styled("form")({
+  width: "55%"
+});
+
 const EmailInputBase = styled(TextField)({
-  width: "55%",
   height: "50px",
   marginBottom: "1rem"
 });
@@ -102,7 +107,21 @@ const ResetDivider = styled(Divider)({
   fontWeight: "600"
 });
 
+const validationSchema = yup.object({
+  email: yup.string().email("Enter a valid email").required("Email is required")
+});
+
 const ForgetPasswordPage: NextPage = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: ""
+    },
+    validationSchema,
+    onSubmit: ({ email }) => {
+      console.log("input email", email);
+    }
+  });
+
   return (
     <ResetContainer>
       <ResetCard>
@@ -112,17 +131,25 @@ const ForgetPasswordPage: NextPage = () => {
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your email to update your password.
           </DetailTypo>
-          <EmailInputBase
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <MailOutlineIcon />
-                </InputAdornment>
-              )
-            }}
-            placeholder="Email address"
-            type="email"
-          />
+          <Form onSubmit={formik.handleSubmit} noValidate>
+            <EmailInputBase
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MailOutlineIcon />
+                  </InputAdornment>
+                )
+              }}
+              required
+              fullWidth
+              placeholder="Email address"
+              id="email"
+              type="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={Boolean(formik.errors.email)}
+            />
+          </Form>
           <SubmitButton variant="contained">Reset my password</SubmitButton>
           <DetailTypo variant="body2">
             <Link href="/signin">Go back to sign in</Link>
