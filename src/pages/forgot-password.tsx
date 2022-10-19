@@ -77,17 +77,17 @@ const StateTypo = styled(Typography)({
   color: "black"
 });
 
-const Form = styled("form")({
+const FormNew = styled("form")({
   width: "55%"
 });
 
 const EmailInputBase = styled(TextField)({
   height: "50px",
-  marginBottom: "1rem"
+  marginBottom: "2rem"
 });
 
 const SubmitButton = styled(Button)({
-  width: "55%",
+  width: "100%",
   height: "50px",
   inlineHeight: "20px",
   color: "white",
@@ -131,7 +131,7 @@ const ForgetPasswordPage: NextPage = () => {
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your email to update your password.
           </DetailTypo>
-          <Form onSubmit={formik.handleSubmit} noValidate>
+          <FormNew onSubmit={formik.handleSubmit} noValidate>
             <EmailInputBase
               InputProps={{
                 startAdornment: (
@@ -148,9 +148,12 @@ const ForgetPasswordPage: NextPage = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               error={Boolean(formik.errors.email)}
+              helperText={formik.errors.email}
             />
-          </Form>
-          <SubmitButton variant="contained">Reset my password</SubmitButton>
+            <SubmitButton type="submit" variant="contained" disabled={Boolean(formik.errors.email)}>
+              Reset my password
+            </SubmitButton>
+          </FormNew>
           <DetailTypo variant="body2">
             <Link href="/signin">Go back to sign in</Link>
           </DetailTypo>
