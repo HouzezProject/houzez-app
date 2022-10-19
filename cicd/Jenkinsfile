@@ -1,64 +1,52 @@
 pipeline {
-  agent any
+
+  agent any 
+
   environment {
-    aws_credential = 'AWS-Sylvon'
-    bucket = 'houzez-app-sylvon'
-    region = 'ap-southeast-2'
-    repo_path = '/var/lib/jenkins/workspace/houzez-app-test1'
-    exclude_file = 'node_modules/*'
-    CI = 'true'
-    HOME = '.'
-    npm_config_cache = 'npm-cache'
+    S3bucket_name = 'houzez.app'
   }
-  
   stages {
-    stage('SonarCloud') {
-  environment {
-    SCANNER_HOME = tool 'SonarQubeScanner'
-    ORGANIZATION = 'sylvonau'
-    PROJECT_NAME = 'SylvonAu_houzez-app'
-  }
-  steps {
-    withSonarQubeEnv('SonarCloudOne') {
+    stage('Sonar Cloud') {
+      environment {
+        SCANNER_HOME = tool 'SonarQubeScanner'
+        ORGANIZATION = "zhangrunqing6599"
+        PROJECT_NAME = "zhangrunqing6599_houzez-app"
+      }
+      steps {
+        withSonarQubeEnv(installationName: 'SonarCloudJenkins', credentialsId: 'SonarCloudJenkinsToken') {
         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-        -Dsonar.typescript.tsconfigPath=./tsconfig.json/ \
+        -Dsonar.java.binaries=build/classes/java/ \
         -Dsonar.projectKey=$PROJECT_NAME \
         -Dsonar.sources=.'''
-         }
         }
       }
-  
+    }
     stage('Install Packages') {
       steps {
         sh 'npm install'
       }
     }
-    stage('Test and Build') {
-      parallel {
-        stage('Run Tests') {
-          steps {   
-            sh 'echo no tests now'
-            sh 'npm run test'
-          }
-        }
-        stage('Create Build Artifacts') {
-          steps {
-            sh 'npm run build'
-          }
-        }
+    stage('build') {
+      steps {
+        sh 'echo "building ..."'
+        sh 'npm run build'
       }
     }
-
-stage('Production') {
-  steps {
-    withAWS(region:"$region",credentials:"$aws_credential") {
-      sh 'aws s3 sync $repo_path s3://houzez-app-sylvon/ --exclude "$exclude_file"'
-      
-//     s3Delete(bucket: "${bucket}", path:'**/*')
-//     s3Upload(bucket: "${bucket}", includePathPattern:'**/*');
-//     s3Upload(bucket: "${bucket}", workingDir:'targetDir', includePathPattern:'**/*');
-            }
-          }
-        }
+    stage('Test') {
+      steps {
+        sh 'echo "Testing ..."'
+        // sh 'npm run test...'
+      }
     }
+    stage('Upload') {
+        steps {
+            echo 'Deploying to AWS s3 bucket.'
+            withAWS(region:'ap-southeast-2',credentials:'houzez_app') {
+                sh 'aws s3 sync /var/lib/jenkins/workspace/houzez_app_frontend_cicid s3://houzez.app/ --exclude "node_modules/*"'
+                // s3Delete(bucket:"houzez.app", path:'');
+                // s3Upload(bucket:"houzez.app", includePathPattern:'**/*');
+            }
+        };
+    }
+  }    
 }

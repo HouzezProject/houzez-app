@@ -1,0 +1,55 @@
+pipeline {
+
+    agent {
+        docker {
+        image 'node:16.17.0'
+        args '-u root'
+    }
+  }
+  environment {
+    S3bucket_name = 'houzez.app'
+  }
+  stages {
+    // stage('Sonar Cloud') {
+    //   environment {
+    //     SCANNER_HOME = tool 'SonarQubeScanner'
+    //     ORGANIZATION = "zhangrunqing6599"
+    //     PROJECT_NAME = "zhangrunqing6599_houzez-app"
+    //   }
+    //   steps {
+    //     withSonarQubeEnv(installationName: 'SonarCloudJenkins', credentialsId: 'SonarCloudJenkinsToken') {
+    //     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+    //     -Dsonar.java.binaries=build/classes/java/ \
+    //     -Dsonar.projectKey=$PROJECT_NAME \
+    //     -Dsonar.sources=.'''
+    //     }
+    //   }
+    // }
+    stage('Install Packages') {
+      steps {
+        sh 'npm install'
+      }
+    }
+    stage('build') {
+      steps {
+        sh 'echo "building ..."'
+        sh 'npm run build'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'echo "Testing ..."'
+        // sh 'npm run test...'
+      }
+    }
+    stage('Upload') {
+      steps {
+        echo 'Deploying to AWS s3 bucket.'
+        // withAWS(region:'ap-southeast-2',credentials:'houzez_app') {
+        //   sh 'aws s3 sync /var/lib/jenkins/workspace/houzez_app_frontend_cicid s3://houzez.app/ --exclude "node_modules/*"'
+        //     s3Delete(bucket:"houzez.app", path:'');
+        //     s3Upload(bucket:"houzez.app", includePathPattern:'**/*');
+      }
+    };
+  }
+}    
