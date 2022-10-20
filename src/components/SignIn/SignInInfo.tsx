@@ -8,7 +8,7 @@ import theme from "../../styles/theme";
 import axiosClient from "../../utils/axios";
 import router from "next/router";
 
-interface accountActive {
+interface accountActiveInfo {
   severity: AlertColor;
   display: string;
   text: string;
@@ -51,8 +51,8 @@ const SignInInfo = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const initialAccountActive: accountActive = { severity: "error", display: "none", text: "" };
-  const [accountActive, setAccountActive] = useState(initialAccountActive);
+  const initialAccountActiveInfo: accountActiveInfo = { severity: "error", display: "none", text: "" };
+  const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
   const [submitLock, setSubmitLock] = useState(false);
 
   const handleSubmit = async () => {
