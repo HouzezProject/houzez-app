@@ -117,8 +117,8 @@ const ForgetPasswordPage: NextPage = () => {
       email: ""
     },
     validationSchema,
-    onSubmit: ({ email }) => {
-      console.log("input email", email);
+    onSubmit: () => {
+      //  some actions after submitting
     }
   });
 
