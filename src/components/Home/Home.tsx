@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Container } from "@mui/material";
 import React from "react";
-import HomeBg from "../../assets/images/homeBg.jpg";
+import HomeBg from "../../../public/assets/images/homebg.jpg";
 import theme from "../../styles/theme";
 import Header from "./Header";
 import HomeSearch from "./HomeSearch";

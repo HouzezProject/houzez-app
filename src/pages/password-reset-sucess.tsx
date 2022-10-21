@@ -2,7 +2,7 @@ import { Box, Button, Card, Container, styled, Typography } from "@mui/material"
 import { NextPage } from "next";
 import Image from "next/image";
 import theme from "../styles/theme";
-import LogoImg from "../assets/logo/logo_black.png";
+import LogoImg from "../../public/assets/logo/logo_black.png";
 import Link from "@mui/material/Link";
 
 const {
