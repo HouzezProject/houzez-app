@@ -7,6 +7,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
 
 const {
   palette: {
@@ -108,13 +109,22 @@ const validationSchema = yup.object({
 });
 
 const RestPasswordPage: NextPage = () => {
+  const router = useRouter();
+  if (router.query.code !== undefined) {
+    const token = router.query.code;
+    // console.log(token);
+    const fileDataProcessed = Buffer.from(token, "base64").toString("binary");
+    const email = JSON.parse(fileDataProcessed).email;
+    console.log(email);
+  }
   const formik = useFormik({
     initialValues: {
       password: ""
     },
     validationSchema,
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: (values) => {
+      console.log(values);
+      //  axiosClient.patch("/reset-password", password);
     }
   });
 
