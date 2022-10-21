@@ -50,14 +50,14 @@ const ResetBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "12px"
+  gap: "5px",
+  margin: "40px 0"
 });
 
 const InfoTypo = styled(Typography)({
   marginTop: "25px",
   marginBottom: "15px",
   textAlign: "center",
-  fontSize: "28px",
   color: "black"
 });
 const DetailTypo = styled(Typography)({
@@ -80,7 +80,7 @@ const PasswordTextField = styled(TextField)({
 });
 
 const SubmitButton = styled(Button)({
-  width: "400px",
+  width: "100%",
   height: "50px",
   padding: "6px 16px",
   marginTop: "10px",
@@ -89,8 +89,7 @@ const SubmitButton = styled(Button)({
   "&:hover": {
     backgroundColor: dark
   },
-  marginBottom: "1rem",
-  textTransform: "none"
+  marginBottom: "1rem"
 });
 
 const ResetDivider = styled(Divider)({
@@ -120,9 +119,7 @@ const RestPasswordPage: NextPage = () => {
       if (router.query.code !== undefined) {
         const token = router.query.code.toString();
         const fileDataProcessed = Buffer.from(token, "base64").toString("binary");
-        console.log(fileDataProcessed);
-        const email = JSON.parse(fileDataProcessed).email;
-        console.log("hello");
+        const email = JSON.stringify(JSON.parse(fileDataProcessed).email);
         axiosClient.patch("/reset-password", { email, password });
         router.push("/password-reset-success");
       }
@@ -135,23 +132,26 @@ const RestPasswordPage: NextPage = () => {
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="h4">Reset your password</InfoTypo>
-          <DetailTypo variant="body1">Enter your new password details</DetailTypo>
+          <DetailTypo variant="body2">Enter your new password details</DetailTypo>
           <form onSubmit={formik.handleSubmit} noValidate>
             <PasswordTextField
               required
               fullWidth
               id="password"
               placeholder="Password"
+              label="password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
               error={Boolean(formik.errors.password)}
               helperText={formik.errors.password}
             />
-            <SubmitButton variant="contained">Change Password</SubmitButton>
+            <SubmitButton variant="contained" type="submit">
+              Change Password
+            </SubmitButton>
           </form>
           <ResetDivider />
-          <DetailTypo variant="body1">
+          <DetailTypo variant="body2">
             Go back to
             <Link href="/signin"> sign in</Link>
           </DetailTypo>

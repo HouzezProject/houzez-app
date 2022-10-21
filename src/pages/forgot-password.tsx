@@ -122,6 +122,7 @@ const ForgetPasswordPage: NextPage = () => {
             }}
             placeholder="Email address"
             type="email"
+            label="Email address"
           />
           <SubmitButton variant="contained">Reset my password</SubmitButton>
           <DetailTypo variant="body2">
