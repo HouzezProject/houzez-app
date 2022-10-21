@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Breadcrumbs, Button, Container, Grid, IconButton, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
-import LogoImg from "../../assets/logo/logo_white.png";
+import LogoImg from "../../../public/assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
