@@ -1,7 +1,7 @@
 import { Box, Container, Button, Divider, Typography, Card, InputAdornment, TextField } from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
-import logo from "../../src/assets/logo/logo_black.png";
+import logo from "../../public/assets/logo/logo_black.png";
 import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";

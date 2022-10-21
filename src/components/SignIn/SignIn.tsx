@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
 import Image from "next/image";
-import LogoImg from "../../assets/logo/logo_black.png";
+import LogoImg from "../../../public/assets/logo/logo_black.png";
 import SignInInfo from "./SignInInfo";
 import SignInThirdPart from "./SignInThirdParty";
 import { Card, Container, Divider, Typography } from "@mui/material";

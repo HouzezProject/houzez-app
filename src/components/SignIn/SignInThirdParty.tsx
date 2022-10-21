@@ -2,9 +2,9 @@ import "./SignIn";
 import { Button, Stack } from "@mui/material";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
-import GoogleLogo from "../../assets/icon/google_icon.png";
-import FacebookLogo from "../../assets/icon/facebook_icon.png";
-import AppleLogo from "../../assets/icon/apple_icon.png";
+import GoogleLogo from "../../../public/assets/icon/google_icon.png";
+import FacebookLogo from "../../../public/assets/icon/facebook_icon.png";
+import AppleLogo from "../../../public/assets/icon/apple_icon.png";
 
 const {
   palette: {

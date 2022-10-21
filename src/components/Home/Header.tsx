@@ -1,19 +1,17 @@
 import styled from "@emotion/styled";
-import { Breadcrumbs, Button, Container, Grid, Link } from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
+import { Breadcrumbs, Button, Container, Grid, IconButton, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
-import LogoImg from "../../assets/logo/logo_white.png";
+import LogoImg from "../../../public/assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
+import StarsIcon from "@mui/icons-material/Stars";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const {
-  palette: {
-    primary: { main: mainP, dark: darkP },
-    secondary: { light: lightS, dark: darkS, contrastText: contrastTextS },
-    background: { paper }
-  }
+  palette: { primary, secondary }
 } = theme;
 
 const HeaderContainer = styled(Container)({
@@ -34,7 +32,7 @@ const HeaderLink = styled(Link)({
   height: "90px",
   display: "flex",
   alignItems: "center",
-  color: contrastTextS,
+  color: secondary.contrastText,
   margin: "0 20px",
   gap: "20px",
   fontWeight: "700"
@@ -49,26 +47,49 @@ const HeaderButton = styled(Button)({
 });
 
 const HeaderButtonSignIn = styled(HeaderButton)({
-  color: contrastTextS,
+  color: secondary.contrastText,
   "&:hover": {
-    borderColor: darkS,
-    backgroundColor: lightS,
-    color: mainP
+    borderColor: secondary.dark,
+    backgroundColor: secondary.light
   }
 });
-const GeneralButtonLink = styled(Link)({
+
+const HeaderButtonLinkSignIn = styled(Link)({
   textDecoration: "none",
-  color: paper
+  color: secondary.contrastText,
+  "&:hover": {
+    color: primary.main
+  }
 });
 
 const HeaderButtonSignUp = styled(HeaderButton)({
-  backgroundColor: mainP,
+  backgroundColor: primary.main,
   "&:hover": {
-    backgroundColor: darkP
+    backgroundColor: primary.dark
   }
 });
 
+const HeaderButtonLinkSignUp = styled(Link)({
+  textDecoration: "none",
+  color: secondary.contrastText
+});
+
+const HeaderIconButton = styled(IconButton)({
+  color: secondary.contrastText
+});
+
 const Header = () => {
+  const [loginStatus, setLoginStatus] = useState(false);
+
+  useEffect(() => {
+    const localStorageLoginStatus = localStorage.getItem("loginStatus");
+    if (localStorageLoginStatus === "true") {
+      setLoginStatus(true);
+    } else {
+      setLoginStatus(false);
+    }
+  }, []);
+
   return (
     <HeaderContainer>
       <Grid container spacing={2}>
@@ -94,12 +115,26 @@ const Header = () => {
         </HeaderGrid>
 
         <HeaderGrid item xs={3}>
-          <HeaderButtonSignIn variant="text">
-            <GeneralButtonLink href="/signin"> Sign in</GeneralButtonLink>
-          </HeaderButtonSignIn>
-          <HeaderButtonSignUp variant="contained">
-            <GeneralButtonLink href="/signup">Sign up</GeneralButtonLink>
-          </HeaderButtonSignUp>
+          {!loginStatus && (
+            <HeaderButtonSignIn variant="text">
+              <HeaderButtonLinkSignIn href="/signin">Sign in</HeaderButtonLinkSignIn>
+            </HeaderButtonSignIn>
+          )}
+          {!loginStatus && (
+            <HeaderButtonSignUp variant="contained">
+              <HeaderButtonLinkSignUp href="/signup">Sign up</HeaderButtonLinkSignUp>
+            </HeaderButtonSignUp>
+          )}
+          {loginStatus && (
+            <HeaderIconButton size="large">
+              <StarsIcon fontSize="inherit" />
+            </HeaderIconButton>
+          )}
+          {loginStatus && (
+            <HeaderIconButton size="large">
+              <AccountCircleIcon fontSize="inherit" />
+            </HeaderIconButton>
+          )}
         </HeaderGrid>
       </Grid>
     </HeaderContainer>
