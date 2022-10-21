@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import IconImg from "../assets/icon/email.png";
+import IconImg from "../../public/assets/icon/email.png";
 import type { NextPage } from "next";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
