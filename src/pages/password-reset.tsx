@@ -1,4 +1,4 @@
-import { Box, Container, Button, Divider, Typography, Card, TextField } from "@mui/material";
+import { Box, Container, Button, Divider, Typography, Card, TextField, AlertColor, Alert } from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../public/assets/logo/logo_black.png";
@@ -9,6 +9,14 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import axiosClient from "../utils/axios";
+import { AxiosError } from "axios";
+import { useState } from "react";
+
+interface AccountActiveInfo {
+  severity: AlertColor;
+  display: string;
+  text: string;
+}
 
 const {
   palette: {
@@ -52,6 +60,11 @@ const ResetBox = styled(Box)({
   alignItems: "center",
   gap: "5px",
   margin: "40px 0"
+});
+
+const SignInInfoAlert = styled(Alert)({
+  marginBottom: "20px",
+  borderRadius: "3px"
 });
 
 const InfoTypo = styled(Typography)({
@@ -109,19 +122,28 @@ const validationSchema = yup.object({
 });
 
 const RestPasswordPage: NextPage = () => {
+  const initialAccountActiveInfo: AccountActiveInfo = { severity: "error", display: "none", text: "" };
+  const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
       password: ""
     },
     validationSchema,
-    onSubmit: (password) => {
-      if (router.query.code !== undefined) {
-        const token = router.query.code.toString();
-        const fileDataProcessed = Buffer.from(token, "base64").toString("binary");
-        const email = JSON.stringify(JSON.parse(fileDataProcessed).email);
-        axiosClient.patch("/reset-password", { email, password });
-        router.push("/password-reset-success");
+    onSubmit: async ({ password }) => {
+      try {
+        if (router.query.code !== undefined) {
+          const token = router.query.code.toString();
+          const fileDataProcessed = Buffer.from(token, "base64").toString("binary");
+          const emailString = JSON.stringify(JSON.parse(fileDataProcessed).email);
+          const email = emailString.replace('"', "").replace('"', "");
+          axiosClient.patch("/agents/reset-password", { email, password });
+          router.push("/password-reset-success");
+        }
+      } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 500) {
+          setAccountActive({ severity: "error", display: "flex", text: "Wait for server respond" });
+        }
       }
     }
   });
@@ -129,6 +151,9 @@ const RestPasswordPage: NextPage = () => {
   return (
     <ResetContainer>
       <ResetCard>
+        <SignInInfoAlert id="alert" severity={accountActive.severity} sx={{ display: accountActive.display }}>
+          {accountActive.text}
+        </SignInInfoAlert>
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="h4">Reset your password</InfoTypo>
