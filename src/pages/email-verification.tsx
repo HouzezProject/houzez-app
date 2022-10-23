@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Card, Container, Box, Typography } from "@mui/material";
 import theme from "../styles/theme";
 import Link from "@mui/material/Link";
+import { useState, useEffect } from "react";
 
 const {
   palette: {
@@ -54,6 +55,24 @@ const DescriptionTypography = styled(Typography)({
 });
 
 const EmailVerificationPage: NextPage = () => {
+  const [state, setState] = useState(false);
+  const [seconds, setSeconds] = useState(60);
+  useEffect(() => {
+    let secondsInterval: string | number | NodeJS.Timeout | undefined;
+    if (state === true) {
+      secondsInterval = setInterval(() => {
+        setSeconds((prev) => prev - 1);
+      }, 1000);
+      setTimeout(() => {
+        setState(false);
+      }, 60000);
+    }
+    return () => clearInterval(secondsInterval);
+  }, [state]);
+  const onBtnClick = () => {
+    setSeconds(60);
+    setState(true);
+  };
   return (
     <>
       <CssBaseline />
@@ -73,7 +92,10 @@ const EmailVerificationPage: NextPage = () => {
             </GeneralButton>
           </Box>
           <Box mt="20px">
-            <GeneralButton variant="contained">Resend verification email</GeneralButton>
+            <GeneralButton variant="contained" disabled={state} onClick={onBtnClick}>
+              Resend verification email<br></br>
+              {state ? seconds : ""}
+            </GeneralButton>
           </Box>
         </BoxEmailOpen>
       </Container>
