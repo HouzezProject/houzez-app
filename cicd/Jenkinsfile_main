@@ -1,0 +1,70 @@
+pipeline {
+  agent any
+  environment {
+    aws_credential = 'ETA-DevOps-Sylvon'
+    bucket = 'houzez4u.com'
+    region = 'ap-southeast-2'
+    repo_path = '/var/lib/jenkins/workspace/houzez-app/out'
+    exclude_file = 'node_modules/*'
+    include_file = '.next/*'
+    CI = 'true'
+  }
+  
+ stages { 
+    
+    stage('Install Packages') {
+      steps {
+        sh 'npm install'
+      }
+    }
+    stage('Test') {
+      parallel {
+        stage('Run Tests') {
+          steps {   
+//            sh 'echo no tests now'
+             sh 'npm run test-c'
+          }
+        }
+        
+        stage('SonarCloud') {
+    environment {
+    SCANNER_HOME = tool 'SonarQubeScanner'
+    ORGANIZATION = 'sylvonau'
+    PROJECT_NAME = 'HouzezProject/houzez-app'
+    PROJECT_BRANCH = 'main'
+  }
+ 
+  steps {
+    withSonarQubeEnv('SonarCloudOne') {   
+        sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+        -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info/ \
+        -Dsonar.projectKey=$PROJECT_NAME \
+        -Dsonar.sources=src'''
+        //-Dsonar.exclusions=**/package-lock.json/ ** \
+         }
+        }
+      }
+      
+        stage('Create Build Artifacts') {
+          steps {
+            sh 'npm run build'
+          }
+        }
+      }
+    }
+
+stage('Production') {
+  steps {
+    withAWS(region:"$region",credentials:"$aws_credential") {
+      sh 'aws s3 sync $repo_path s3://"$bucket"/' 
+      //--include "$include_file"
+      //--exclude "$exclude_file"
+      
+//     s3Delete(bucket: "${bucket}", path:'**/*')
+//     s3Upload(bucket: "${bucket}", includePathPattern:'**/*');
+//     s3Upload(bucket: "${bucket}", workingDir:'targetDir', includePathPattern:'**/*');
+            }
+          }
+        }
+    }
+}
