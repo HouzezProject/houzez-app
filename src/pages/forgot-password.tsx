@@ -8,6 +8,7 @@ import Link from "next/link";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import axiosClient from "../utils/axios";
 
 const {
   palette: {
@@ -117,8 +118,15 @@ const ForgetPasswordPage: NextPage = () => {
       email: ""
     },
     validationSchema,
-    onSubmit: () => {
-      //  some actions after submitting
+    onSubmit: async (email) => {
+      const emailParams = email.email;
+      console.log(emailParams);
+      try {
+        const url = `/agents/reset-password?email=${emailParams}`;
+        await axiosClient.post(url);
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 
@@ -127,6 +135,7 @@ const ForgetPasswordPage: NextPage = () => {
       <ResetCard>
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
+
           <InfoTypo variant="body1">Forget your password?</InfoTypo>
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your email to update your password.
@@ -142,7 +151,7 @@ const ForgetPasswordPage: NextPage = () => {
               }}
               required
               fullWidth
-              placeholder="Email address"
+              label="Email address"
               id="email"
               type="email"
               value={formik.values.email}
