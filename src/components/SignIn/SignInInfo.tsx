@@ -8,7 +8,7 @@ import theme from "../../styles/theme";
 import axiosClient from "../../utils/axios";
 import router from "next/router";
 
-interface AccountActiveInfo {
+interface AuthResponseMsgInfo {
   severity: AlertColor;
   display: string;
   text: string;
@@ -51,8 +51,8 @@ const SignInInfo = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const initialAccountActiveInfo: AccountActiveInfo = { severity: "error", display: "none", text: "" };
-  const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
+  const initialAuthResponseMsg: AuthResponseMsgInfo = { severity: "error", display: "none", text: "" };
+  const [authResponseMsg, setAuthResponseMsg] = useState(initialAuthResponseMsg);
   const [submitLock, setSubmitLock] = useState(false);
 
   const handleSubmit = async () => {
@@ -65,7 +65,7 @@ const SignInInfo = () => {
     } catch (error) {
       console.log(error);
       if (error instanceof AxiosError && error.response?.status === 401) {
-        setAccountActive({ severity: "error", display: "flex", text: "Email or password not correct." });
+        setAuthResponseMsg({ severity: "error", display: "flex", text: "Email or password not correct." });
       }
       if (error instanceof AxiosError && error.response?.status === 403) {
         countdownThenRedirect("error", 3, "Your account is not activated. ", router.push, "email-verification");
@@ -77,7 +77,7 @@ const SignInInfo = () => {
     window.setInterval(() => {
       if (countdown >= 0) {
         setSubmitLock(true);
-        setAccountActive({
+        setAuthResponseMsg({
           severity: severity,
           display: "flex",
           text: text + " Page jumps in " + countdown + "s"
@@ -91,8 +91,8 @@ const SignInInfo = () => {
 
   return (
     <Box width="100%">
-      <SignInInfoAlert id="alert" severity={accountActive.severity} sx={{ display: accountActive.display }}>
-        {accountActive.text}
+      <SignInInfoAlert id="alert" severity={authResponseMsg.severity} sx={{ display: authResponseMsg.display }}>
+        {authResponseMsg.text}
       </SignInInfoAlert>
       <form noValidate>
         <SignInInfoTextField
