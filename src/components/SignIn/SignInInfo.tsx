@@ -3,10 +3,11 @@ import { AxiosError } from "axios";
 import "./SignIn";
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import { Alert, AlertColor, Button, TextField } from "@mui/material";
+import { Alert, AlertColor, Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import theme from "../../styles/theme";
 import axiosClient from "../../utils/axios";
 import router from "next/router";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface AccountActiveInfo {
   severity: AlertColor;
@@ -54,6 +55,11 @@ const SignInInfo = () => {
   const initialAccountActiveInfo: AccountActiveInfo = { severity: "error", display: "none", text: "" };
   const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
   const [submitLock, setSubmitLock] = useState(false);
+
+  const [values, setValues] = useState(false);
+  const handleClickShowPassword = () => {
+    setValues(!values);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -110,10 +116,20 @@ const SignInInfo = () => {
           fullWidth
           id="password"
           label="Password"
-          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={submitLock}
+          type={values ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickShowPassword}>
+                  {values && <Visibility />}
+                  {!values && <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <SignInInfoButton variant="contained" onClick={handleSubmit} disabled={submitLock}>
           Sign In
