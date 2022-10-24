@@ -117,12 +117,12 @@ const Header = () => {
         <HeaderGrid item xs={3}>
           {!loginStatus && (
             <HeaderButtonSignIn variant="text">
-              <HeaderButtonLinkSignIn href="/signin">Sign in</HeaderButtonLinkSignIn>
+              <HeaderButtonLinkSignIn href="/sign-in">Sign in</HeaderButtonLinkSignIn>
             </HeaderButtonSignIn>
           )}
           {!loginStatus && (
             <HeaderButtonSignUp variant="contained">
-              <HeaderButtonLinkSignUp href="/signup">Sign up</HeaderButtonLinkSignUp>
+              <HeaderButtonLinkSignUp href="/sign-up">Sign up</HeaderButtonLinkSignUp>
             </HeaderButtonSignUp>
           )}
           {loginStatus && (

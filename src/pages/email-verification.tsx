@@ -69,7 +69,7 @@ const EmailVerificationPage: NextPage = () => {
           </DescriptionTypography>
           <Box mt="20px">
             <GeneralButton variant="contained">
-              <GeneralButtonLink href="/signin">CONTINUE</GeneralButtonLink>
+              <GeneralButtonLink href="/sign-in">CONTINUE</GeneralButtonLink>
             </GeneralButton>
           </Box>
           <Box mt="20px">

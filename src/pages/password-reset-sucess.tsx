@@ -85,7 +85,7 @@ const passwordResetSuccessPage: NextPage = () => {
           <Image src={LogoImg} alt="Houzez-logo" width="200px" height="50px" />
           <ResetTypography variant="body2">Your password has been updated</ResetTypography>
           <SubmitButton variant="contained" type="submit">
-            <GeneralButtonLink href="/signin">Done</GeneralButtonLink>
+            <GeneralButtonLink href="/sign-in">Done</GeneralButtonLink>
           </SubmitButton>
         </ResetBox>
       </ResetCard>

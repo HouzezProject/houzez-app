@@ -142,7 +142,7 @@ const RestPasswordPage: NextPage = () => {
           <ResetDivider />
           <DetailTypo variant="body1">
             Go back to
-            <Link href="/signin"> sign in</Link>
+            <Link href="/sign-in"> sign in</Link>
           </DetailTypo>
         </ResetBox>
       </ResetCard>
