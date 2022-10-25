@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Link } from "@mui/material";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -7,7 +7,6 @@ import router from "next/router";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 import UserAvatar from "../../../public/assets/images/avatar.png";
-import { Link } from "@mui/material";
 
 const {
   palette: { primary, secondary }
