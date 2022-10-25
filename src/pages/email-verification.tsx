@@ -92,7 +92,7 @@ const EmailVerificationPage: NextPage = () => {
             </GeneralButton>
           </Box>
           <Box mt="20px">
-            <GeneralButton variant="contained" disabled={state} onClick={onBtnClick}>
+            <GeneralButton variant="contained" disabled={state} onClick={onBtnClick} title="resendBtn">
               Resend verification email
               <br></br>
               {state ? seconds : ""}
