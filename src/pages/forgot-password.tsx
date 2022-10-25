@@ -125,7 +125,7 @@ const ForgetPasswordPage: NextPage = () => {
           />
           <SubmitButton variant="contained">Reset my password</SubmitButton>
           <DetailTypo variant="body2">
-            <Link href="/signin">Go back to sign in</Link>
+            <Link href="/sign-in">Go back to sign in</Link>
           </DetailTypo>
           <ResetDivider />
           <StateTypo mb="10px" gap="10px">

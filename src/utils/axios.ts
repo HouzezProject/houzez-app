@@ -29,7 +29,7 @@ axiosClient.interceptors.response.use(
     }
 
     if (error.response?.status === 403 && error.response.data === "login token is not valid") {
-      router.push("/signin");
+      router.push("/sign-in");
     }
     return Promise.reject(error);
   }
