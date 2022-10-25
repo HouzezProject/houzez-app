@@ -70,7 +70,7 @@ const SignUp = () => {
 
           <Typography variant="body2" mt="10px" mb="10px" gap="10px">
             Already have an account?
-            <Link href="/signin"> Sign in</Link>
+            <Link href="/sign-in"> Sign in</Link>
           </Typography>
 
           <SignUpDivider>OR</SignUpDivider>
