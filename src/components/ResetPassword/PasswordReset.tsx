@@ -1,16 +1,15 @@
 import { Box, Container, Button, Divider, Typography, Card, TextField, AlertColor, Alert } from "@mui/material";
 import styled from "@mui/system/styled";
-import theme from "../styles/theme";
-import logo from "../../public/assets/logo/logo_black.png";
+import logo from "../../../public/assets/logo/logo_black.png";
 import Image from "next/image";
-import { NextPage } from "next";
 import Link from "next/link";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
-import axiosClient from "../utils/axios";
 import { AxiosError } from "axios";
 import { useState } from "react";
+import axiosClient from "../../utils/axios";
+import theme from "../../styles/theme";
 
 interface AccountActiveInfo {
   severity: AlertColor;
@@ -121,7 +120,7 @@ const validationSchema = yup.object({
     .required("Password is required")
 });
 
-const RestPasswordPage: NextPage = () => {
+const RestPasswordPage = () => {
   const initialAccountActiveInfo: AccountActiveInfo = { severity: "error", display: "none", text: "" };
   const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
   const router = useRouter();
@@ -132,17 +131,14 @@ const RestPasswordPage: NextPage = () => {
     validationSchema,
     onSubmit: async ({ password }) => {
       try {
-        if (router.query.code !== undefined) {
-          const token = router.query.code.toString();
-          const fileDataProcessed = Buffer.from(token, "base64").toString("binary");
-          const emailString = JSON.stringify(JSON.parse(fileDataProcessed).email);
-          const email = emailString.replace('"', "").replace('"', "");
-          axiosClient.patch("/agents/reset-password", { email, password });
-          router.push("/password-reset-success");
+        const token = router.query.code;
+        if (token) {
+          await axiosClient.patch("/agents/reset-password", { token, password });
+          router.push("/PasswordResetSuccess");
         }
       } catch (error) {
-        if (error instanceof AxiosError && error.response?.status === 500) {
-          setAccountActive({ severity: "error", display: "flex", text: "Wait for server respond" });
+        if (error instanceof AxiosError && error.response?.status === 400) {
+          setAccountActive({ severity: "error", display: "flex", text: error.response.data.details });
         }
       }
     }
@@ -151,14 +147,14 @@ const RestPasswordPage: NextPage = () => {
   return (
     <ResetContainer>
       <ResetCard>
-        <SignInInfoAlert id="alert" severity={accountActive.severity} sx={{ display: accountActive.display }}>
-          {accountActive.text}
-        </SignInInfoAlert>
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="h4">Reset your password</InfoTypo>
           <DetailTypo variant="body2">Enter your new password details</DetailTypo>
           <form onSubmit={formik.handleSubmit} noValidate>
+            <SignInInfoAlert id="alert" severity={accountActive.severity} sx={{ display: accountActive.display }}>
+              {accountActive.text}
+            </SignInInfoAlert>
             <PasswordTextField
               required
               fullWidth
@@ -178,7 +174,7 @@ const RestPasswordPage: NextPage = () => {
           <ResetDivider />
           <DetailTypo variant="body2">
             Go back to
-            <Link href="/signin"> sign in</Link>
+            <Link href="/sign-in"> sign in</Link>
           </DetailTypo>
         </ResetBox>
       </ResetCard>
