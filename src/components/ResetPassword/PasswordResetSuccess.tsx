@@ -1,6 +1,6 @@
 import { Box, Button, Card, Container, styled, Typography } from "@mui/material";
 import Image from "next/image";
-import LogoImg from "../../public/assets/logo/logo_black.png";
+import LogoImg from "../../../public/assets/logo/logo_black.png";
 import Link from "next/link";
 import theme from "../../styles/theme";
 
@@ -75,7 +75,7 @@ const GeneralButtonLink = styled(Link)({
   textDecoration: "none"
 });
 
-const passwordResetSuccessPage = () => {
+const PasswordResetSuccess = () => {
   return (
     <ResetContainer>
       <ResetCard>
@@ -91,4 +91,4 @@ const passwordResetSuccessPage = () => {
   );
 };
 
-export default passwordResetSuccessPage;
+export default PasswordResetSuccess;

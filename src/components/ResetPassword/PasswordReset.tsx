@@ -131,10 +131,10 @@ const RestPasswordPage = () => {
     validationSchema,
     onSubmit: async ({ password }) => {
       try {
-        const token = router.query.code;
+        const token = router.query.code?.toString();
         if (token) {
           await axiosClient.patch("/agents/reset-password", { token, password });
-          router.push("/PasswordResetSuccess");
+          router.push("/reset-password-success");
         }
       } catch (error) {
         if (error instanceof AxiosError && error.response?.status === 400) {
