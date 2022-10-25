@@ -2,11 +2,11 @@ import * as React from "react";
 import { Box, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import router from "next/router";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
+import UserAvatar from "../../../public/assets/images/avatar.png";
 import { Link } from "@mui/material";
 
 const {
@@ -24,20 +24,19 @@ const ManagementHeaderContainer = styled(Box)({
 });
 
 const ManagementHeaderBoxLogo = styled(Box)({
-  width: "270px",
+  width: "260px",
   paddingLeft: "2%",
   justifyContent: "center"
 });
 
 const ManagementHeaderBoxAvatar = styled(Box)({
-  width: "5%",
-  paddingLeft: "2%",
+  width: "50px",
   justifyContent: "center"
 });
 
 const ManagementHeaderBoxUserInfo = styled(Box)({
   width: "80%",
-  paddingLeft: "1%",
+  paddingLeft: "2%",
   flexDirection: "column",
   fontSize: "0.8rem",
   fontWeight: 500
@@ -50,6 +49,12 @@ const ManagementHeaderBoxLogout = styled(Box)({
 
 const ManagementHeaderButton = styled(IconButton)({
   color: secondary.contrastText
+});
+
+const Avatar = styled(Image)({
+  width: "50px",
+  height: "50px",
+  borderRadius: "50%"
 });
 
 const ManagementHeader = () => {
@@ -68,9 +73,7 @@ const ManagementHeader = () => {
       </ManagementHeaderBoxLogo>
 
       <ManagementHeaderBoxAvatar>
-        <ManagementHeaderButton size="large">
-          <AccountCircleIcon fontSize="inherit" />
-        </ManagementHeaderButton>
+        <Avatar src={UserAvatar} alt="Avatar" />
       </ManagementHeaderBoxAvatar>
 
       <ManagementHeaderBoxUserInfo>
