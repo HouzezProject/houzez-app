@@ -1,12 +1,15 @@
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import EmailVerificationPage from "./email-verification";
 
+// eslint-disable-next-line jest/valid-describe-callback
 describe("<EmailVerificationPage />", () => {
-  it("button should be disabled when clicked", () => {
+  it("button should be disabled when clicked", async () => {
     render(<EmailVerificationPage />);
-    userEvent.click(screen.getByRole("button", { name: "Resend verification email" }));
+    userEvent.click(screen.getByTitle("resendBtn"));
     // eslint-disable-next-line jest/valid-expect
-    expect(screen.getByText("Resend verification email").closest("button")).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByTitle("resendBtn")).toBeDisabled();
+    });
   });
 });
