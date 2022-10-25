@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { Breadcrumbs, Button, Container, Grid, IconButton, Link } from "@mui/material";
+import { Breadcrumbs, Button, Container, Grid, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
@@ -74,8 +74,10 @@ const HeaderButtonLinkSignUp = styled(Link)({
   color: secondary.contrastText
 });
 
-const HeaderIconButton = styled(IconButton)({
-  color: secondary.contrastText
+const HeaderIconLink = styled(Link)({
+  color: secondary.contrastText,
+  padding: "10px",
+  fontSize: "2rem"
 });
 
 const Header = () => {
@@ -126,14 +128,14 @@ const Header = () => {
             </HeaderButtonSignUp>
           )}
           {loginStatus && (
-            <HeaderIconButton size="large">
+            <HeaderIconLink href="/agent-management/account-setting">
               <StarsIcon fontSize="inherit" />
-            </HeaderIconButton>
+            </HeaderIconLink>
           )}
           {loginStatus && (
-            <HeaderIconButton size="large">
+            <HeaderIconLink href="/agent-management/account-setting">
               <AccountCircleIcon fontSize="inherit" />
-            </HeaderIconButton>
+            </HeaderIconLink>
           )}
         </HeaderGrid>
       </Grid>

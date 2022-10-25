@@ -73,7 +73,7 @@ const SignInInfo = () => {
   };
 
   const countdownThenRedirect = (severity: AlertColor, countdown: number, text: string, url: any, urlPage: string) => {
-    window.setInterval(() => {
+    setInterval(() => {
       if (countdown >= 0) {
         setSubmitLock(true);
         setAuthResponseMsg({
