@@ -63,15 +63,15 @@ const EmailVerificationPage: NextPage = () => {
       secondsInterval = setInterval(() => {
         setSeconds((prev) => prev - 1);
       }, 1000);
-      setTimeout(() => {
-        setState(false);
-      }, 60000);
     }
     return () => clearInterval(secondsInterval);
   }, [state]);
   const onBtnClick = () => {
     setSeconds(60);
     setState(true);
+    setTimeout(() => {
+      setState(false);
+    }, 60000);
   };
   return (
     <>
@@ -93,7 +93,8 @@ const EmailVerificationPage: NextPage = () => {
           </Box>
           <Box mt="20px">
             <GeneralButton variant="contained" disabled={state} onClick={onBtnClick}>
-              Resend verification email<br></br>
+              Resend verification email
+              <br></br>
               {state ? seconds : ""}
             </GeneralButton>
           </Box>
