@@ -146,7 +146,6 @@ const ForgetPasswordPage: NextPage = () => {
     validationSchema,
     onSubmit: async (email) => {
       const emailParams = email.email;
-      console.log(emailParams);
       try {
         const url = `/agents/forget-password?email=${emailParams}`;
         await axiosClient.post(url);
