@@ -183,6 +183,7 @@ const ForgetPasswordPage: NextPage = () => {
               required
               fullWidth
               label="Email address"
+              placeholder="Email address"
               id="email"
               type="email"
               value={formik.values.email}
