@@ -1,6 +1,6 @@
 import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import EmailVerificationPage from "./email-verification";
+import EmailVerificationPage from "../../pages/email-verification";
 
 describe("<EmailVerificationPage />", () => {
   it("button should be disabled when clicked", async () => {
