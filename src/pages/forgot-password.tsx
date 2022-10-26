@@ -1,4 +1,15 @@
-import { Box, Container, Button, Divider, Typography, Card, InputAdornment, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  Button,
+  Divider,
+  Typography,
+  Card,
+  InputAdornment,
+  TextField,
+  Alert,
+  AlertColor
+} from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../public/assets/logo/logo_black.png";
@@ -9,6 +20,14 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axiosClient from "../utils/axios";
+import { AxiosError } from "axios";
+import { useState } from "react";
+
+interface SendEmailErrorInfo {
+  severity: AlertColor;
+  display: string;
+  text: string;
+}
 
 const {
   palette: {
@@ -17,6 +36,11 @@ const {
     red: { main: redMain, dark }
   }
 } = theme;
+
+const InfoAlert = styled(Alert)({
+  marginBottom: "20px",
+  borderRadius: "3px"
+});
 
 const ResetContainer = styled(Container)({
   width: "100%",
@@ -113,6 +137,8 @@ const validationSchema = yup.object({
 });
 
 const ForgetPasswordPage: NextPage = () => {
+  const initialSendEmailErrorInfo: SendEmailErrorInfo = { severity: "error", display: "none", text: "" };
+  const [isSendEmailError, setIsSendEmailError] = useState(initialSendEmailErrorInfo);
   const formik = useFormik({
     initialValues: {
       email: ""
@@ -122,10 +148,13 @@ const ForgetPasswordPage: NextPage = () => {
       const emailParams = email.email;
       console.log(emailParams);
       try {
-        const url = `/agents/reset-password?email=${emailParams}`;
+        const url = `/agents/forget-password?email=${emailParams}`;
         await axiosClient.post(url);
+        setIsSendEmailError({ severity: "success", display: "flex", text: "Email sent, please check your email." });
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError && error.response?.status === 400) {
+          setIsSendEmailError({ severity: "error", display: "flex", text: "Email not correct." });
+        }
       }
     }
   });
@@ -135,11 +164,13 @@ const ForgetPasswordPage: NextPage = () => {
       <ResetCard>
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
-
           <InfoTypo variant="body1">Forget your password?</InfoTypo>
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your email to update your password.
           </DetailTypo>
+          <InfoAlert id="alert" severity={isSendEmailError.severity} sx={{ display: isSendEmailError.display }}>
+            {isSendEmailError.text}
+          </InfoAlert>
           <FormNew onSubmit={formik.handleSubmit} noValidate>
             <EmailInputBase
               InputProps={{
