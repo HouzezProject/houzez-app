@@ -30,12 +30,12 @@ const BoxEmailOpen = styled(Card)({
 });
 
 const GeneralButton = styled(Button)({
-  textTransform: "none",
+  textTransform: "uppercase",
   height: "50px",
   marginTop: "10px",
   fontWeight: "800",
   color: contrastText,
-  width: "215px"
+  width: "300px"
 });
 
 const GeneralButtonLink = styled(Link)({
@@ -55,22 +55,22 @@ const DescriptionTypography = styled(Typography)({
 });
 
 const EmailVerificationPage: NextPage = () => {
-  const [state, setState] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [seconds, setSeconds] = useState(60);
   useEffect(() => {
     let secondsInterval: string | number | NodeJS.Timeout | undefined;
-    if (state === true) {
+    if (isButtonDisabled === true) {
       secondsInterval = setInterval(() => {
         setSeconds((prev) => prev - 1);
       }, 1000);
     }
     return () => clearInterval(secondsInterval);
-  }, [state]);
+  }, [isButtonDisabled]);
   const onBtnClick = () => {
     setSeconds(60);
-    setState(true);
+    setIsButtonDisabled(true);
     setTimeout(() => {
-      setState(false);
+      setIsButtonDisabled(false);
     }, 60000);
   };
   return (
@@ -92,10 +92,9 @@ const EmailVerificationPage: NextPage = () => {
             </GeneralButton>
           </Box>
           <Box mt="20px">
-            <GeneralButton variant="contained" disabled={state} onClick={onBtnClick} title="resendBtn">
+            <GeneralButton variant="contained" disabled={isButtonDisabled} onClick={onBtnClick} title="resendBtn">
               Resend verification email
-              <br></br>
-              {state ? seconds : ""}
+              {isButtonDisabled ? " " + seconds : ""}
             </GeneralButton>
           </Box>
         </BoxEmailOpen>
