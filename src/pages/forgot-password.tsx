@@ -1,4 +1,15 @@
-import { Box, Container, Button, Divider, Typography, Card, InputAdornment, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  Button,
+  Divider,
+  Typography,
+  Card,
+  InputAdornment,
+  TextField,
+  Alert,
+  AlertColor
+} from "@mui/material";
 import styled from "@mui/system/styled";
 import theme from "../styles/theme";
 import logo from "../../public/assets/logo/logo_black.png";
@@ -6,6 +17,17 @@ import Image from "next/image";
 import { NextPage } from "next";
 import Link from "next/link";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import axiosClient from "../utils/axios";
+import { AxiosError } from "axios";
+import { useState } from "react";
+
+interface SendEmailErrorInfo {
+  severity: AlertColor;
+  display: string;
+  text: string;
+}
 
 const {
   palette: {
@@ -14,6 +36,11 @@ const {
     red: { main: redMain, dark }
   }
 } = theme;
+
+const InfoAlert = styled(Alert)({
+  marginBottom: "20px",
+  borderRadius: "3px"
+});
 
 const ResetContainer = styled(Container)({
   width: "100%",
@@ -75,14 +102,17 @@ const StateTypo = styled(Typography)({
   color: "black"
 });
 
+const FormNew = styled("form")({
+  width: "55%"
+});
+
 const EmailInputBase = styled(TextField)({
-  width: "55%",
   height: "50px",
-  marginBottom: "1rem"
+  marginBottom: "2rem"
 });
 
 const SubmitButton = styled(Button)({
-  width: "55%",
+  width: "100%",
   height: "50px",
   inlineHeight: "20px",
   color: "white",
@@ -102,7 +132,32 @@ const ResetDivider = styled(Divider)({
   fontWeight: "600"
 });
 
+const validationSchema = yup.object({
+  email: yup.string().email("Enter a valid email").required("Email is required")
+});
+
 const ForgetPasswordPage: NextPage = () => {
+  const initialSendEmailErrorInfo: SendEmailErrorInfo = { severity: "error", display: "none", text: "" };
+  const [isSendEmailError, setIsSendEmailError] = useState(initialSendEmailErrorInfo);
+  const formik = useFormik({
+    initialValues: {
+      email: ""
+    },
+    validationSchema,
+    onSubmit: async (email) => {
+      const emailParams = email.email;
+      try {
+        const url = `/agents/forget-password?email=${emailParams}`;
+        await axiosClient.post(url);
+        setIsSendEmailError({ severity: "success", display: "flex", text: "Email sent, please check your email." });
+      } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 400) {
+          setIsSendEmailError({ severity: "error", display: "flex", text: "Email not correct." });
+        }
+      }
+    }
+  });
+
   return (
     <ResetContainer>
       <ResetCard>
@@ -112,18 +167,33 @@ const ForgetPasswordPage: NextPage = () => {
           <DetailTypo variant="body2" mt="10px" mb="10px" gap="10px">
             Enter your email to update your password.
           </DetailTypo>
-          <EmailInputBase
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <MailOutlineIcon />
-                </InputAdornment>
-              )
-            }}
-            placeholder="Email address"
-            type="email"
-          />
-          <SubmitButton variant="contained">Reset my password</SubmitButton>
+          <InfoAlert id="alert" severity={isSendEmailError.severity} sx={{ display: isSendEmailError.display }}>
+            {isSendEmailError.text}
+          </InfoAlert>
+          <FormNew onSubmit={formik.handleSubmit} noValidate>
+            <EmailInputBase
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MailOutlineIcon />
+                  </InputAdornment>
+                )
+              }}
+              required
+              fullWidth
+              label="Email address"
+              placeholder="Email address"
+              id="email"
+              type="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={Boolean(formik.errors.email)}
+              helperText={formik.errors.email}
+            />
+            <SubmitButton type="submit" variant="contained" disabled={Boolean(formik.errors.email)}>
+              Reset my password
+            </SubmitButton>
+          </FormNew>
           <DetailTypo variant="body2">
             <Link href="/sign-in">Go back to sign in</Link>
           </DetailTypo>
