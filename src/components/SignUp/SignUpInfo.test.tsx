@@ -6,6 +6,9 @@ import axiosClient from "../../utils/axios";
 import SignUpInfo from "./SignUpInfo";
 
 describe("<SignUpInfo />", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
   it("should show email already exits when user type a registered email", async () => {
     jest.spyOn(axiosClient, "head").mockResolvedValue({ status: 200 });
     render(<SignUpInfo />);
