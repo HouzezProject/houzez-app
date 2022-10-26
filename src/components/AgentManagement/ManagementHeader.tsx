@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, Link } from "@mui/material";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
@@ -9,6 +9,7 @@ import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 import UserAvatar from "../../../public/assets/images/avatar.png";
 import axiosClient from "../../utils/axios";
+import { AxiosResponse } from "axios";
 
 const {
   palette: { primary, secondary }
@@ -59,14 +60,20 @@ const Avatar = styled(Image)({
 });
 
 const ManagementHeader = () => {
+  const [userInfoName, setUserInfoName] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("token")?.split(".")[1];
-    if (token) {
-      const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
-      axiosClient.get("/agents/" + userId);
-    } else {
-      router.push({ pathname: "/hint", query: { msg: "You need sign in first." } });
-    }
+
+    const getUserInfo = async () => {
+      if (token) {
+        const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
+        const userInfo = await axiosClient.get("/agents/" + userId);
+        setUserInfoName(userInfo.data.email);
+      } else {
+        await router.push({ pathname: "/hint", query: { msg: "You need sign in first." } });
+      }
+    };
+    getUserInfo();
   }, []);
 
   const logout = () => {
@@ -87,8 +94,8 @@ const ManagementHeader = () => {
       </ManagementHeaderBoxAvatar>
 
       <ManagementHeaderBoxUserInfo>
-        <Box>Agent ,</Box>
-        <Box>8da89359-4189-466f-b3c2-70e42577ebc7</Box>
+        <Box>Welcome Agent ,</Box>
+        <Box>{userInfoName}</Box>
       </ManagementHeaderBoxUserInfo>
 
       <ManagementHeaderBoxLogout>
