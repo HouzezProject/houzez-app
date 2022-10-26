@@ -59,7 +59,6 @@ const SignInInfo = () => {
     try {
       const url = `/agents/sign-in`;
       const res = await axiosClient.post(url, { email, password });
-      localStorage.setItem("loginStatus", "true");
       localStorage.setItem("token", res.headers.authorization);
       countdownThenRedirect("success", 3, "Sign in successfully. ", router.back, "");
     } catch (error) {
@@ -72,6 +71,7 @@ const SignInInfo = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const countdownThenRedirect = (severity: AlertColor, countdown: number, text: string, url: any, urlPage: string) => {
     setInterval(() => {
       if (countdown >= 0) {
