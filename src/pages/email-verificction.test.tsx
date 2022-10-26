@@ -10,15 +10,14 @@ describe("<EmailVerificationPage />", () => {
   });
 
   it("button should start countdown after clicked", () => {
+    render(<EmailVerificationPage />);
     jest.useFakeTimers();
     jest.spyOn(global, "setTimeout");
     jest.spyOn(global, "setInterval");
-    render(<EmailVerificationPage />);
     userEvent.click(screen.getByTitle("resendBtn"));
-    expect(setTimeout).toHaveBeenCalled();
     jest.runAllTimers();
-    // expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 60000);
-    // expect(setInterval).toHaveBeenCalledTimes(0);
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+    // expect(setInterval).toHaveBeenCalledTimes(1);
     expect(screen.getByTitle("resendBtn")).not.toBeDisabled();
   });
 });
