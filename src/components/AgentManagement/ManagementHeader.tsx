@@ -84,7 +84,7 @@ const ManagementHeader = () => {
   return (
     <ManagementHeaderContainer>
       <ManagementHeaderBoxLogo>
-        <Link href="../">
+        <Link href="/">
           <Image src={LogoImg} alt="Houzez" width="160px" height="40px" />
         </Link>
       </ManagementHeaderBoxLogo>
