@@ -23,13 +23,14 @@ const ManagementHeaderContainer = styled(Box)({
 });
 
 const ManagementHeaderBoxLogo = styled(Box)({
-  width: "260px",
+  minWidth: "280px",
   paddingLeft: "2%",
   justifyContent: "center"
 });
 
 const ManagementHeaderBoxAvatar = styled(Box)({
-  width: "50px",
+  minWidth: "45px",
+  maxWidth: "45px",
   justifyContent: "center"
 });
 
@@ -51,8 +52,6 @@ const ManagementHeaderButton = styled(IconButton)({
 });
 
 const Avatar = styled(Image)({
-  width: "50px",
-  height: "50px",
   borderRadius: "50%"
 });
 
