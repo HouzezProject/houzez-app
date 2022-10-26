@@ -60,7 +60,7 @@ const SignInInfo = () => {
       const url = `/agents/sign-in`;
       const res = await axiosClient.post(url, { email, password });
       localStorage.setItem("token", res.headers.authorization);
-      countdownThenRedirect("success", 3, "Sign in successfully. ", router.back, "");
+      countdownThenRedirect("success", 3, "Sign in successfully. ", router.push, "/");
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
         setAuthResponseMsg({ severity: "error", display: "flex", text: "Email or password not correct." });
