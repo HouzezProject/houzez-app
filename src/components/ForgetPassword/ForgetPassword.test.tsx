@@ -18,9 +18,9 @@ describe("<ForgetPasswordPage />", () => {
       .spyOn(axiosClient, "post")
       .mockRejectedValue(new AxiosError(undefined, undefined, undefined, undefined, { status: 400 } as AxiosResponse));
     render(<ForgetPasswordPage />);
-    await userEvent.type(screen.getByPlaceholderText("Email address"), "jessie.houjinzhi1@gmail.com");
+    await userEvent.type(screen.getByPlaceholderText("Email address"), "test1@gmail.com");
     await userEvent.click(screen.getByRole("button", { name: "Reset my password" }));
     expect(await screen.findByText("Email not correct.")).toBeInTheDocument();
-    expect(axiosClient.post).toBeCalledWith("/agents/forget-password?email=jessie.houjinzhi1@gmail.com");
+    expect(axiosClient.post).toBeCalledWith("/agents/forget-password?email=test1@gmail.com");
   });
 });
