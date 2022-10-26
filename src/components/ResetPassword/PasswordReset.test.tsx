@@ -34,7 +34,7 @@ describe("<PasswordReset />", () => {
       })
     );
 
-    await waitFor(() => expect(mockPush).toBeCalledWith("/PasswordResetSuccess"));
+    await waitFor(() => expect(mockPush).toBeCalledWith("/reset-password-success"));
   });
 
   it("should respond the error message to user", async () => {
