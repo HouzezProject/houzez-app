@@ -139,16 +139,19 @@ const validationSchema = yup.object({
 const ForgetPasswordPage: NextPage = () => {
   const initialSendEmailErrorInfo: SendEmailErrorInfo = { severity: "error", display: "none", text: "" };
   const [isSendEmailError, setIsSendEmailError] = useState(initialSendEmailErrorInfo);
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: ""
     },
     validationSchema,
     onSubmit: async (email) => {
+      setIsLoading(true);
       const emailParams = email.email;
       try {
         const url = `/agents/forget-password?email=${emailParams}`;
         await axiosClient.post(url);
+        setIsLoading(false);
         setIsSendEmailError({ severity: "success", display: "flex", text: "Email sent, please check your email." });
       } catch (error) {
         if (error instanceof AxiosError && error.response?.status === 400) {
@@ -190,7 +193,7 @@ const ForgetPasswordPage: NextPage = () => {
               error={Boolean(formik.errors.email)}
               helperText={formik.errors.email}
             />
-            <SubmitButton type="submit" variant="contained" disabled={Boolean(formik.errors.email)}>
+            <SubmitButton type="submit" variant="contained" disabled={Boolean(formik.errors.email) || isLoading}>
               Reset my password
             </SubmitButton>
           </FormNew>
