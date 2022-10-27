@@ -9,7 +9,6 @@ import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 import UserAvatar from "../../../public/assets/images/avatar.png";
 import axiosClient from "../../utils/axios";
-import { AxiosResponse } from "axios";
 
 const {
   palette: { primary, secondary }
@@ -68,7 +67,7 @@ const ManagementHeader = () => {
       if (token) {
         const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
         const userInfo = await axiosClient.get("/agents/" + userId);
-        setUserInfoName(userInfo.data.email);
+        setUserInfoName(userInfo.data?.email);
       } else {
         await router.push({ pathname: "/hint", query: { msg: "You need sign in first." } });
       }
