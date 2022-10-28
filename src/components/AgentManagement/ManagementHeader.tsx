@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { Box, IconButton, Link } from "@mui/material";
 import styled from "@emotion/styled";
 import theme from "../../styles/theme";
@@ -7,6 +8,7 @@ import router from "next/router";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 import UserAvatar from "../../../public/assets/images/avatar.png";
+import axiosClient from "../../utils/axios";
 
 const {
   palette: { primary, secondary }
@@ -18,6 +20,7 @@ const ManagementHeaderContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  paddingTop: "4px",
   backgroundColor: primary.main,
   color: primary.contrastText
 });
@@ -56,8 +59,23 @@ const Avatar = styled(Image)({
 });
 
 const ManagementHeader = () => {
+  const [userInfoName, setUserInfoName] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token")?.split(".")[1];
+
+    const getUserInfo = async () => {
+      if (token) {
+        const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
+        const userInfo = await axiosClient.get("/agents/" + userId);
+        setUserInfoName(userInfo.data?.email);
+      } else {
+        await router.push({ pathname: "/hint", query: { msg: "You need sign in first." } });
+      }
+    };
+    getUserInfo();
+  }, []);
+
   const logout = () => {
-    localStorage.removeItem("loginStatus");
     localStorage.removeItem("token");
     router.push("/");
   };
@@ -65,7 +83,7 @@ const ManagementHeader = () => {
   return (
     <ManagementHeaderContainer>
       <ManagementHeaderBoxLogo>
-        <Link href="../">
+        <Link href="/">
           <Image src={LogoImg} alt="Houzez" width="160px" height="40px" />
         </Link>
       </ManagementHeaderBoxLogo>
@@ -75,8 +93,8 @@ const ManagementHeader = () => {
       </ManagementHeaderBoxAvatar>
 
       <ManagementHeaderBoxUserInfo>
-        <Box>Agent</Box>
-        <Box>8da89359-4189-466f-b3c2-70e42577ebc7</Box>
+        <Box>Welcome Agent ,</Box>
+        <Box>{userInfoName}</Box>
       </ManagementHeaderBoxUserInfo>
 
       <ManagementHeaderBoxLogout>
