@@ -1,13 +1,11 @@
-/* eslint-disable jsx-a11y/alt-text */
 import * as React from "react";
-import PropertyTableBody from "@mui/material/TableBody";
-import PropertyTableCell from "@mui/material/TableCell";
-// import TableContainer from "@mui/material/TableContainer";
-import PropertyTableHead from "@mui/material/TableHead";
-import PropertyTableRow from "@mui/material/TableRow";
-// import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 import Link from "next/link";
-import SearchIcon from "@mui/icons-material/Search";
+
 import {
   Box,
   Button,
@@ -17,27 +15,77 @@ import {
   Select,
   SelectChangeEvent,
   styled,
+  TableCell,
+  TablePagination,
   TextField
 } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
 import Image from "next/image";
 import ManagementHeader from "../ManagementHeader";
 import ManagementNavigation from "../ManagementNavigation";
+import theme from "../../../styles/theme";
+import { url } from "inspector";
+//import { height, width } from "@mui/system";
+
 const AgentManagementContainer = styled(Box)({
   width: "100%",
   height: "100vh",
   display: "flex",
   alignItems: "start",
-  flexDirection: "column",
-  position: "relative"
+  flexDirection: "column"
 });
 
 const AgentManagementBody = styled(Box)({
   height: "calc(100vh - 64px)",
   display: "flex",
   alignItems: "center",
-  justifyContent: "start"
+  justifyContent: "start",
+  position: "ralative"
 });
 
+const {
+  palette: {
+    secondary: { light, main, dark },
+    background: { default: background, paper: backgroundPaper }
+  }
+} = theme;
+
+const Search = styled("div")({
+  display: "flex",
+  marginLeft: "10px",
+  position: "relative",
+  borderRadius: "3px",
+  backgroundColor: "dark",
+  "&:hover": {
+    backgroundColor: "light"
+  },
+  width: "100%",
+  justifyContent: "space-around"
+});
+
+const SearchIconWrapper = styled("div")({
+  // padding: "10px",
+  height: "100%",
+  position: "absolute",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+});
+
+const StyledInputBase = styled(InputBase)({
+  color: "dark",
+  "& .MuiInputBase-input": {
+    // vertical padding + font size from searchIcon
+    paddingLeft: "30px",
+    width: "100%"
+  }
+});
+
+const SearchButton = styled(Button)({
+  justifyContent: "center",
+  SearchButton: "right"
+});
 const createData = (
   name: string,
   State: string,
@@ -70,7 +118,7 @@ const createData = (
   InspectionTime
 });
 
-const PropertyRows = [
+const rows = [
   createData(
     "Luxury Family Home",
     "CA 90015",
@@ -137,54 +185,6 @@ const PropertyRows = [
   ),
   createData(
     "Luxury Family Home",
-    "CA 90015",
-    "Los Angeles",
-    "San Pdro Street",
-    "1421",
-    "$13,000",
-    3,
-    2,
-    2,
-    1440,
-    "Apartment",
-    "for sale",
-    "5 Apr",
-    "PM 5:00"
-  ),
-  createData(
-    "Gorgeous Villa Bay View",
-    "CA 90015",
-    "Los Angeles",
-    "San Pdro Street",
-    "1421",
-    "$13,000",
-    3,
-    2,
-    2,
-    1440,
-    "Apartment",
-    "for sale",
-    "5 Apr",
-    "PM 5:00"
-  ),
-  createData(
-    "Luxury Family Home",
-    "CA 90015",
-    "Los Angeles",
-    "San Pdro Street",
-    "1421",
-    "$13,000",
-    3,
-    2,
-    2,
-    1440,
-    "Apartment",
-    "for sale",
-    "5 Apr",
-    "PM 5:00"
-  ),
-  createData(
-    "Gorgeous Villa Bay View",
     "CA 90015",
     "Los Angeles",
     "San Pdro Street",
@@ -216,57 +216,45 @@ const PropertyRows = [
     "PM 5:00"
   )
 ];
-const PropertyShowBox = styled(Box)({
-  position: "absolute",
-  top: "100px",
-  left: "300px"
-});
-const PropertyTableBox = styled(Box)({
-  // width: "100%",
-  height: "50px",
+const SelectAllBox = styled(Box)({
   display: "flex",
-  flexDirection: "column",
-  padding: "0px"
+  padding: "10px",
+  justifyContent: "space-between",
+  alignItems: "center"
+});
+
+const SelectBox = styled(Box)({
+  minWidth: "100px"
 });
 const PropertyBox = styled(Box)({
   display: "flex"
 });
-
-const PropertySearchBox = styled("div")({
-  display: "flex",
-  marginLeft: "20px",
-  position: "relative",
-  borderRadius: "5px",
-  backgroundColor: "dark",
-  "&:hover": {
-    backgroundColor: "light"
-  }
-  // justifyContent: "space-around"
-});
-
-const PropertySearchButton = styled(Button)({
-  justifyContent: "left",
-  alignItems: "center"
-});
-
-const SelectAllBox = styled(Box)({
-  display: "flex",
-  // padding: "20px",
-  justifyContent: "space-around",
-  alignItems: "center",
-  flexDirection: "row"
-});
-const SelectBox = styled(Box)({
-  minWidth: "120px"
-});
-const PropertySearchIconBox = styled(Box)({
-  display: "flex",
-  justifyContent: "left"
-});
-
 const handleChange = (event: SelectChangeEvent) => {
   console.log(event.target.value as string);
 };
+const PropertyListBox = styled(Box)({
+  position: "absolute",
+  top: "30px",
+  left: "300px",
+  overflow: "auto",
+  marginTop: "40px"
+});
+const TableContainer = styled(Box)({
+  marginTop: "10px"
+});
+const PropertyTable = styled(Table)({});
+
+const PropertyTableCell = styled(TableCell)({
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center"
+});
+
+const StatusStyle = styled("div")({
+  //color: dark
+  color: "red"
+});
+const SearchBox = styled(Box)({});
 
 const PropertyList = () => {
   return (
@@ -274,15 +262,20 @@ const PropertyList = () => {
       <ManagementHeader />
       <AgentManagementBody>
         <ManagementNavigation />
-        <PropertyShowBox>
-          <PropertySearchBox>
-            <PropertySearchIconBox>
-              <SearchIcon />
-              <PropertySearchBox />
-            </PropertySearchIconBox>
-            <TextField placeholder="Search…"></TextField>
-            <PropertySearchButton variant="outlined">search</PropertySearchButton>
-          </PropertySearchBox>
+        <PropertyListBox>
+          <Box>
+            <Search>
+              <SearchBox>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+              </SearchBox>
+              <SearchBox>
+                <SearchButton variant="outlined">search</SearchButton>
+              </SearchBox>
+            </Search>
+          </Box>
           <br />
           <SelectAllBox>
             <SelectBox>
@@ -326,56 +319,62 @@ const PropertyList = () => {
             <TextField id="basic" label="Landsize" />
             <br />
           </SelectAllBox>
-          <br />
-          <PropertyTableBox>
-            <PropertyTableHead>
-              <PropertyTableRow>
-                <PropertyTableCell align="center">Property name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</PropertyTableCell>
-                <PropertyTableCell align="center">Price </PropertyTableCell>
-                <PropertyTableCell align="center">Type </PropertyTableCell>
-                <PropertyTableCell align="center">Beds/Baths/Garages </PropertyTableCell>
-                <PropertyTableCell align="center">Landsize </PropertyTableCell>
-                <PropertyTableCell align="center">Status </PropertyTableCell>
-                <PropertyTableCell align="center">Inspection Date </PropertyTableCell>
-                <PropertyTableCell align="center">Edit </PropertyTableCell>
-              </PropertyTableRow>
-            </PropertyTableHead>
-            <PropertyTableBody>
-              {PropertyRows.map((row) => (
-                <PropertyTableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <PropertyTableCell align="center" component="th" scope="row">
-                    <PropertyBox>
-                      <Image
-                        src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
-                        width={10}
-                        height={10}
-                      />
-                      {row.name}
-                      <br />
-                      {row.Post},{row.Street},{row.Suburd},{row.State}
-                    </PropertyBox>
-                  </PropertyTableCell>
 
-                  <PropertyTableCell align="center">{row.Price}</PropertyTableCell>
-                  <PropertyTableCell align="center">{row.Type}</PropertyTableCell>
-                  <PropertyTableCell align="center">
-                    {row.Beds}/{row.Baths}/{row.Garages}
-                  </PropertyTableCell>
-                  <PropertyTableCell align="center">{row.Landsize}</PropertyTableCell>
-                  <PropertyTableCell align="center">{row.Status}</PropertyTableCell>
-                  <PropertyTableCell align="center">
-                    {row.InspectionDate} {row.InspectionTime}
-                  </PropertyTableCell>
-                  <PropertyTableCell align="center">
-                    <Button variant="outlined">
-                      <Link href="">Edit</Link>
-                    </Button>
-                  </PropertyTableCell>
-                </PropertyTableRow>
-              ))}
-            </PropertyTableBody>
-          </PropertyTableBox>
-        </PropertyShowBox>
+          <br />
+          <TableContainer>
+            <PropertyTable size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <PropertyTableCell>Property name </PropertyTableCell>
+                  <PropertyTableCell>Price</PropertyTableCell>
+                  <PropertyTableCell>Type</PropertyTableCell>
+                  <PropertyTableCell>Beds/Baths/Garages</PropertyTableCell>
+                  <PropertyTableCell>Landsize</PropertyTableCell>
+                  <PropertyTableCell>Status</PropertyTableCell>
+                  <PropertyTableCell>Inspection Date</PropertyTableCell>
+                  <PropertyTableCell>Edit</PropertyTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow key={row.name}>
+                    <PropertyTableCell component="th" scope="row">
+                      <PropertyBox>
+                        <Image
+                          src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+                          width={50}
+                          height={50}
+                        />
+                        {row.name}
+                        <br />
+                        {row.Post},{row.Street},{row.Suburd},{row.State}
+                      </PropertyBox>
+                    </PropertyTableCell>
+
+                    <PropertyTableCell>{row.Price}</PropertyTableCell>
+                    <PropertyTableCell>{row.Type}</PropertyTableCell>
+                    <PropertyTableCell>
+                      {row.Beds}/{row.Baths}/{row.Garages}
+                    </PropertyTableCell>
+                    <PropertyTableCell>{row.Landsize}</PropertyTableCell>
+                    <PropertyTableCell>
+                      <StatusStyle>{row.Status}</StatusStyle>
+                    </PropertyTableCell>
+                    <PropertyTableCell>
+                      {row.InspectionDate} {row.InspectionTime}
+                    </PropertyTableCell>
+                    <PropertyTableCell>
+                      <Button variant="outlined">
+                        <Link href="">Edit</Link>
+                      </Button>
+                    </PropertyTableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </PropertyTable>
+          </TableContainer>
+          <TablePagination component="div" count={100} page={10} rowsPerPage={10} />
+        </PropertyListBox>
       </AgentManagementBody>
     </AgentManagementContainer>
   );
