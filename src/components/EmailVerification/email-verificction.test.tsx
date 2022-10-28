@@ -16,8 +16,6 @@ describe("<EmailVerificationPage />", () => {
     jest.spyOn(global, "setInterval");
     userEvent.click(screen.getByTitle("resendBtn"));
     jest.runAllTimers();
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    // expect(setInterval).toHaveBeenCalledTimes(1);
     expect(screen.getByTitle("resendBtn")).not.toBeDisabled();
   });
 });
