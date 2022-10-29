@@ -1,1 +1,1 @@
-export { default } from "./PropertyList2";
+export { default } from "./PropertyList";

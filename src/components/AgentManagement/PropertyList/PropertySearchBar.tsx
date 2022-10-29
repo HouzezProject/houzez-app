@@ -43,19 +43,28 @@ const SquareFitContainer = styled(InputBase)({
 });
 
 const PropertySearchBar = () => {
-  const options = [
-    { label: "All types", value: "All types" },
-    { label: "House", value: "House" },
-    { label: "Apartment", value: "Apartment" },
-    { label: "Townhouse", value: "Townhouse" },
-    { label: "Villa", value: "Villa" },
-    { label: "Land", value: "Land" },
-    { label: "Acreage", value: "Acreage" },
-    { label: "Rural", value: "Rural" },
-    { label: "Block of Units", value: "Block of Units" },
-    { label: "Retirement Living", value: "Retirement Living" }
+  const optionsBeds = [
+    { label: "Beds", value: "0" },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "4", value: "4" },
+    { label: "5", value: "5" },
+    { label: "6", value: "6" }
   ];
-  const [value, setValue] = useState("All types");
+  const optionsBaths = [
+    { label: "Baths", value: "0" },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "4", value: "4" },
+    { label: "5", value: "5" },
+    { label: "6", value: "6" }
+  ];
+
+  const [numBed, setBedValue] = useState("0");
+  const [numBath, setBathValue] = useState("0");
+
   return (
     <PropertySearchBarContainer>
       <SearchContainer>
@@ -73,10 +82,10 @@ const PropertySearchBar = () => {
             label="types"
             disableUnderline
             variant="standard"
-            value={value}
-            onChange={(event) => setValue(event.target.value as string)}
+            value={numBed}
+            onChange={(event) => setBedValue(event.target.value as string)}
           >
-            {options.map((option) => {
+            {optionsBeds.map((option) => {
               return (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -94,10 +103,10 @@ const PropertySearchBar = () => {
             label="types"
             disableUnderline
             variant="standard"
-            value={value}
-            onChange={(event) => setValue(event.target.value as string)}
+            value={numBath}
+            onChange={(event) => setBathValue(event.target.value as string)}
           >
-            {options.map((option) => {
+            {optionsBaths.map((option) => {
               return (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
