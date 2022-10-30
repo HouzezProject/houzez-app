@@ -33,7 +33,12 @@ const createData = (
   inspectionDate,
   inspectionTime
 });
-export const rows = [
+const creatMockDate = (count: number, rowsPerPage: number, page: number) => ({
+  count,
+  rowsPerPage,
+  page
+});
+export const PropertyDatarows = [
   createData(
     1,
     "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2",
@@ -143,3 +148,4 @@ export const rows = [
     "PM 5:00"
   )
 ];
+export const PropertyDataCountrows = creatMockDate(100, 10, 10);
