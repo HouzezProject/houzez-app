@@ -5,7 +5,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../../styles/theme";
 
 const {
-  palette: { secondary }
+  palette: {
+    primary: { main },
+    background: { paper }
+  }
 } = theme;
 
 const PropertySearchBarContainer = styled(Box)({
@@ -18,30 +21,66 @@ const PropertySearchBarContainer = styled(Box)({
 });
 
 const SearchLightIconBox = styled(Box)({
-  color: secondary.main,
-  borderRight: "1px solid " + secondary.main,
+  color: main,
+  borderRight: "1px solid " + main,
   display: "flex",
   alignItems: "center",
   height: "100%",
   padding: "0 10px 0 10px"
 });
 
+const PropertyInputBase = styled(InputBase)({
+  flex: "1",
+  paddingLeft: "20px"
+  // width: "50%",
+  // height: "40px",
+  // backgroundColor: paper,
+  // justifyContent: "center",
+  // borderRadius: "0"
+});
+const PropertyButton = styled(Button)({
+  height: "40px"
+});
+
 const SearchContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
-  border: "1px solid " + secondary.main,
+  border: "1px solid " + main,
   borderRadius: "4px",
   width: "300px",
   height: "40px"
 });
 
 const SquareFitContainer = styled(InputBase)({
-  border: "1px solid " + secondary.main,
+  border: "1px solid " + main,
   width: "100px",
   height: "40px",
-  paddingLeft: "10px"
+  paddingLeft: "10px",
+  borderRadius: "4px",
+  textAlign: "center"
 });
-
+const SelectBedBox = styled(Box)({
+  display: "flex",
+  width: "20%",
+  height: "40px",
+  backgroundColor: paper,
+  textAlign: "center",
+  justifyContent: "center",
+  alignItems: "center",
+  border: "1px solid" + main,
+  borderRadius: "4px"
+});
+const SelectBathBox = styled(Box)({
+  display: "flex",
+  width: "20%",
+  height: "40px",
+  backgroundColor: paper,
+  textAlign: "center",
+  justifyContent: "center",
+  alignItems: "center",
+  border: "1px solid" + main,
+  borderRadius: "4px"
+});
 const PropertySearchBar = () => {
   const optionsBeds = [
     { label: "Beds", value: "0" },
@@ -61,7 +100,6 @@ const PropertySearchBar = () => {
     { label: "5", value: "5" },
     { label: "6", value: "6" }
   ];
-
   const [numBed, setBedValue] = useState("0");
   const [numBath, setBathValue] = useState("0");
 
@@ -71,10 +109,10 @@ const PropertySearchBar = () => {
         <SearchLightIconBox>
           <SearchIcon />
         </SearchLightIconBox>
-        <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search..." />
-        <Button variant="contained">Search</Button>
+        <PropertyInputBase placeholder="Search..." />
+        <PropertyButton variant="contained">Search</PropertyButton>
       </SearchContainer>
-      <Box>
+      <SelectBedBox>
         <FormControl>
           <Select
             labelId="types"
@@ -94,8 +132,8 @@ const PropertySearchBar = () => {
             })}
           </Select>
         </FormControl>
-      </Box>
-      <Box>
+      </SelectBedBox>
+      <SelectBathBox>
         <FormControl>
           <Select
             labelId="types"
@@ -115,7 +153,7 @@ const PropertySearchBar = () => {
             })}
           </Select>
         </FormControl>
-      </Box>
+      </SelectBathBox>
       <SquareFitContainer placeholder="Sq Ft" />
     </PropertySearchBarContainer>
   );
