@@ -1,11 +1,20 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from "@mui/material";
-import { PropertyDataCountrows, PropertyDatarows } from "./config";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableFooter,
+  TablePagination
+} from "@mui/material";
+import { createData, PropertyDatarows } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { borderBottom } from "@mui/system";
 
 const {
   palette: {
@@ -58,10 +67,23 @@ const AddressDiv = styled(Box)({
   marginTop: "0.5rem",
   marginLeft: "-0.5rem"
 });
-const handleChangePage = () => {};
-const handleChangeRowsPerPage = () => {};
 
 const PropertyListTable = () => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [data, setData] = useState<Array<createData>>([]);
+
+  useEffect(() => setData(PropertyDatarows));
+
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <PropertyListTableContainer>
       <TableContainer>
@@ -80,7 +102,7 @@ const PropertyListTable = () => {
             </PropertyTableHeadRow>
           </PropertyTableHeard>
           <TableBody>
-            {PropertyDatarows.map((row) => (
+            {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
               <PropertyTableBodyRow key={row.id}>
                 <TableCell>
                   <Image src={row.img} alt="house image" width="80px" height="40px" objectFit="contain" />
@@ -113,15 +135,18 @@ const PropertyListTable = () => {
               </PropertyTableBodyRow>
             ))}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                count={data.length}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
         </PropertyTableList>
-        <TablePagination
-          component="div"
-          count={PropertyDataCountrows.count}
-          page={PropertyDataCountrows.page}
-          rowsPerPage={PropertyDataCountrows.rowsPerPage}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </TableContainer>
     </PropertyListTableContainer>
   );
