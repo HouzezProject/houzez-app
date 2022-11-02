@@ -25,9 +25,8 @@ const {
 
 const PropertyListTableContainer = styled(Box)({
   display: "flex",
-  width: "1100px",
   paddingLeft: "35px",
-  // width: "100%",
+  width: "100%",
   height: "calc(100vh - 145px)",
   textAlign: "center"
 });
@@ -47,8 +46,13 @@ const PropertyTableBodyRow = styled(TableRow)({});
 const PriceTableCell = styled(TableCell)({
   color: primary.main
 });
-const PropertyTableCell = styled(TableCell)({
+const PropertyTitleTableCell = styled(TableCell)({
   // textAlign: "center"
+  minWidth: "200px"
+});
+const PropertyStatusTableCell = styled(TableCell)({
+  // textAlign: "center"
+  minWidth: "100px"
 });
 const ForRentDiv = styled(`div`)({
   color: "#F3B11F",
@@ -90,15 +94,15 @@ const PropertyListTable = () => {
         <PropertyTableList>
           <PropertyTableHeard>
             <PropertyTableHeadRow>
-              <PropertyTableCell>Image</PropertyTableCell>
-              <PropertyTableCell>Title</PropertyTableCell>
-              <PropertyTableCell>Beds</PropertyTableCell>
-              <PropertyTableCell>Baths</PropertyTableCell>
-              <PropertyTableCell>Sq Ft</PropertyTableCell>
-              <PropertyTableCell>Type</PropertyTableCell>
-              <PropertyTableCell>Price</PropertyTableCell>
-              <PropertyTableCell>Status</PropertyTableCell>
-              <PropertyTableCell>Action</PropertyTableCell>
+              <TableCell>Image</TableCell>
+              <PropertyTitleTableCell>Title</PropertyTitleTableCell>
+              <TableCell>Beds</TableCell>
+              <TableCell>Baths</TableCell>
+              <TableCell>Sq Ft</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Price</TableCell>
+              <PropertyStatusTableCell>Status</PropertyStatusTableCell>
+              <TableCell>Action</TableCell>
             </PropertyTableHeadRow>
           </PropertyTableHeard>
           <TableBody>
