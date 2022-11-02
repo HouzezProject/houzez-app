@@ -5,6 +5,7 @@ import { PropertyDataCountrows, PropertyDatarows } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { borderBottom } from "@mui/system";
 
 const {
   palette: {
@@ -24,6 +25,10 @@ const PropertyListTableContainer = styled(Box)({
 const PropertyTableList = styled(Table)({
   borderBottom: "3px solid" + paper,
   Align: "center"
+});
+
+const PropertyTableHeard = styled(TableHead)({
+  borderBottom: "solid 2px" + primary.main
 });
 const PropertyTableHeadRow = styled(TableRow)({
   textAlign: "center"
@@ -61,7 +66,7 @@ const PropertyListTable = () => {
     <PropertyListTableContainer>
       <TableContainer>
         <PropertyTableList>
-          <TableHead>
+          <PropertyTableHeard>
             <PropertyTableHeadRow>
               <PropertyTableCell>Image</PropertyTableCell>
               <PropertyTableCell>Title</PropertyTableCell>
@@ -73,7 +78,7 @@ const PropertyListTable = () => {
               <PropertyTableCell>Status</PropertyTableCell>
               <PropertyTableCell>Action</PropertyTableCell>
             </PropertyTableHeadRow>
-          </TableHead>
+          </PropertyTableHeard>
           <TableBody>
             {PropertyDatarows.map((row) => (
               <PropertyTableBodyRow key={row.id}>
