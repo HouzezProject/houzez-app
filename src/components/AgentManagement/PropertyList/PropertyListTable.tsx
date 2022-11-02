@@ -91,7 +91,7 @@ const PropertyListTable = () => {
   return (
     <PropertyListTableContainer>
       <TableContainer>
-        <PropertyTableList>
+        <PropertyTableList stickyHeader>
           <PropertyTableHeard>
             <PropertyTableHeadRow>
               <TableCell>Image</TableCell>
