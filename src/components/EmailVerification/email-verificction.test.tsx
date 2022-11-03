@@ -14,12 +14,28 @@ describe("<EmailVerificationPage />", () => {
     mockQuery.mockReturnValue({
       push: mockPush,
       query: {
-        email: "a@gmail.com"
+        userEmail: "a@gmail.com"
       } as any
     } as any);
     render(<EmailVerificationPage />);
     await userEvent.click(screen.getByTitle("resendBtn"));
     expect(await screen.getByTitle("resendBtn")).toBeDisabled();
+  });
+
+  it("should post user's email to backend", async () => {
+    const mockPush = jest.fn();
+    const mockQuery = jest.spyOn(nextRouter, "useRouter");
+    mockQuery.mockReturnValue({
+      push: mockPush,
+      query: {
+        userEmail: "a@gmail.com"
+      } as any
+    } as any);
+    jest.spyOn(axiosClient, "post").mockResolvedValue({ status: 200 });
+    render(<EmailVerificationPage />);
+    await userEvent.click(screen.getByTitle("resendBtn"));
+    await waitFor(() => expect(mockQuery).toBeCalled());
+    await waitFor(() => expect(axiosClient.post).toBeCalledWith("/agents/resend-email", { email: "a@gmail.com" }));
   });
 
   it("button should start countdown after clicked", () => {
@@ -28,7 +44,7 @@ describe("<EmailVerificationPage />", () => {
     mockQuery.mockReturnValue({
       push: mockPush,
       query: {
-        email: "a@gmail.com"
+        userEmail: "a@gmail.com"
       } as any
     } as any);
     render(<EmailVerificationPage />);
@@ -38,20 +54,5 @@ describe("<EmailVerificationPage />", () => {
     userEvent.click(screen.getByTitle("resendBtn"));
     jest.runAllTimers();
     expect(screen.getByTitle("resendBtn")).not.toBeDisabled();
-  });
-
-  it("should post user's email to backend", async () => {
-    const mockPush = jest.fn();
-    const mockQuery = jest.spyOn(nextRouter, "useRouter");
-    mockQuery.mockReturnValue({
-      push: mockPush,
-      query: {
-        email: "a@gmail.com"
-      } as any
-    } as any);
-    jest.spyOn(axiosClient, "post").mockResolvedValue({ status: 200 });
-    render(<EmailVerificationPage />);
-    await userEvent.click(screen.getByTitle("resendBtn"));
-    await waitFor(() => expect(axiosClient.post).toBeCalledWith("/agents/resend-email", { email: "a@gmail.com" }));
   });
 });
