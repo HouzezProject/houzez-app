@@ -147,14 +147,13 @@ const ForgetPasswordPage: NextPage = () => {
     validationSchema,
     onSubmit: async (email) => {
       setIsLoading(true);
-      const emailParams = email.email;
       try {
-        const url = `/agents/forget-password?email=${emailParams}`;
-        await axiosClient.post(url);
+        const url = `/agents/forget-password`;
+        await axiosClient.post(url, email);
         setIsLoading(false);
         setIsSendEmailError({ severity: "success", display: "flex", text: "Email sent, please check your email." });
       } catch (error) {
-        if (error instanceof AxiosError && error.response?.status === 400) {
+        if (error instanceof AxiosError && error.response?.status === 404) {
           setIsSendEmailError({ severity: "error", display: "flex", text: "Email not correct." });
         }
       }
