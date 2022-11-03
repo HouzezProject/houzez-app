@@ -32,6 +32,6 @@ describe("<SignUpInfo />", () => {
     await userEvent.click(screen.getByRole("button", { name: "Create account" }));
 
     expect(axiosClient.post).toBeCalledWith("/agents", { email: "a@gmail.com", password: "a@QA1212123" });
-    expect(mockPush).toBeCalledWith("/email-verification");
+    expect(mockPush).toBeCalledWith({ pathname: "/email-verification", query: { userEmail: "a@gmail.com" } });
   });
 });
