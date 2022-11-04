@@ -59,9 +59,8 @@ const SignInInfo = () => {
     try {
       const url = `/agents/sign-in`;
       const res = await axiosClient.post(url, { email, password });
-      localStorage.setItem("loginStatus", "true");
       localStorage.setItem("token", res.headers.authorization);
-      countdownThenRedirect("success", 3, "Sign in successfully. ", router.back, "");
+      countdownThenRedirect("success", 3, "Sign in successfully. ", router.push, "/");
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
         setAuthResponseMsg({ severity: "error", display: "flex", text: "Email or password not correct." });
@@ -72,6 +71,7 @@ const SignInInfo = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const countdownThenRedirect = (severity: AlertColor, countdown: number, text: string, url: any, urlPage: string) => {
     setInterval(() => {
       if (countdown >= 0) {

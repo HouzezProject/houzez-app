@@ -84,8 +84,7 @@ const Header = () => {
   const [loginStatus, setLoginStatus] = useState(false);
 
   useEffect(() => {
-    const localStorageLoginStatus = localStorage.getItem("loginStatus");
-    if (localStorageLoginStatus === "true") {
+    if (localStorage.getItem("token")) {
       setLoginStatus(true);
     } else {
       setLoginStatus(false);
