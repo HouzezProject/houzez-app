@@ -2,14 +2,6 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { Box, InputBase, Button, FormControl, MenuItem, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import theme from "../../../styles/theme";
-
-const {
-  palette: {
-    primary: { main },
-    background: { paper }
-  }
-} = theme;
 
 const PropertySearchBarContainer = styled(Box)({
   width: "100%",
@@ -17,12 +9,13 @@ const PropertySearchBarContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "0 60px 0 60px"
+  padding: "0 60px 0 60px",
+  minWidth: "900px"
 });
 
 const SearchLightIconBox = styled(Box)({
-  color: main,
-  borderRight: "1px solid " + main,
+  color: "#a1a1a1",
+  borderRight: "1px solid #a1a1a1",
   display: "flex",
   alignItems: "center",
   height: "100%",
@@ -32,11 +25,6 @@ const SearchLightIconBox = styled(Box)({
 const PropertyInputBase = styled(InputBase)({
   flex: "1",
   paddingLeft: "20px"
-  // width: "50%",
-  // height: "40px",
-  // backgroundColor: paper,
-  // justifyContent: "center",
-  // borderRadius: "0"
 });
 const PropertyButton = styled(Button)({
   height: "40px"
@@ -45,14 +33,14 @@ const PropertyButton = styled(Button)({
 const SearchContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
-  border: "1px solid " + main,
+  border: "1px solid #a1a1a1",
   borderRadius: "4px",
   width: "300px",
   height: "40px"
 });
 
 const SquareFitContainer = styled(InputBase)({
-  border: "1px solid " + main,
+  border: "1px solid #a1a1a1",
   width: "100px",
   height: "40px",
   paddingLeft: "10px",
@@ -63,27 +51,25 @@ const SelectBedBox = styled(Box)({
   display: "flex",
   width: "20%",
   height: "40px",
-  backgroundColor: paper,
   textAlign: "center",
   justifyContent: "center",
   alignItems: "center",
-  border: "1px solid" + main,
+  border: "1px solid #a1a1a1",
   borderRadius: "4px"
 });
 const SelectBathBox = styled(Box)({
   display: "flex",
   width: "20%",
   height: "40px",
-  backgroundColor: paper,
   textAlign: "center",
   justifyContent: "center",
   alignItems: "center",
-  border: "1px solid" + main,
+  border: "1px solid #a1a1a1",
   borderRadius: "4px"
 });
 const PropertySearchBar = () => {
   const optionsBeds = [
-    { label: "Beds", value: "0" },
+    { label: "-- Beds --", value: "0" },
     { label: "1", value: "1" },
     { label: "2", value: "2" },
     { label: "3", value: "3" },
@@ -92,7 +78,7 @@ const PropertySearchBar = () => {
     { label: "6", value: "6" }
   ];
   const optionsBaths = [
-    { label: "Baths", value: "0" },
+    { label: "-- Baths --", value: "0" },
     { label: "1", value: "1" },
     { label: "2", value: "2" },
     { label: "3", value: "3" },

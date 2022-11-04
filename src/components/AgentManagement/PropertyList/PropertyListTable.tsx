@@ -9,7 +9,8 @@ import {
   TableCell,
   TableBody,
   TableFooter,
-  TablePagination
+  TablePagination,
+  Button
 } from "@mui/material";
 import { createData, PropertyDatarows } from "./config";
 import theme from "../../../styles/theme";
@@ -17,10 +18,7 @@ import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 const {
-  palette: {
-    primary,
-    background: { paper }
-  }
+  palette: { primary }
 } = theme;
 
 const PropertyListTableContainer = styled(Box)({
@@ -31,28 +29,26 @@ const PropertyListTableContainer = styled(Box)({
   textAlign: "center"
 });
 const PropertyTableList = styled(Table)({
-  borderBottom: "3px solid" + paper,
   Align: "center"
 });
 
-const PropertyTableHeard = styled(TableHead)({
-  borderBottom: "solid 2px" + primary.main
-});
 const PropertyTableHeadRow = styled(TableRow)({
   textAlign: "center"
-  // borderBottom: "3px solid" + paper
 });
 const PropertyTableBodyRow = styled(TableRow)({});
 const PriceTableCell = styled(TableCell)({
   color: primary.main
 });
 const PropertyTitleTableCell = styled(TableCell)({
-  // textAlign: "center"
-  minWidth: "200px"
+  minWidth: "200px",
+  borderBottom: "solid 2px" + primary.light
+});
+const TitleCell = styled(TableCell)({
+  borderBottom: "solid 2px" + primary.light
 });
 const PropertyStatusTableCell = styled(TableCell)({
-  // textAlign: "center"
-  minWidth: "100px"
+  minWidth: "100px",
+  borderBottom: "solid 2px" + primary.light
 });
 const ForRentDiv = styled(`div`)({
   color: "#F3B11F",
@@ -72,13 +68,17 @@ const AddressDiv = styled(Box)({
   marginLeft: "-0.5rem"
 });
 
+const EditButton = styled(Button)({
+  height: "30px"
+});
+
 const PropertyListTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [data, setData] = useState<Array<createData>>([]);
 
-  useEffect(() => setData(PropertyDatarows));
+  useEffect(() => setData(PropertyDatarows), []);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
@@ -92,19 +92,19 @@ const PropertyListTable = () => {
     <PropertyListTableContainer>
       <TableContainer>
         <PropertyTableList stickyHeader>
-          <PropertyTableHeard>
+          <TableHead>
             <PropertyTableHeadRow>
-              <TableCell>Image</TableCell>
+              <TitleCell>Image</TitleCell>
               <PropertyTitleTableCell>Title</PropertyTitleTableCell>
-              <TableCell>Beds</TableCell>
-              <TableCell>Baths</TableCell>
-              <TableCell>Sq Ft</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Price</TableCell>
+              <TitleCell>Beds</TitleCell>
+              <TitleCell>Baths</TitleCell>
+              <TitleCell>Sq Ft</TitleCell>
+              <TitleCell>Type</TitleCell>
+              <TitleCell>Price</TitleCell>
               <PropertyStatusTableCell>Status</PropertyStatusTableCell>
-              <TableCell>Action</TableCell>
+              <TitleCell>Action</TitleCell>
             </PropertyTableHeadRow>
-          </PropertyTableHeard>
+          </TableHead>
           <TableBody>
             {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
               <PropertyTableBodyRow key={row.id}>
@@ -135,7 +135,9 @@ const PropertyListTable = () => {
                     <ForRentDiv>{row.status}</ForRentDiv>
                   </TableCell>
                 )}
-                <TableCell>button</TableCell>
+                <TableCell>
+                  <EditButton variant="contained"> Edit </EditButton>
+                </TableCell>
               </PropertyTableBodyRow>
             ))}
           </TableBody>
