@@ -1,4 +1,4 @@
-export interface createData {
+export interface CreateData {
   id: number;
   img: string;
   name: string;
@@ -17,7 +17,7 @@ export interface createData {
   inspectionTime: string;
 }
 
-export const PropertyDatarows: createData[] = [
+export const PropertyDatarows: CreateData[] = [
   {
     id: 1,
     img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",

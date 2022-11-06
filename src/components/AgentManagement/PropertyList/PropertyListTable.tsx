@@ -12,7 +12,7 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { createData, PropertyDatarows } from "./config";
+import { CreateData, PropertyDatarows } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -76,7 +76,7 @@ const PropertyListTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [data, setData] = useState<Array<createData>>([]);
+  const [data, setData] = useState<Array<CreateData>>([]);
 
   useEffect(() => setData(PropertyDatarows), []);
 
