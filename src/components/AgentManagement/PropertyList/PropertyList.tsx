@@ -3,6 +3,8 @@ import { Box } from "@mui/material";
 import React from "react";
 import ManagementHeader from "../ManagementHeader";
 import ManagementNavigation from "../ManagementNavigation";
+import PropertySearchBar from "./PropertySearchBar";
+import PropertyListTable from "./PropertyListTable";
 
 const AgentManagementContainer = styled(Box)({
   width: "100%",
@@ -16,7 +18,12 @@ const AgentManagementBody = styled(Box)({
   height: "calc(100vh - 64px)",
   display: "flex",
   alignItems: "center",
-  justifyContent: "start"
+  justifyContent: "start",
+  width: "100%"
+});
+
+const PropertyListContainer = styled(Box)({
+  width: "calc(100vw - 260px)"
 });
 
 const PropertyList = () => {
@@ -25,7 +32,10 @@ const PropertyList = () => {
       <ManagementHeader />
       <AgentManagementBody>
         <ManagementNavigation />
-        <p>This is property list page.</p>
+        <PropertyListContainer>
+          <PropertySearchBar />
+          <PropertyListTable />
+        </PropertyListContainer>
       </AgentManagementBody>
     </AgentManagementContainer>
   );
