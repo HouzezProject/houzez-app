@@ -8,6 +8,8 @@ import { Card, Container, Box, Typography } from "@mui/material";
 import theme from "../styles/theme";
 import Link from "@mui/material/Link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import axiosClient from "../utils/axios";
 
 const {
   palette: {
@@ -55,6 +57,8 @@ const DescriptionTypography = styled(Typography)({
 });
 
 const EmailVerificationPage: NextPage = () => {
+  const router = useRouter();
+  const email = router.query.userEmail;
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [seconds, setSeconds] = useState(60);
   useEffect(() => {
@@ -66,12 +70,13 @@ const EmailVerificationPage: NextPage = () => {
     }
     return () => clearInterval(secondsInterval);
   }, [isButtonDisabled]);
-  const onBtnClick = () => {
+  const onBtnClick = async () => {
     setSeconds(60);
     setIsButtonDisabled(true);
     setTimeout(() => {
       setIsButtonDisabled(false);
     }, 60000);
+    await axiosClient.post("/agents/resend-email", { email });
   };
   return (
     <>
