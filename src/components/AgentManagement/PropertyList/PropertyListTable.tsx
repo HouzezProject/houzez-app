@@ -12,10 +12,11 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { CreateData, PropertyDatarows } from "./config";
+import { CreateData } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import axiosClient from "../../../utils/axios";
 
 const {
   palette: { primary }
@@ -74,18 +75,25 @@ const EditButton = styled(Button)({
 
 const PropertyListTable = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const rowsPerPage = 10;
+  const [propertyDataRows, setPropertyDataRows] = useState<Array<CreateData>>([]);
 
-  const [data, setData] = useState<Array<CreateData>>([]);
-
-  useEffect(() => setData(PropertyDatarows), []);
+  useEffect(() => {
+    const getAgentProperties = async () => {
+      const res = await axiosClient.get("/agents/2/properties?page=0&size=10");
+      setPropertyDataRows(res.data);
+    };
+    getAgentProperties();
+  }, []);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    console.log(newPage);
     setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    const getAgentProperties = async () => {
+      const res = await axiosClient.get(`/agents/2/properties?page=${newPage}&size=10`);
+      setPropertyDataRows(res.data);
+    };
+    getAgentProperties();
   };
 
   return (
@@ -106,24 +114,24 @@ const PropertyListTable = () => {
             </PropertyTableHeadRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
+            {propertyDataRows.map((row) => (
               <PropertyTableBodyRow key={row.id}>
                 <TableCell>
                   <Image src={row.img} alt="house image" width="80px" height="40px" objectFit="contain" />
                 </TableCell>
                 <TableCell>
                   <Box>
-                    <Box>{row.name}</Box>
+                    <Box>{row.title}</Box>
                     <AddressDiv>
                       <LocationOnOutlinedIcon />
-                      <Box>{`${row.street}, ${row.state}, ${row.post}`}</Box>
+                      <Box>{`${row.street}, ${row.state}, ${row.postcode}`}</Box>
                     </AddressDiv>
                   </Box>
                 </TableCell>
-                <TableCell>{row.beds}</TableCell>
-                <TableCell>{row.baths}</TableCell>
+                <TableCell>{row.bedroom}</TableCell>
+                <TableCell>{row.bathroom}</TableCell>
                 <TableCell>{row.landSize}</TableCell>
-                <TableCell>{row.type}</TableCell>
+                <TableCell>{row.propertyType}</TableCell>
                 <PriceTableCell>{row.price}</PriceTableCell>
                 {row.status === "for sale" && (
                   <TableCell>
@@ -144,11 +152,11 @@ const PropertyListTable = () => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                count={data.length}
+                count={11}
                 page={page}
+                rowsPerPageOptions={[10]}
                 rowsPerPage={rowsPerPage}
                 onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableRow>
           </TableFooter>
