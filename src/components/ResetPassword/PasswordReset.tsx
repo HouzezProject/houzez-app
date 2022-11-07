@@ -1,12 +1,21 @@
-import { Box, Container, Button, Divider, Typography, Card, TextField } from "@mui/material";
+import { Box, Container, Button, Divider, Typography, Card, TextField, AlertColor, Alert } from "@mui/material";
 import styled from "@mui/system/styled";
-import theme from "../styles/theme";
-import logo from "../../public/assets/logo/logo_black.png";
+import logo from "../../../public/assets/logo/logo_black.png";
 import Image from "next/image";
-import { NextPage } from "next";
 import Link from "next/link";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import axiosClient from "../../utils/axios";
+import theme from "../../styles/theme";
+
+interface AccountActiveInfo {
+  severity: AlertColor;
+  display: string;
+  text: string;
+}
 
 const {
   palette: {
@@ -48,14 +57,19 @@ const ResetBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "12px"
+  gap: "5px",
+  margin: "40px 0"
+});
+
+const SignInInfoAlert = styled(Alert)({
+  marginBottom: "20px",
+  borderRadius: "3px"
 });
 
 const InfoTypo = styled(Typography)({
   marginTop: "25px",
   marginBottom: "15px",
   textAlign: "center",
-  fontSize: "28px",
   color: "black"
 });
 const DetailTypo = styled(Typography)({
@@ -78,7 +92,7 @@ const PasswordTextField = styled(TextField)({
 });
 
 const SubmitButton = styled(Button)({
-  width: "400px",
+  width: "100%",
   height: "50px",
   padding: "6px 16px",
   marginTop: "10px",
@@ -87,8 +101,7 @@ const SubmitButton = styled(Button)({
   "&:hover": {
     backgroundColor: dark
   },
-  marginBottom: "1rem",
-  textTransform: "none"
+  marginBottom: "1rem"
 });
 
 const ResetDivider = styled(Divider)({
@@ -107,14 +120,27 @@ const validationSchema = yup.object({
     .required("Password is required")
 });
 
-const RestPasswordPage: NextPage = () => {
+const RestPasswordPage = () => {
+  const initialAccountActiveInfo: AccountActiveInfo = { severity: "error", display: "none", text: "" };
+  const [accountActive, setAccountActive] = useState(initialAccountActiveInfo);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       password: ""
     },
     validationSchema,
-    onSubmit: (value) => {
-      console.log(value);
+    onSubmit: async ({ password }) => {
+      try {
+        const token = router.query.code?.toString();
+        if (token) {
+          await axiosClient.patch("/agents/reset-password", { token, password });
+          router.push("/reset-password-success");
+        }
+      } catch (error) {
+        if (error instanceof AxiosError && error.response?.status === 400) {
+          setAccountActive({ severity: "error", display: "flex", text: error.response.data.details });
+        }
+      }
     }
   });
 
@@ -124,25 +150,31 @@ const RestPasswordPage: NextPage = () => {
         <ResetBox>
           <Image src={logo} alt="Houzez" width="200px" height="50px" />
           <InfoTypo variant="h4">Reset your password</InfoTypo>
-          <DetailTypo variant="body1">Enter your new password details</DetailTypo>
+          <DetailTypo variant="body2">Enter your new password details</DetailTypo>
           <form onSubmit={formik.handleSubmit} noValidate>
+            <SignInInfoAlert id="alert" severity={accountActive.severity} sx={{ display: accountActive.display }}>
+              {accountActive.text}
+            </SignInInfoAlert>
             <PasswordTextField
               required
               fullWidth
               id="password"
               placeholder="Password"
+              label="password"
               type="password"
               value={formik.values.password}
               onChange={formik.handleChange}
               error={Boolean(formik.errors.password)}
               helperText={formik.errors.password}
             />
-            <SubmitButton variant="contained">Change Password</SubmitButton>
+            <SubmitButton variant="contained" type="submit">
+              Change Password
+            </SubmitButton>
           </form>
           <ResetDivider />
-          <DetailTypo variant="body1">
+          <DetailTypo variant="body2">
             Go back to
-            <Link href="/signin"> sign in</Link>
+            <Link href="/sign-in"> sign in</Link>
           </DetailTypo>
         </ResetBox>
       </ResetCard>

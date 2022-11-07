@@ -9,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const {
   palette: {
-    primary: { main },
+    primary: { main, contrastText },
     background: { paper }
   }
 } = theme;
@@ -26,7 +26,7 @@ const HomeSearchContainer = styled(Container)({
 const IntroTypography = styled(Typography)({
   marginBottom: "8px",
   padding: "2px",
-  color: paper,
+  color: contrastText,
   boxSizing: "border-box",
   display: "block",
   lineHeight: "31.2px",
@@ -39,7 +39,7 @@ const DetailTypography = styled(Typography)({
   marginTop: "20px",
   marginBottom: "40px",
   padding: "2px",
-  color: paper,
+  color: contrastText,
   boxSizing: "border-box",
   lineHeight: "1.5",
   textAlign: "center",

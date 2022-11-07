@@ -1,9 +1,8 @@
 import { Box, Button, Card, Container, styled, Typography } from "@mui/material";
-import { NextPage } from "next";
 import Image from "next/image";
-import theme from "../styles/theme";
-import LogoImg from "../../public/assets/logo/logo_black.png";
-import Link from "@mui/material/Link";
+import LogoImg from "../../../public/assets/logo/logo_black.png";
+import Link from "next/link";
+import theme from "../../styles/theme";
 
 const {
   palette: {
@@ -23,8 +22,8 @@ const ResetContainer = styled(Container)({
 });
 
 const ResetCard = styled(Card)({
-  minWidth: 300,
-  minHeight: 500,
+  minWidth: 500,
+  minHeight: 400,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -45,7 +44,7 @@ const ResetBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "10px",
+  gap: "5px",
   margin: "40px 0"
 });
 
@@ -68,7 +67,6 @@ const SubmitButton = styled(Button)({
   "&:hover": {
     backgroundColor: redDark
   },
-  textTransform: "none",
   fontSize: "18px"
 });
 
@@ -77,7 +75,7 @@ const GeneralButtonLink = styled(Link)({
   textDecoration: "none"
 });
 
-const passwordResetSuccessPage: NextPage = () => {
+const PasswordResetSuccess = () => {
   return (
     <ResetContainer>
       <ResetCard>
@@ -85,7 +83,7 @@ const passwordResetSuccessPage: NextPage = () => {
           <Image src={LogoImg} alt="Houzez-logo" width="200px" height="50px" />
           <ResetTypography variant="body2">Your password has been updated</ResetTypography>
           <SubmitButton variant="contained" type="submit">
-            <GeneralButtonLink href="/signin">Done</GeneralButtonLink>
+            <GeneralButtonLink href="/sign-in">Done</GeneralButtonLink>
           </SubmitButton>
         </ResetBox>
       </ResetCard>
@@ -93,4 +91,4 @@ const passwordResetSuccessPage: NextPage = () => {
   );
 };
 
-export default passwordResetSuccessPage;
+export default PasswordResetSuccess;

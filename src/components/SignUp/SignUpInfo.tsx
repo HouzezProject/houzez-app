@@ -64,7 +64,7 @@ const SignUpInfo = () => {
     validationSchema,
     onSubmit: ({ email, password }) => {
       axiosClient.post("/agents", { email, password });
-      router.push("/email-verification");
+      router.push({ pathname: "/email-verification", query: { userEmail: email } });
     }
   });
 
