@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import { Box, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, Grid, List, ListItem, ListItemIcon, ListItemText, Typography, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import FooterBg from "../../../public/assets/images/footer_bg.jpg";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 import Image from "next/image";
-import { Link } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import EmailIcon from "@mui/icons-material/Email";
