@@ -5,7 +5,7 @@ pipeline {
     bucket = 'houzez4u.com'
     test_bucket = 'uat.houzez4u.com'
     region = 'ap-southeast-2'
-    repo_path = '/out'
+    repo_path = 'out'
     exclude_file = 'node_modules/*'
     include_file = '.next/*'
     CI = 'true'
