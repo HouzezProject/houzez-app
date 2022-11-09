@@ -17,6 +17,7 @@ import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import axiosClient from "../../../utils/axios";
+import { useRouter } from "next/router";
 
 const {
   palette: { primary }
@@ -74,26 +75,47 @@ const EditButton = styled(Button)({
 });
 
 const PropertyListTable = () => {
+  const router = useRouter();
+
+  const pageSize = 10;
+  const [userInfoId, setUserInfoId] = useState("");
   const [page, setPage] = useState(0);
   const rowsPerPage = 10;
   const [propertyDataRows, setPropertyDataRows] = useState<Array<CreateData>>([]);
 
+  const getAgentProperties = async (pid: number) => {
+    const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${pid}&size=${pageSize}`);
+    setPropertyDataRows(res.data);
+  };
+
   useEffect(() => {
-    const getAgentProperties = async () => {
-      const res = await axiosClient.get("/agents/2/properties?page=0&size=10");
-      setPropertyDataRows(res.data);
+    const token = localStorage.getItem("token")?.split(".")[1];
+    const getUserInfo = async () => {
+      if (token) {
+        const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
+        const userInfo = await axiosClient.get("/agents/" + userId);
+        setUserInfoId(userInfo.data.id);
+      }
     };
-    getAgentProperties();
+    getUserInfo();
   }, []);
 
+  useEffect(() => {
+    const pagequery: number = router.query.page ? +router.query.page - 1 : 0;
+    setPage(+pagequery);
+    if (userInfoId) {
+      getAgentProperties(+pagequery);
+    }
+  }, [userInfoId, router.query.page]);
+
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    console.log(newPage);
     setPage(newPage);
     const getAgentProperties = async () => {
-      const res = await axiosClient.get(`/agents/2/properties?page=${newPage}&size=10`);
+      const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${newPage}&size=${pageSize}`);
       setPropertyDataRows(res.data);
     };
     getAgentProperties();
+    router.push({ pathname: `/agent-management/property-list`, query: { page: newPage + 1 } });
   };
 
   return (
