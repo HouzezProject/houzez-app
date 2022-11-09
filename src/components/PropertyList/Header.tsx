@@ -17,13 +17,16 @@ const {
 
 const HeaderContainer = styled(Box)({
   height: "10vh",
+  width:"100vw",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: primary.dark
+  backgroundColor: primary.dark,
+  position:"fixed",
+  zIndex:"1"
 });
 
-const HeaderGrid = styled(Grid)({
+const HeaderGrid = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center"
@@ -32,11 +35,9 @@ const HeaderGrid = styled(Grid)({
 const Header = () => {
   return (
     <HeaderContainer>
-      <Grid container spacing={2}>
-        <HeaderGrid item xs={3}>
+        <HeaderGrid>
           <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
         </HeaderGrid>
-      </Grid>
     </HeaderContainer>
   );
 };

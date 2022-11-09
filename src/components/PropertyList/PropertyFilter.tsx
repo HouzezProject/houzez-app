@@ -9,7 +9,10 @@ const PropertyFilterContainer = styled(Box)({
   height: "90vh",
   display: "flex",
   flexDirection: "column",
-  alignItems: "center"
+  alignItems: "center",
+  position:"fixed",
+  top:"10vh",
+  left:"20vh"
 });
 
 const PropertyFilterHeader = styled(Box)({
