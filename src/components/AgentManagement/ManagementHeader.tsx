@@ -22,7 +22,9 @@ const ManagementHeaderContainer = styled(Box)({
   justifyContent: "center",
   paddingTop: "4px",
   backgroundColor: primary.main,
-  color: primary.contrastText
+  color: primary.contrastText,
+  position: "fixed",
+  zIndex: "9"
 });
 
 const ManagementHeaderBoxLogo = styled(Box)({

@@ -19,13 +19,21 @@ const AgentManagementBody = styled(Box)({
   justifyContent: "start"
 });
 
+const PropertyAddContainer = styled(Box)({
+  position: "absolute",
+  left: "260px",
+  top: "64px"
+});
+
 const PropertyAdd = () => {
   return (
     <AgentManagementContainer>
       <ManagementHeader />
       <AgentManagementBody>
         <ManagementNavigation />
-        This is property add page.
+        <PropertyAddContainer>
+          <p>This is property add page.</p>
+        </PropertyAddContainer>
       </AgentManagementBody>
     </AgentManagementContainer>
   );
