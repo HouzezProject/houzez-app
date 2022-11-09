@@ -110,11 +110,7 @@ const PropertyListTable = () => {
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
-    const getAgentProperties = async () => {
-      const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${newPage}&size=${pageSize}`);
-      setPropertyDataRows(res.data);
-    };
-    getAgentProperties();
+    getAgentProperties(newPage);
     router.push({ pathname: `/agent-management/property-list`, query: { page: newPage + 1 } });
   };
 
