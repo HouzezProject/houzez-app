@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import ManagementHeader from "../ManagementHeader";
 import ManagementNavigation from "../ManagementNavigation";
+import PropertyAddBody from "./PropertyAddBody";
 
 const AgentManagementContainer = styled(Box)({
   width: "100%",
@@ -15,17 +16,19 @@ const AgentManagementContainer = styled(Box)({
 const AgentManagementBody = styled(Box)({
   height: "calc(100vh - 64px)",
   display: "flex",
-  alignItems: "center",
+  alignItems: "start",
   justifyContent: "start"
 });
+
+
 
 const PropertyAdd = () => {
   return (
     <AgentManagementContainer>
       <ManagementHeader />
       <AgentManagementBody>
-        <ManagementNavigation />
-        This is property add page.
+        <ManagementNavigation/>
+        <PropertyAddBody/>
       </AgentManagementBody>
     </AgentManagementContainer>
   );

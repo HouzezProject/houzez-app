@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   TableContainer,
@@ -12,13 +12,13 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { CreateData, PropertyDatarows } from "./config";
+import {CreateData, PropertyDatarows} from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 const {
-  palette: { primary }
+  palette: {primary}
 } = theme;
 
 const PropertyListTableContainer = styled(Box)({
@@ -76,6 +76,7 @@ const PropertyListTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+
   const [data, setData] = useState<Array<CreateData>>([]);
 
   useEffect(() => setData(PropertyDatarows), []);
@@ -89,72 +90,73 @@ const PropertyListTable = () => {
   };
 
   return (
-    <PropertyListTableContainer>
-      <TableContainer>
-        <PropertyTableList stickyHeader>
-          <TableHead>
-            <PropertyTableHeadRow>
-              <TitleCell>Image</TitleCell>
-              <PropertyTitleTableCell>Title</PropertyTitleTableCell>
-              <TitleCell>Beds</TitleCell>
-              <TitleCell>Baths</TitleCell>
-              <TitleCell>Sq Ft</TitleCell>
-              <TitleCell>Type</TitleCell>
-              <TitleCell>Price</TitleCell>
-              <PropertyStatusTableCell>Status</PropertyStatusTableCell>
-              <TitleCell>Action</TitleCell>
-            </PropertyTableHeadRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
-              <PropertyTableBodyRow key={row.id}>
-                <TableCell>
-                  <Image src={row.img} alt="house image" width="80px" height="40px" objectFit="contain" />
-                </TableCell>
-                <TableCell>
-                  <Box>
-                    <Box>{row.name}</Box>
-                    <AddressDiv>
-                      <LocationOnOutlinedIcon />
-                      <Box>{`${row.street}, ${row.state}, ${row.post}`}</Box>
-                    </AddressDiv>
-                  </Box>
-                </TableCell>
-                <TableCell>{row.beds}</TableCell>
-                <TableCell>{row.baths}</TableCell>
-                <TableCell>{row.landSize}</TableCell>
-                <TableCell>{row.type}</TableCell>
-                <PriceTableCell>{row.price}</PriceTableCell>
-                {row.status === "for sale" && (
-                  <TableCell>
-                    <ForSellDiv>{row.status}</ForSellDiv>
-                  </TableCell>
-                )}
-                {row.status === "for rent" && (
-                  <TableCell>
-                    <ForRentDiv>{row.status}</ForRentDiv>
-                  </TableCell>
-                )}
-                <TableCell>
-                  <EditButton variant="contained"> Edit </EditButton>
-                </TableCell>
-              </PropertyTableBodyRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                count={data.length}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
-        </PropertyTableList>
-      </TableContainer>
-    </PropertyListTableContainer>
+      <PropertyListTableContainer>
+        <TableContainer>
+          <PropertyTableList stickyHeader>
+            <TableHead>
+              <PropertyTableHeadRow>
+                <TitleCell>Image</TitleCell>
+                <PropertyTitleTableCell>Title</PropertyTitleTableCell>
+                <TitleCell>Beds</TitleCell>
+                <TitleCell>Baths</TitleCell>
+                <TitleCell>Sq Ft</TitleCell>
+                <TitleCell>Type</TitleCell>
+                <TitleCell>Price</TitleCell>
+                <PropertyStatusTableCell>Status</PropertyStatusTableCell>
+                <TitleCell>Action</TitleCell>
+              </PropertyTableHeadRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
+                  <PropertyTableBodyRow key={row.id}>
+                    <TableCell>
+                      <Image src={row.img} alt="house image" width="80px" height="40px"
+                             objectFit="contain"/>
+                    </TableCell>
+                    <TableCell>
+                      <Box>
+                        <Box>{row.name}</Box>
+                        <AddressDiv>
+                          <LocationOnOutlinedIcon/>
+                          <Box>{`${row.street}, ${row.state}, ${row.post}`}</Box>
+                        </AddressDiv>
+                      </Box>
+                    </TableCell>
+                    <TableCell>{row.beds}</TableCell>
+                    <TableCell>{row.baths}</TableCell>
+                    <TableCell>{row.landSize}</TableCell>
+                    <TableCell>{row.type}</TableCell>
+                    <PriceTableCell>{row.price}</PriceTableCell>
+                    {row.status === "for sale" && (
+                        <TableCell>
+                          <ForSellDiv>{row.status}</ForSellDiv>
+                        </TableCell>
+                    )}
+                    {row.status === "for rent" && (
+                        <TableCell>
+                          <ForRentDiv>{row.status}</ForRentDiv>
+                        </TableCell>
+                    )}
+                    <TableCell>
+                      <EditButton variant="contained"> Edit </EditButton>
+                    </TableCell>
+                  </PropertyTableBodyRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                    count={data.length}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow>
+            </TableFooter>
+          </PropertyTableList>
+        </TableContainer>
+      </PropertyListTableContainer>
   );
 };
 
