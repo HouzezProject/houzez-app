@@ -1,15 +1,13 @@
 import { Box } from "@mui/system";
-import { Card, CardContent, CardMedia, colors, styled, Typography } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import propertyDemoImg from "../../../public/assets/images/propertyDemoImg.jpg";
 import agentAvatarDemo from "../../../public/assets/images/AgentAvatarDemo.jpeg";
-import Image from "next/image";
 import theme from "../../styles/theme";
 import Icon from "@mdi/react";
-import { mdiAccount, mdiMapMarker, mdiShower, mdibed, mdiBed, mdiGarage } from "@mdi/js";
-import { Bathroom } from "@mui/icons-material";
+import { mdiMapMarker, mdiShower, mdiBed, mdiGarage } from "@mdi/js";
 
 const {
-  palette: { primary, secondary }
+  palette: { primary }
 } = theme;
 
 const PropertyContentBody = styled(Box)({
@@ -132,7 +130,7 @@ const PropertyContent = () => {
           <PropertyName>Vila In Coral Gables</PropertyName>
           <PropertyLocation>
             <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
+            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
           </PropertyLocation>
           <PropertyRoomInfoContainer>
             <RoomInfo>
@@ -171,7 +169,7 @@ const PropertyContent = () => {
           <PropertyName>Vila In Coral Gables</PropertyName>
           <PropertyLocation>
             <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
+            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
           </PropertyLocation>
           <PropertyRoomInfoContainer>
             <RoomInfo>
@@ -210,7 +208,7 @@ const PropertyContent = () => {
           <PropertyName>Vila In Coral Gables</PropertyName>
           <PropertyLocation>
             <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
+            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
           </PropertyLocation>
           <PropertyRoomInfoContainer>
             <RoomInfo>
@@ -249,7 +247,7 @@ const PropertyContent = () => {
           <PropertyName>Vila In Coral Gables</PropertyName>
           <PropertyLocation>
             <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
+            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
           </PropertyLocation>
           <PropertyRoomInfoContainer>
             <RoomInfo>
