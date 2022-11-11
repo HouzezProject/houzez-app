@@ -5,7 +5,7 @@ import agentAvatarDemo from "../../../public/assets/images/AgentAvatarDemo.jpeg"
 import Image from "next/image";
 import theme from "../../styles/theme";
 import Icon from "@mdi/react";
-import { mdiAccount, mdiMapMarker, mdiShower } from "@mdi/js";
+import { mdiAccount, mdiMapMarker, mdiShower, mdibed, mdiBed, mdiGarage } from "@mdi/js";
 import { Bathroom } from "@mui/icons-material";
 
 const {
@@ -16,23 +16,23 @@ const PropertyContentBody = styled(Box)({
   borderRadius: "5%",
   width: "50vw",
   display: "flex",
-  flexDirection:"column",
+  flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  position:"relative",
-  top:"10vh",
-  left:"12vw"
+  position: "relative",
+  top: "10vh",
+  left: "12vw"
 });
 
 const PropertyCard = styled(Box)({
   transition: "box-shadow .3s",
   width: "50vw",
   height: "30vh",
-  border: "1px grey solid",
+  border: "1px solid #d3d3d3",
   display: "flex",
   alignItems: "center",
-  marginTop:"30px",
-  marginLeft:"20px",
+  marginTop: "30px",
+  marginLeft: "20px",
   "&:hover": {
     boxShadow: "0 0 30px rgba(33,33,33,.2)"
   }
@@ -47,28 +47,43 @@ const PropertyImg = styled(Box)({
 });
 
 const PropertyInfoContainer = styled(Box)({
-  marginLeft: "10px"
+  marginLeft: "10px",
+  height: "180px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  borderRight: "1px solid #d3d3d3",
+  paddingRight: "30px"
 });
 
 const PropertyType = styled(Typography)({
   backgroundColor: primary.main,
   color: "white",
-  width: "fit-content"
+  width: "60px",
+  marginBottom: "10px",
+  textAlign: "center"
 });
 
-const PropertyName = styled(Typography)({});
+const PropertyName = styled(Typography)({
+  marginBottom: "10px",
+  fontSize: "20px",
+  fontWeight: "600"
+});
 
 const PropertyLocation = styled(Box)({
   display: "flex",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+  marginBottom: "15px"
 });
 
 const LocationInfo = styled(Typography)({});
 
 const PropertyRoomInfoContainer = styled(Box)({
   display: "flex",
-  alignItems: "center"
+  alignItems: "center",
+  width: "150px",
+  justifyContent: "space-between"
 });
 
 const RoomInfo = styled(Box)({});
@@ -82,7 +97,14 @@ const RoomNumberContainer = styled(Box)({
 
 const RoomNumber = styled(Typography)({});
 
-const AgentInfoContainer = styled(Box)({});
+const AgentInfoContainer = styled(Box)({
+  height: "120px",
+  width: "180px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-between"
+});
 
 const AgentAvatar = styled(Box)({
   backgroundImage: `url(${agentAvatarDemo.src})`,
@@ -95,7 +117,10 @@ const AgentAvatar = styled(Box)({
 
 const AgentName = styled(Typography)({});
 
-const PropertyPrice = styled(Typography)({});
+const PropertyPrice = styled(Typography)({
+  fontSize: "20px",
+  fontWeight: "600"
+});
 
 const PropertyContent = () => {
   return (
@@ -118,55 +143,16 @@ const PropertyContent = () => {
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
+              <RoomTitle>Bed</RoomTitle>
               <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
+                <Icon path={mdiBed} title="User Profile" size={0.8} />
+                <RoomNumber>3</RoomNumber>
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
+              <RoomTitle>Garage</RoomTitle>
               <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-          </PropertyRoomInfoContainer>
-        </PropertyInfoContainer>
-        <AgentInfoContainer>
-          <AgentAvatar></AgentAvatar>
-          <AgentName>Tom Wilson</AgentName>
-          <PropertyPrice>$350.000</PropertyPrice>
-        </AgentInfoContainer>
-      </PropertyCard>
-      <PropertyCard>
-        <PropertyImg></PropertyImg>
-        <PropertyInfoContainer>
-          <PropertyType>House</PropertyType>
-          <PropertyName>Vila In Coral Gables</PropertyName>
-          <PropertyLocation>
-            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
-          </PropertyLocation>
-          <PropertyRoomInfoContainer>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
+                <Icon path={mdiGarage} title="User Profile" size={0.8} />
                 <RoomNumber>2</RoomNumber>
               </RoomNumberContainer>
             </RoomInfo>
@@ -196,16 +182,16 @@ const PropertyContent = () => {
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
+              <RoomTitle>Bed</RoomTitle>
               <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
+                <Icon path={mdiBed} title="User Profile" size={0.8} />
+                <RoomNumber>3</RoomNumber>
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
+              <RoomTitle>Garage</RoomTitle>
               <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
+                <Icon path={mdiGarage} title="User Profile" size={0.8} />
                 <RoomNumber>2</RoomNumber>
               </RoomNumberContainer>
             </RoomInfo>
@@ -235,6 +221,38 @@ const PropertyContent = () => {
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
+              <RoomTitle>Bed</RoomTitle>
+              <RoomNumberContainer>
+                <Icon path={mdiBed} title="User Profile" size={0.8} />
+                <RoomNumber>3</RoomNumber>
+              </RoomNumberContainer>
+            </RoomInfo>
+            <RoomInfo>
+              <RoomTitle>Garage</RoomTitle>
+              <RoomNumberContainer>
+                <Icon path={mdiGarage} title="User Profile" size={0.8} />
+                <RoomNumber>2</RoomNumber>
+              </RoomNumberContainer>
+            </RoomInfo>
+          </PropertyRoomInfoContainer>
+        </PropertyInfoContainer>
+        <AgentInfoContainer>
+          <AgentAvatar></AgentAvatar>
+          <AgentName>Tom Wilson</AgentName>
+          <PropertyPrice>$350.000</PropertyPrice>
+        </AgentInfoContainer>
+      </PropertyCard>
+      <PropertyCard>
+        <PropertyImg></PropertyImg>
+        <PropertyInfoContainer>
+          <PropertyType>House</PropertyType>
+          <PropertyName>Vila In Coral Gables</PropertyName>
+          <PropertyLocation>
+            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
+            <LocationInfo>West Flaminggo Road, Las Vegas</LocationInfo>
+          </PropertyLocation>
+          <PropertyRoomInfoContainer>
+            <RoomInfo>
               <RoomTitle>Bath</RoomTitle>
               <RoomNumberContainer>
                 <Icon path={mdiShower} title="User Profile" size={0.8} />
@@ -242,9 +260,16 @@ const PropertyContent = () => {
               </RoomNumberContainer>
             </RoomInfo>
             <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
+              <RoomTitle>Bed</RoomTitle>
               <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
+                <Icon path={mdiBed} title="User Profile" size={0.8} />
+                <RoomNumber>3</RoomNumber>
+              </RoomNumberContainer>
+            </RoomInfo>
+            <RoomInfo>
+              <RoomTitle>Garage</RoomTitle>
+              <RoomNumberContainer>
+                <Icon path={mdiGarage} title="User Profile" size={0.8} />
                 <RoomNumber>2</RoomNumber>
               </RoomNumberContainer>
             </RoomInfo>
