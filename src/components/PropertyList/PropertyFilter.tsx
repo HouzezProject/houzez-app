@@ -1,4 +1,3 @@
-import { BorderBottom, Height } from "@mui/icons-material";
 import { Button, FormControl, InputLabel, MenuItem, Select, Slider, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";

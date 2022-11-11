@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { Breadcrumbs, Button, Container, Grid, Link, Box } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
 
 const {
-  palette: { primary, secondary }
+  palette: { primary }
 } = theme;
 
 const HeaderContainer = styled(Box)({
@@ -21,16 +20,16 @@ const HeaderContainer = styled(Box)({
 });
 
 const HeaderBox = styled(Box)({
-  width:"75vw",
+  width: "75vw",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between"
 });
 
 const HeaderLinkContainer = styled(Box)({
-  width:"250px",
-  display:"flex",
-  justifyContent:"space-between"
+  width: "250px",
+  display: "flex",
+  justifyContent: "space-between"
 });
 
 const HeaderButton = styled(Button)({
@@ -38,9 +37,8 @@ const HeaderButton = styled(Button)({
 });
 
 const AddListButton = styled(Button)({
-  color: primary.dark,
   backgroundColor: "white",
-  "&hover": {
+  "&:hover": {
     backgroundColor: "white"
   }
 });
@@ -55,7 +53,7 @@ const Header = () => {
           <HeaderButton>Pages</HeaderButton>
           <HeaderButton>Contact</HeaderButton>
         </HeaderLinkContainer>
-        <AddListButton variant="contained" disableRipple={true}>
+        <AddListButton variant="outlined" disableRipple={true}>
           Add List
         </AddListButton>
       </HeaderBox>
