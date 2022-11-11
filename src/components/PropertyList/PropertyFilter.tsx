@@ -96,34 +96,45 @@ const PropertyFilter = () => {
         <FilterFormControl>
           <InputLabel id="property-type">Type</InputLabel>
           <Select labelId="property-type" id="property-type" label="Type">
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value="">(None)</MenuItem>
+            <MenuItem value="house">House</MenuItem>
+            <MenuItem value="apartment">Apartment</MenuItem>
+            <MenuItem value="townhouse">Townhouse</MenuItem>
+            <MenuItem value="villa">Villa</MenuItem>
+            <MenuItem value="land">Land</MenuItem>
+            <MenuItem value="acreage">Acreage</MenuItem>
+            <MenuItem value="rural">Rural</MenuItem>
+            <MenuItem value="blockOfUnits">Block of Units</MenuItem>
+            <MenuItem value="retirementLiving">Retirement Living</MenuItem>
           </Select>
         </FilterFormControl>
         <FilterFormControl>
           <InputLabel id="property-bedroom">Bedroom</InputLabel>
           <Select labelId="property-bedroom" id="property-bedroom" label="Bedroom">
-            <MenuItem value={10}>1</MenuItem>
-            <MenuItem value={20}>2</MenuItem>
-            <MenuItem value={30}>3</MenuItem>
+            <MenuItem value="">(None)</MenuItem>
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5+</MenuItem>
           </Select>
         </FilterFormControl>
         <FilterFormControl>
           <InputLabel id="property-bathroom">Bathroom</InputLabel>
           <Select labelId="property-bathroom" id="property-bathroom" label="Bathroom">
-            <MenuItem value={10}>1</MenuItem>
-            <MenuItem value={20}>2</MenuItem>
-            <MenuItem value={30}>3</MenuItem>
+            <MenuItem value="">(None)</MenuItem>
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3+</MenuItem>
           </Select>
         </FilterFormControl>
         <FilterFormControl>
           <InputLabel id="property-garage">Garage</InputLabel>
           <Select labelId="property-garage" id="property-garage" label="Garage">
-            <MenuItem value={10}>1</MenuItem>
-            <MenuItem value={20}>2</MenuItem>
-            <MenuItem value={30}>3</MenuItem>
+            <MenuItem value="">(None)</MenuItem>
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3+</MenuItem>
           </Select>
         </FilterFormControl>
         <SliderContainer>
