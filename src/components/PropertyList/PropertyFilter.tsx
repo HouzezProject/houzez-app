@@ -5,14 +5,14 @@ import { useState } from "react";
 
 const PropertyFilterContainer = styled(Box)({
   border: "0.7px grey solid",
-  width: "25vw",
-  height: "90vh",
+  width: "23vw",
+  height: "80vh",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  position:"fixed",
-  top:"10vh",
-  left:"20vh"
+  position: "fixed",
+  top: "15vh",
+  left: "20vh"
 });
 
 const PropertyFilterHeader = styled(Box)({
@@ -22,7 +22,7 @@ const PropertyFilterHeader = styled(Box)({
   width: "100%",
   display: "flex",
   alignItems: "center",
-  justifyContent:"center"
+  justifyContent: "center"
 });
 
 const PropertyFilterBody = styled(Box)({
@@ -31,6 +31,29 @@ const PropertyFilterBody = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center"
+});
+
+const FilterFormControl = styled(FormControl)({
+  marginTop: 20,
+  marginBottom: 2,
+  width: 280
+});
+
+const FilterTypography = styled(Typography)({
+  fontWeight: "700"
+});
+
+const SliderContainer = styled(Box)({
+  width: 280,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  marginTop: "20px"
+});
+
+const PriceSlider = styled(Slider)({
+  marginTop: "40px",
+  width: "250px"
 });
 
 const marks = [
@@ -68,10 +91,10 @@ const PropertyFilter = () => {
   return (
     <PropertyFilterContainer>
       <PropertyFilterHeader>
-        <Typography>Property Filter</Typography>
+        <FilterTypography variant="h6">Property Filter</FilterTypography>
       </PropertyFilterHeader>
       <PropertyFilterBody>
-        <FormControl sx={{ marginTop:5, marginBottom:2, width: 280 }}>
+        <FilterFormControl>
           <InputLabel id="property-type">Type</InputLabel>
           <Select labelId="property-type" id="property-type" label="Type">
             <MenuItem value="">None</MenuItem>
@@ -79,34 +102,36 @@ const PropertyFilter = () => {
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
-        </FormControl>
-        <FormControl sx={{ m: 2, minWidth: 280 }}>
+        </FilterFormControl>
+        <FilterFormControl>
           <InputLabel id="property-bedroom">Bedroom</InputLabel>
           <Select labelId="property-bedroom" id="property-bedroom" label="Bedroom">
             <MenuItem value={10}>1</MenuItem>
             <MenuItem value={20}>2</MenuItem>
             <MenuItem value={30}>3</MenuItem>
           </Select>
-        </FormControl>
-        <FormControl sx={{ m: 2, minWidth: 280 }}>
+        </FilterFormControl>
+        <FilterFormControl>
           <InputLabel id="property-bathroom">Bathroom</InputLabel>
           <Select labelId="property-bathroom" id="property-bathroom" label="Bathroom">
             <MenuItem value={10}>1</MenuItem>
             <MenuItem value={20}>2</MenuItem>
             <MenuItem value={30}>3</MenuItem>
           </Select>
-        </FormControl>
-        <FormControl sx={{ m: 2, minWidth: 280 }}>
+        </FilterFormControl>
+        <FilterFormControl>
           <InputLabel id="property-garage">Garage</InputLabel>
           <Select labelId="property-garage" id="property-garage" label="Garage">
             <MenuItem value={10}>1</MenuItem>
             <MenuItem value={20}>2</MenuItem>
             <MenuItem value={30}>3</MenuItem>
           </Select>
-        </FormControl>
-        <Box sx={{ width: 280 }}>
-          <Typography>Price:</Typography>
-          <Slider
+        </FilterFormControl>
+        <SliderContainer>
+          <Typography variant="body1" sx={{ fontWeight: "500", alignSelf: "flex-start" }}>
+            Price:
+          </Typography>
+          <PriceSlider
             getAriaLabel={() => "Temperature range"}
             value={value}
             onChange={handleChange}
@@ -117,10 +142,11 @@ const PropertyFilter = () => {
             min={0}
             max={2000}
             step={100}
-            sx={{ marginTop: 5, width: 250 }}
           />
-        </Box>
-        <Button variant={"contained"}>Find Properties</Button>
+        </SliderContainer>
+        <Button variant={"contained"} sx={{ marginTop: "40px" }} size={"large"}>
+          Find Properties
+        </Button>
       </PropertyFilterBody>
     </PropertyFilterContainer>
   );
