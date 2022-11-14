@@ -2,7 +2,7 @@ import axios from "axios";
 import router from "next/router";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_SERVICE_HOST,
   timeout: 5000
 });
 

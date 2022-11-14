@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Breadcrumbs, Button, Container, Grid, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
-import LogoImg from "../../../public/assets/logo/logo_black.png";
+import LogoImg from "../../../public/assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
@@ -32,8 +32,7 @@ const HeaderLink = styled(Link)({
   height: "90px",
   display: "flex",
   alignItems: "center",
-  color: secondary.dark,
-  textDecoration: "none",
+  color: secondary.contrastText,
   margin: "0 20px",
   gap: "20px",
   fontWeight: "700"
@@ -48,7 +47,7 @@ const HeaderButton = styled(Button)({
 });
 
 const HeaderButtonSignIn = styled(HeaderButton)({
-  color: secondary.dark,
+  color: secondary.contrastText,
   "&:hover": {
     borderColor: secondary.dark,
     backgroundColor: secondary.light
@@ -57,7 +56,7 @@ const HeaderButtonSignIn = styled(HeaderButton)({
 
 const HeaderButtonLinkSignIn = styled(Link)({
   textDecoration: "none",
-  color: secondary.dark,
+  color: secondary.contrastText,
   "&:hover": {
     color: primary.main
   }
@@ -76,7 +75,7 @@ const HeaderButtonLinkSignUp = styled(Link)({
 });
 
 const HeaderIconLink = styled(Link)({
-  color: secondary.dark,
+  color: secondary.contrastText,
   padding: "10px",
   fontSize: "2rem"
 });
@@ -96,9 +95,7 @@ const Header = () => {
     <HeaderContainer>
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
-          <Link href="/">
-            <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
-          </Link>
+          <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
         </HeaderGrid>
 
         <HeaderGrid item xs={6}>
