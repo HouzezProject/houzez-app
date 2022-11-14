@@ -79,6 +79,7 @@ const ManagementHeader = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     router.push("/");
   };
 
