@@ -11,7 +11,7 @@ import StarsIcon from "@mui/icons-material/Stars";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const {
-  palette: { primary, secondary }
+  palette: { primary, secondary, background }
 } = theme;
 
 const HeaderContainer = styled(Container)({
@@ -33,6 +33,7 @@ const HeaderLink = styled(Link)({
   display: "flex",
   alignItems: "center",
   color: secondary.contrastText,
+  textDecoration: "none",
   margin: "0 20px",
   gap: "20px",
   fontWeight: "700"
@@ -63,15 +64,18 @@ const HeaderButtonLinkSignIn = styled(Link)({
 });
 
 const HeaderButtonSignUp = styled(HeaderButton)({
-  backgroundColor: primary.main,
+  backgroundColor: background.paper,
   "&:hover": {
-    backgroundColor: primary.dark
+    backgroundColor: primary.main
   }
 });
 
 const HeaderButtonLinkSignUp = styled(Link)({
   textDecoration: "none",
-  color: secondary.contrastText
+  color: primary.main,
+  "&:hover": {
+    color: primary.contrastText
+  }
 });
 
 const HeaderIconLink = styled(Link)({
@@ -95,7 +99,9 @@ const Header = () => {
     <HeaderContainer>
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
-          <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+          <Link href="/">
+            <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+          </Link>
         </HeaderGrid>
 
         <HeaderGrid item xs={6}>
