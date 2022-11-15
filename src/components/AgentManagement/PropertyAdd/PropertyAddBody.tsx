@@ -2,9 +2,14 @@ import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import styled from "@emotion/styled";
 import {
-    Box, Checkbox,
-    Divider, FormControl, FormControlLabel,
-    Grid, InputAdornment,
+    Box,
+    Checkbox,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    Grid,
+    Input,
+    InputAdornment,
     InputLabel,
     MenuItem,
     Select,
@@ -13,6 +18,7 @@ import {
     Typography
 } from "@mui/material";
 
+import Autocomplete from "react-google-autocomplete";
 import Button from "@mui/material/Button";
 import ButtonGif from "../../../../public/assets/gif/lines.gif";
 import axiosClient from "../../../utils/axios";
@@ -22,7 +28,7 @@ import {AxiosError} from "axios";
 const indoorCheckList = ["Ensuite", "Dishwasher", "Study", "Built in robes", "Alarm system", "Broadband", "Floorboards", "Gym", "Rumpus room", "Workshop"];
 const outdoorCheckList = ["Swimming pool", "Balcony", "Outdoor area", "Undercover parking", "Shed", "Fully fenced", "Outdoor spa", "Tennis court"];
 const typeCheckList = ["House", "Apartment", "Townhouse", "Villa", "Land", "Acreage", "Rural", "Block Of Units", "Retirement Living"]
-const stateCheckList = ["New South Wales", "Victoria", "Queensland", "South Australia", "Western Australia", "Tasmania", "Northern Territory", "Australian Capital Territory"]
+const stateCheckList = ["NSW", "VIC", "QSD", "SA", "WA", "TAS", "NT", "ACT"]
 
 
 const GridContainer = styled(Grid)({
@@ -92,31 +98,31 @@ const AddImageButton = styled(Button)({
 
 const PropertyAddBody = () => {
 
-    const [data, setData] = useState("");
-
     const {
         register,
         handleSubmit
     } = useForm();
 
+    const [data, setData] = useState("");
 
     const onSubmit = async (data) => {
         try {
+
             setData(JSON.stringify(data));
+
             let list = "";
-            data.indoor.forEach((e: String) => {
-                list += (e + ",");
+            data.indoor.forEach((data: String) => {
+                list += (data + ",");
             });
             data.indoor = list;
 
             list = "";
-            data.outdoor.forEach((e: String) => {
-                list += (e + ",");
+            data.outdoor.forEach((data: String) => {
+                list += (data + ",");
             });
             data.outdoor = list;
 
             await axiosClient.post("/agents/1/properties", data);
-            //router.push("/reset-password-success");
         } catch (error) {
             if (error instanceof AxiosError && error.response?.status === 400) {
                 //setAccountActive({severity: "error", display: "flex", text: error.response.data.details});
@@ -125,8 +131,11 @@ const PropertyAddBody = () => {
     }
 
     return (
+
         <PropertyAddFormContainer>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
+
+
                 <GridContainer container spacing={3}>
                     <Grid item xs={12}>
                         <AddPropertyDivider/>
@@ -181,10 +190,30 @@ const PropertyAddBody = () => {
                         />
                     </Grid>
                     <Grid item xs={3}>
-                        <FormTextField id="street" label="Street" size="small"  {...register("street")}/>
+                        <Input
+                            fullWidth
+                            inputComponent={({onFocus, onBlur, ...props}) => (
+                                <Autocomplete
+                                    apiKey={"AIzaSyDRsNEvVJiPnDeu6geyVIwOs3x1yHIzngs"}
+                                    {...props}
+                                    options={{
+                                        types: [],
+                                        componentRestrictions: {country: "au"},
+                                        fields: ["address_components", "geometry", "icon", "name"],
+                                    }}
+                                    language={"en"}
+                                    onPlaceSelected={(selected) => {
+                                        console.log(selected);
+                                        document.getElementById("suburb").value = selected.address_components[0].long_name;
+                                        document.getElementById("state").value = Object.keys(selected.address_components[1].short_name);
+                                    }}
+                                />
+                            )}
+                        />
                     </Grid>
                     <Grid item xs={3}>
-                        <FormTextField id="suburb" label="Suburb" size="small"  {...register("suburb")}/>
+                        <FormTextField id="suburb" label="Suburb" size="small"
+                                       InputLabelProps={{shrink: true}} {...register("suburb")}/>
                     </Grid>
                     <Grid item xs={3}>
                         <FormControl fullWidth size="small">
@@ -250,11 +279,10 @@ const PropertyAddBody = () => {
                     <Grid item xs={11}/>
                     <Grid item xs={1}>
                         <SubmitButton type={"submit"} variant="contained">Submit</SubmitButton>
-                    </Grid>
-                    <p>{data.toString()}</p>
+                    </Grid>                <p>{data.toString()}</p>
+
                 </GridContainer>
             </form>
-
         </PropertyAddFormContainer>
     );
 };
