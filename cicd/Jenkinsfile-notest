@@ -22,16 +22,16 @@ pipeline {
       parallel {
         stage('Run Tests') {
           steps {   
-           sh 'echo no tests now'
-            //  sh 'npm run test-c'
+            sh 'echo no tests now'
+//             sh 'npm run test-c'
           }
         }
         
         stage('SonarCloud') {
     environment {
     SCANNER_HOME = tool 'SonarQubeScanner'
-    ORGANIZATION = 'sylvonau'
-    PROJECT_NAME = 'HouzezProject/houzez-app'
+    ORGANIZATION = 'houzezproject'
+    PROJECT_NAME = 'HouzezProject_houzez-app'
     PROJECT_BRANCH = 'main'
   }
  
@@ -40,7 +40,7 @@ pipeline {
         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info/ \
         -Dsonar.projectKey=$PROJECT_NAME \
-        -Dsonar.sources=src'''
+        -Dsonar.sources=.'''
         //-Dsonar.exclusions=**/package-lock.json/ ** \
          }
         }
