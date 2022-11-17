@@ -1,10 +1,12 @@
 import { Box } from "@mui/system";
 import { styled, Typography } from "@mui/material";
 import propertyDemoImg from "../../../public/assets/images/propertyDemoImg.jpg";
-import agentAvatarDemo from "../../../public/assets/images/AgentAvatarDemo.jpeg";
 import theme from "../../styles/theme";
 import Icon from "@mdi/react";
 import { mdiMapMarker, mdiShower, mdiBed, mdiGarage } from "@mdi/js";
+import { CreateData, PropertyDatarows } from "./config";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 const {
   palette: { primary }
@@ -57,7 +59,7 @@ const PropertyInfoContainer = styled(Box)({
 const PropertyType = styled(Typography)({
   backgroundColor: primary.main,
   color: "white",
-  width: "60px",
+  width: "32%",
   marginBottom: "10px",
   textAlign: "center"
 });
@@ -104,15 +106,6 @@ const AgentInfoContainer = styled(Box)({
   justifyContent: "space-between"
 });
 
-const AgentAvatar = styled(Box)({
-  backgroundImage: `url(${agentAvatarDemo.src})`,
-  width: "50px",
-  height: "50px",
-  borderRadius: "50%",
-  backgroundPosition: "center",
-  backgroundSize: "contain"
-});
-
 const AgentName = styled(Typography)({});
 
 const PropertyPrice = styled(Typography)({
@@ -121,164 +114,52 @@ const PropertyPrice = styled(Typography)({
 });
 
 const PropertyContent = () => {
+  const [data, setData] = useState<Array<CreateData>>([]);
+  useEffect(() => setData(PropertyDatarows), []);
+
   return (
     <PropertyContentBody>
-      <PropertyCard>
-        <PropertyImg></PropertyImg>
-        <PropertyInfoContainer>
-          <PropertyType>House</PropertyType>
-          <PropertyName>Vila In Coral Gables</PropertyName>
-          <PropertyLocation>
-            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
-          </PropertyLocation>
-          <PropertyRoomInfoContainer>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bed</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiBed} title="User Profile" size={0.8} />
-                <RoomNumber>3</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Garage</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiGarage} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-          </PropertyRoomInfoContainer>
-        </PropertyInfoContainer>
-        <AgentInfoContainer>
-          <AgentAvatar></AgentAvatar>
-          <AgentName>Tom Wilson</AgentName>
-          <PropertyPrice>$350.000</PropertyPrice>
-        </AgentInfoContainer>
-      </PropertyCard>
-      <PropertyCard>
-        <PropertyImg></PropertyImg>
-        <PropertyInfoContainer>
-          <PropertyType>House</PropertyType>
-          <PropertyName>Vila In Coral Gables</PropertyName>
-          <PropertyLocation>
-            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
-          </PropertyLocation>
-          <PropertyRoomInfoContainer>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bed</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiBed} title="User Profile" size={0.8} />
-                <RoomNumber>3</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Garage</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiGarage} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-          </PropertyRoomInfoContainer>
-        </PropertyInfoContainer>
-        <AgentInfoContainer>
-          <AgentAvatar></AgentAvatar>
-          <AgentName>Tom Wilson</AgentName>
-          <PropertyPrice>$350.000</PropertyPrice>
-        </AgentInfoContainer>
-      </PropertyCard>
-      <PropertyCard>
-        <PropertyImg></PropertyImg>
-        <PropertyInfoContainer>
-          <PropertyType>House</PropertyType>
-          <PropertyName>Vila In Coral Gables</PropertyName>
-          <PropertyLocation>
-            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
-          </PropertyLocation>
-          <PropertyRoomInfoContainer>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bed</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiBed} title="User Profile" size={0.8} />
-                <RoomNumber>3</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Garage</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiGarage} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-          </PropertyRoomInfoContainer>
-        </PropertyInfoContainer>
-        <AgentInfoContainer>
-          <AgentAvatar></AgentAvatar>
-          <AgentName>Tom Wilson</AgentName>
-          <PropertyPrice>$350.000</PropertyPrice>
-        </AgentInfoContainer>
-      </PropertyCard>
-      <PropertyCard>
-        <PropertyImg></PropertyImg>
-        <PropertyInfoContainer>
-          <PropertyType>House</PropertyType>
-          <PropertyName>Vila In Coral Gables</PropertyName>
-          <PropertyLocation>
-            <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
-            <LocationInfo>West Flamingo Road, Las Vegas</LocationInfo>
-          </PropertyLocation>
-          <PropertyRoomInfoContainer>
-            <RoomInfo>
-              <RoomTitle>Bath</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiShower} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Bed</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiBed} title="User Profile" size={0.8} />
-                <RoomNumber>3</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-            <RoomInfo>
-              <RoomTitle>Garage</RoomTitle>
-              <RoomNumberContainer>
-                <Icon path={mdiGarage} title="User Profile" size={0.8} />
-                <RoomNumber>2</RoomNumber>
-              </RoomNumberContainer>
-            </RoomInfo>
-          </PropertyRoomInfoContainer>
-        </PropertyInfoContainer>
-        <AgentInfoContainer>
-          <AgentAvatar></AgentAvatar>
-          <AgentName>Tom Wilson</AgentName>
-          <PropertyPrice>$350.000</PropertyPrice>
-        </AgentInfoContainer>
-      </PropertyCard>
+      {data.map((row) => (
+        <PropertyCard key={row.id}>
+          <PropertyImg></PropertyImg>
+          <PropertyInfoContainer>
+            <PropertyType>{row.type}</PropertyType>
+            <PropertyName>{row.name}</PropertyName>
+            <PropertyLocation>
+              <Icon path={mdiMapMarker} title="User Profile" size={0.8} />
+              <LocationInfo>{`${row.street}, ${row.suburd}, ${row.state}`}</LocationInfo>
+            </PropertyLocation>
+            <PropertyRoomInfoContainer>
+              <RoomInfo>
+                <RoomTitle>Bath</RoomTitle>
+                <RoomNumberContainer>
+                  <Icon path={mdiShower} title="User Profile" size={0.8} />
+                  <RoomNumber>{row.baths}</RoomNumber>
+                </RoomNumberContainer>
+              </RoomInfo>
+              <RoomInfo>
+                <RoomTitle>Bed</RoomTitle>
+                <RoomNumberContainer>
+                  <Icon path={mdiBed} title="User Profile" size={0.8} />
+                  <RoomNumber>{row.beds}</RoomNumber>
+                </RoomNumberContainer>
+              </RoomInfo>
+              <RoomInfo>
+                <RoomTitle>Garage</RoomTitle>
+                <RoomNumberContainer>
+                  <Icon path={mdiGarage} title="User Profile" size={0.8} />
+                  <RoomNumber>{row.garages}</RoomNumber>
+                </RoomNumberContainer>
+              </RoomInfo>
+            </PropertyRoomInfoContainer>
+          </PropertyInfoContainer>
+          <AgentInfoContainer>
+            <Image src={row.agent_icon} alt="house image" width="50px" height="50px" objectFit="contain" />
+            <AgentName>{row.agent}</AgentName>
+            <PropertyPrice>{row.price}</PropertyPrice>
+          </AgentInfoContainer>
+        </PropertyCard>
+      ))}
     </PropertyContentBody>
   );
 };
