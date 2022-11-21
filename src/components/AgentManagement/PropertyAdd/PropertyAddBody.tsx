@@ -1,27 +1,16 @@
 import React, {useState} from "react";
 import styled from "@emotion/styled";
-import {
-    AlertColor,
-    Box,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    Input,
-    InputAdornment,
-    InputLabel,
-    MenuItem,
-    Select,
-    Switch,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Box, Checkbox, Divider, FormControlLabel, Grid, Input, Switch, Typography} from "@mui/material";
 
 import Autocomplete from "react-google-autocomplete";
 import Button from "@mui/material/Button";
 import ButtonGif from "../../../../public/assets/gif/lines.gif";
 import axiosClient from "../../../utils/axios";
+import PropertyAddInput from "./components/PropertyAddInput";
+import {PropertyAttribute} from "./components/PropertyAttribute";
+import {PropertyAddInputWithLabelShrink} from "./components/PropertyAddInputWithLabelShrink";
+import {PropertyAddInputWithUnit} from "./components/PropertyAddInputWithUnit";
+import {AddPropertyDropDown} from "./components/AddPropertyDropDown";
 
 const indoorCheckList = ["Ensuite", "Dishwasher", "Study", "Built in robes", "Alarm system", "Broadband", "Floorboards", "Gym", "Rumpus room", "Workshop"];
 const outdoorCheckList = ["Swimming pool", "Balcony", "Outdoor area", "Undercover parking", "Shed", "Fully fenced", "Outdoor spa", "Tennis court"];
@@ -48,10 +37,6 @@ const PropertyAddFormContainer = styled(Box)({
         display: "flex",
         alignItems: "center",
     }
-});
-
-const FormTextField = styled(TextField)({
-    width: "100%",
 });
 
 const LevelTwoTitle = styled(Typography)(
@@ -90,35 +75,41 @@ const AddImageButton = styled(Button)({
     borderStyle: "solid"
 
 });
-
-interface PropertyAttribute {
-    propertyType: string;
-    title: string;
-    price: number;
-    livingRoom: number;
-    bedroom: number;
-    bathroom: number;
-    garage: number;
-    landSize: number;
-    description: string;
-    state: string;
-    suburb: string;
-    street: string;
-    postcode: number;
-    preowned: boolean;
-    latitude: number;
-    longitude: number;
-    indoor: string[];
-    outdoor: string[];
-}
-
 const PropertyAddBody = () => {
-
 
     const [propertyAttribute, setPropertyAttribute] = useState({} as PropertyAttribute);
 
     const handleChange = (type: keyof PropertyAttribute) => (event: any) => {
-        setPropertyAttribute({...propertyAttribute, [type]: event.target.value});
+        switch (type) {
+            case "outdoor" : {
+                setPropertyAttribute((propertyAttribute) => ({
+                    ...propertyAttribute, outdoor: {
+                        ...propertyAttribute.outdoor,
+                        [event.target.name]: event.target.checked
+                    }
+                }));
+                break;
+            }
+            case "indoor" : {
+                setPropertyAttribute((propertyAttribute) => ({
+                    ...propertyAttribute, indoor: {
+                        ...propertyAttribute.indoor,
+                        [event.target.name]: event.target.checked
+                    }
+                }));
+                break;
+            }
+            case "preowned": {
+                setPropertyAttribute({...propertyAttribute, [type]: event.target.checked});
+                break;
+            }
+            default: {
+                setPropertyAttribute({...propertyAttribute, [type]: event.target.value});
+            }
+        }
+        console.log(propertyAttribute);
+
+
     };
 
     const {
@@ -144,19 +135,24 @@ const PropertyAddBody = () => {
 
     const onSubmit = async () => {
         try {
-            // let list = "";
-            // propertyAttribute.indoor.forEach((data: String) => {
-            //     list += (data + ",");
-            // });
-            // propertyAttribute.indoor = list;
-            //
-            // list = "";
-            // propertyAttribute.outdoor.forEach((data: String) => {
-            //     list += (data + ",");
-            // });
-            // propertyAttribute.outdoor = list;
 
-            await axiosClient.post("/agents/1/properties", propertyAttribute);
+            let list = "";
+            for (const [key, value] of Object.entries(propertyAttribute.outdoor)) {
+                if (value == true) {
+                    list += "" + key + ",";
+                }
+            }
+
+            let list1 = "";
+            for (const [key, value] of Object.entries(propertyAttribute.indoor)) {
+                if (value == true) {
+                    list1 += "" + key + ",";
+                }
+            }
+
+            const postDto = {...propertyAttribute, outdoor: list, indoor: list1};
+
+            await axiosClient.post("/agents/1/properties", postDto);
         } catch (error) {
 
         }
@@ -166,40 +162,24 @@ const PropertyAddBody = () => {
         <PropertyAddFormContainer>
             <form noValidate onSubmit={onSubmit}>
                 <GridContainer container spacing={3}>
-                    <Grid item xs={12}>
-                        <AddPropertyDivider/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <LevelTwoTitle>Basic Information</LevelTwoTitle>
-                    </Grid>
+                    <AddPropertyDividerGrid/>
+                    <LevelTwoTitleGrid title="Basic Information"/>
                     <PropertyAddInput xs={6} label="Title" value={title} attribute="title"
                                       handleChange={handleChange} multiline={false}/>
-
                     <AddPropertyDropDown xs={6} labelId="type" label="Type" value={propertyType}
                                          handleChange={handleChange} attribute={"propertyType"}
                                          checklist={typeCheckList}/>
                     <PropertyAddInput xs={12} label="Description" value={description} attribute="description"
                                       handleChange={handleChange} multiline={true} rows={4}/>
-                    <Grid item xs={12}>
-                        <AddPropertyDivider/>
-                    </Grid>
+                    <AddPropertyDividerGrid/>
 
-                    <Grid item xs={12}>
-                        <LevelTwoTitle>Property Information</LevelTwoTitle>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <FormTextField id="price" type="number" label="Price" size="small" InputProps={{
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                        }} value={propertyAttribute.price} onChange={handleChange("price")}/>
-                    </Grid>
-
-                    <Grid item xs={3}>
-                        <FormTextField id="land-size" type="number" label="Land Size" size="small" InputProps={{
-                            startAdornment: <InputAdornment position="start">m²</InputAdornment>,
-                        }} value={propertyAttribute.landSize} onChange={handleChange("landSize")}/>
-                    </Grid>
+                    <LevelTwoTitleGrid title="Property Information"/>
+                    <PropertyAddInputWithUnit xs={3} label="Price" value={price} handleChange={handleChange}
+                                              attribute={"price"} unit={"$"}/>
+                    <PropertyAddInputWithUnit xs={3} label="Land Size" value={landSize} handleChange={handleChange}
+                                              attribute={"landSize"} unit={"m²"}/>
                     <PropertyAddInput type="number" xs={3} label="Bedroom" value={bedroom}
-                                      handleChange={handleChange} attribute="bedroom" multiline={false}/>
+                                      handleChange={handleChange} attribute="bedroom"/>
                     <Grid item xs={3}>
                         <FormControlLabel
                             control={
@@ -208,6 +188,7 @@ const PropertyAddBody = () => {
                             label="preowned"
                         />
                     </Grid>
+
                     <Grid item xs={12}>
                         <Input
                             fullWidth
@@ -228,47 +209,44 @@ const PropertyAddBody = () => {
                                             street: address_components[0].long_name + " " + address_components[1].long_name,
                                             suburb: address_components[2].long_name,
                                             state: address_components[4].short_name,
-                                            postcode: address_components[6].short_name
+                                            postcode: address_components[6].short_name,
+                                            latitude: geometry.location.lat(),
+                                            longitude: geometry.location.lng()
                                         });
                                     }}
                                 />
                             )}
                         />
                     </Grid>
-                    <PropertyAddInput type="text" xs={3} label="Street" value={street} handleChange={handleChange}
-                                      attribute="street" multiline={false}/>
-                    <PropertyAddInput type="text" xs={3} label="Suburb" value={suburb} handleChange={handleChange}
-                                      attribute="suburb" multiline={false}/>
-                    <PropertyAddInput type="text" xs={3} label="State" value={state} handleChange={handleChange}
-                                      attribute="state" multiline={false}/>
-                    <PropertyAddInput type="number" xs={3} label="Postcode" value={postcode}
-                                      handleChange={handleChange} attribute="postcode" multiline={false}/>
-                    <Grid item xs={12}>
-                        <AddPropertyDivider/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <LevelTwoTitle>Dimensions</LevelTwoTitle>
-                    </Grid>
+                    <PropertyAddInputWithLabelShrink xs={3} label="Street" value={street} handleChange={handleChange}
+                                                     attribute="street"/>
+                    <PropertyAddInputWithLabelShrink xs={3} label="Suburb" value={suburb} handleChange={handleChange}
+                                                     attribute="suburb"/>
+                    <PropertyAddInputWithLabelShrink xs={3} label="State" value={state} handleChange={handleChange}
+                                                     attribute="state"/>
+                    <PropertyAddInputWithLabelShrink type="number" xs={3} label="Postcode" value={postcode}
+                                                     handleChange={handleChange} attribute="postcode"/>
+                    <AddPropertyDividerGrid/>
+
+                    <LevelTwoTitleGrid title="Dimensions"/>
                     <PropertyAddInput type="number" xs={3} label="Living room" value={livingRoom}
-                                      handleChange={handleChange} attribute="livingRoom" multiline={false}/>
+                                      handleChange={handleChange} attribute="livingRoom"/>
                     <PropertyAddInput type="number" xs={3} label="Bathroom" value={bathroom}
-                                      handleChange={handleChange} attribute="bathroom" multiline={false}/>
+                                      handleChange={handleChange} attribute="bathroom"/>
                     <PropertyAddInput type="number" xs={3} label="Garage" value={garage}
-                                      handleChange={handleChange} attribute="garage" multiline={false}/>
-                    <Grid item xs={12}>
-                        <AddPropertyDivider/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <LevelTwoTitle>General Amenities</LevelTwoTitle>
-                    </Grid>
+                                      handleChange={handleChange} attribute="garage"/>
+                    <AddPropertyDividerGrid/>
+                    <LevelTwoTitleGrid title="General Amenities"/>
                     <Grid item xs={12}>
                         <LevelThreeTitle>Indoor</LevelThreeTitle>
                     </Grid>
                     {indoorCheckList.map((item, index) => (
                         <Grid item xs={1.5} key={index}>
-                            <FormControlLabel control={<Checkbox size={"small"} value={propertyAttribute.indoor}
-                                                                 onChange={handleChange("indoor")}/>}
-                                              label={item}/>
+                            <FormControlLabel
+                                control={<Checkbox size={"small"} value={propertyAttribute.indoor} name={item}
+                                                   onChange={handleChange("indoor")}
+                                />}
+                                label={item}/>
                         </Grid>
                     ))}
                     <Grid item xs={12}>
@@ -276,9 +254,11 @@ const PropertyAddBody = () => {
                     </Grid>
                     {outdoorCheckList.map((item, index) => (
                         <Grid item xs={1.5} key={index}>
-                            <FormControlLabel control={<Checkbox size={"small"} value={propertyAttribute.outdoor}
-                                                                 onChange={handleChange("outdoor")}/>}
-                                              label={item}/>
+                            <FormControlLabel
+                                control={<Checkbox size={"small"} value={propertyAttribute.outdoor} name={item}
+                                                   onChange={handleChange("outdoor")}
+                                />}
+                                label={item}/>
                         </Grid>
                     ))}
                     <Grid item xs={12}>
@@ -288,53 +268,26 @@ const PropertyAddBody = () => {
                     <Grid item xs={1}>
                         <SubmitButton type={"submit"} variant="contained">Submit</SubmitButton>
                     </Grid>
-
+                    <p>{propertyAttribute.preowned}</p>
                 </GridContainer>
-
             </form>
         </PropertyAddFormContainer>
     );
 };
 
-const PropertyAddInput = ({
-                              xs,
-                              type = "text",
-                              label,
-                              handleChange,
-                              value,
-                              attribute,
-                              multiline,
-                              rows = 1
-                          }: { xs: number, type?: string, label: string, value: string | number, handleChange: (type: keyof PropertyAttribute) => (event: any) => void, attribute: keyof PropertyAttribute, multiline: boolean, rows?: number }) => {
+const AddPropertyDividerGrid = () => {
     return (
-        <Grid item xs={xs}>
-            <FormTextField type={type} label={label} multiline={multiline} rows={rows}
-                           size="small" value={value}
-                           onChange={handleChange(attribute)}/>
+        <Grid item xs={12}>
+            <AddPropertyDivider/>
         </Grid>
     )
 }
 
-const AddPropertyDropDown = ({
-                                 xs,
-                                 labelId,
-                                 label,
-                                 value,
-                                 handleChange,
-                                 attribute,
-                                 checklist
-                             }: { xs: number, labelId: string, label: string, value: string, handleChange: (type: keyof PropertyAttribute) => (event: any) => void, attribute: keyof PropertyAttribute, checklist: string[] }) => {
+
+const LevelTwoTitleGrid = ({title}: { title: string }) => {
     return (
-        <Grid item xs={xs}>
-            <FormControl fullWidth size="small">
-                <InputLabel id={labelId}>Type</InputLabel>
-                <Select labelId={labelId} label={label} value={value}
-                        onChange={handleChange(attribute)}>
-                    {checklist.map((item) => (
-                        <MenuItem value={item.toUpperCase().replaceAll(" ", "_")}>{item}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+        <Grid item xs={12}>
+            <LevelTwoTitle>{title}</LevelTwoTitle>
         </Grid>
     )
 }
