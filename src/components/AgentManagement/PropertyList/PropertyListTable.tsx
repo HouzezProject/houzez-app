@@ -12,7 +12,7 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { CreateData } from "./config";
+import { Property, NewProperty } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -80,12 +80,29 @@ const PropertyListTable = () => {
   const pageSize = 10;
   const [userInfoId, setUserInfoId] = useState("");
   const [page, setPage] = useState(0);
+  const [totalNumber, setTotalNumber] = useState(0);
   const rowsPerPage = 10;
-  const [propertyDataRows, setPropertyDataRows] = useState<Array<CreateData>>([]);
+  const [propertyDataRows, setPropertyDataRows] = useState<NewProperty[]>([]);
 
   const getAgentProperties = async (pid: number) => {
     const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${pid}&size=${pageSize}`);
-    setPropertyDataRows(res.data);
+
+    setTotalNumber(res.data.propertyGetDtoList.length);
+    const properyList = res.data.propertyGetDtoList;
+
+    const selectImage = (propertyId: number) => {
+      const imageFilter = res.data.imageGetDtoList.filter((img: any) => img.property.id === propertyId);
+      console.log(imageFilter);
+      return imageFilter[0].url;
+    };
+
+    const newPropertyList = properyList.map((obj: Property) => ({
+      ...obj,
+      image: selectImage(obj.id),
+      totalPageNumber: res.data.totalPageNumber
+    }));
+    console.log(newPropertyList);
+    setPropertyDataRows(newPropertyList);
   };
 
   useEffect(() => {
@@ -132,40 +149,41 @@ const PropertyListTable = () => {
             </PropertyTableHeadRow>
           </TableHead>
           <TableBody>
-            {propertyDataRows.map((row) => (
-              <PropertyTableBodyRow key={row.id}>
-                <TableCell>
-                  <Image src={row.img} alt="house image" width="80px" height="40px" objectFit="contain" />
-                </TableCell>
-                <TableCell>
-                  <Box>
-                    <Box>{row.title}</Box>
-                    <AddressDiv>
-                      <LocationOnOutlinedIcon />
-                      <Box>{`${row.street}, ${row.state}, ${row.postcode}`}</Box>
-                    </AddressDiv>
-                  </Box>
-                </TableCell>
-                <TableCell>{row.bedroom}</TableCell>
-                <TableCell>{row.bathroom}</TableCell>
-                <TableCell>{row.landSize}</TableCell>
-                <TableCell>{row.propertyType}</TableCell>
-                <PriceTableCell>{row.price}</PriceTableCell>
-                {row.status === "for sale" && (
+            {propertyDataRows.length > 0 &&
+              propertyDataRows.map((row) => (
+                <PropertyTableBodyRow key={row.id}>
                   <TableCell>
-                    <ForSellDiv>{row.status}</ForSellDiv>
+                    <Image src={row.image} alt="house image" width="80px" height="40px" objectFit="contain" />
                   </TableCell>
-                )}
-                {row.status === "for rent" && (
                   <TableCell>
-                    <ForRentDiv>{row.status}</ForRentDiv>
+                    <Box>
+                      <Box>{row.title}</Box>
+                      <AddressDiv>
+                        <LocationOnOutlinedIcon />
+                        <Box>{`${row.street}, ${row.state}, ${row.postcode}`}</Box>
+                      </AddressDiv>
+                    </Box>
                   </TableCell>
-                )}
-                <TableCell>
-                  <EditButton variant="contained"> Edit </EditButton>
-                </TableCell>
-              </PropertyTableBodyRow>
-            ))}
+                  <TableCell>{row.bedroom}</TableCell>
+                  <TableCell>{row.bathroom}</TableCell>
+                  <TableCell>{row.landSize}</TableCell>
+                  <TableCell>{row.propertyType}</TableCell>
+                  <PriceTableCell>{row.price}</PriceTableCell>
+                  {row.status === "for sale" && (
+                    <TableCell>
+                      <ForSellDiv>{row.status}</ForSellDiv>
+                    </TableCell>
+                  )}
+                  {row.status === "for rent" && (
+                    <TableCell>
+                      <ForRentDiv>{row.status}</ForRentDiv>
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    <EditButton variant="contained"> Edit </EditButton>
+                  </TableCell>
+                </PropertyTableBodyRow>
+              ))}
           </TableBody>
           <TableFooter>
             <TableRow>
