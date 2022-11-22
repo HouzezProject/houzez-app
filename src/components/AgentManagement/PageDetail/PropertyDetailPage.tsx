@@ -2,14 +2,12 @@ import styled from "@emotion/styled";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import Header from "../../Common/Header";
 import Footer from "../../Common/Footer";
-import React from "react";
-import HomeImage1 from "../../../../public/assets/houseImage/HomeImage.webp";
-import HomeImage2 from "../../../../public/assets/houseImage/rabbit.jpeg";
-import HomeImage3 from "../../../../public/assets/houseImage/dog.jpeg";
-import HomeImage4 from "../../../../public/assets/houseImage/HomeImage1.jpeg";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import Carousel from "react-material-ui-carousel";
+import { useRouter } from "next/router";
+import axiosClient from "../../../utils/axios";
 
 const MainContainer = styled(Box)({
   width: "100vw",
@@ -87,36 +85,28 @@ const DescriptionBox = styled(Box)({
 });
 
 const PropertyDetailPage = () => {
+  const router = useRouter();
+  const [data, setData] = useState({ hits: [] });
+  useEffect(() => {
+    const idString = router.query.id?.toString();
+    if (idString) {
+      console.log(idString);
+      const res = async () => {
+        await axiosClient.get("/properties/" + idString);
+        console.log(res);
+      };
+    }
+  }, [router.query.id]);
   const Items = [
     {
-      key: "Image2",
-      image: HomeImage1,
-      text: "Image1 name"
-    },
-    {
-      key: "Image2",
-      image: HomeImage2,
-      text: "Image2 name"
-    },
-    {
-      key: "ImageName",
-      image: HomeImage2,
-      text: "Image3 name"
-    },
-    {
-      key: "Image2",
-      image: HomeImage3,
-      text: "Image1 name"
-    },
-    {
-      key: "Image2",
-      image: HomeImage4,
-      text: "Image2 name"
+      key: "",
+      image: "data.image.ur",
+      text: "data.image.tag"
     }
   ];
 
   const propertyDetails = {
-    "Property ID:": "1",
+    "Property ID:": 0,
     "Property Type:": "1",
     "Price:": 0,
     "Bedrooms:": 0,
