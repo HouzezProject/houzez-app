@@ -3,7 +3,7 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import HomeBg from "../../../public/assets/images/homebg.jpg";
 import theme from "../../styles/theme";
-import Header from "./Header";
+import Header from "../Common/Header";
 import HomeSearch from "./HomeSearch";
 
 const {

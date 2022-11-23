@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Breadcrumbs, Button, Container, Grid, Link } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
-import LogoImg from "../../../public/assets/logo/logo_black.png";
+import LogoImg from "../../../public/assets/logo/logo_white.png";
 import HomeIcon from "@mui/icons-material/Home";
 import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
@@ -11,7 +11,7 @@ import StarsIcon from "@mui/icons-material/Stars";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const {
-  palette: { primary, secondary }
+  palette: { primary, secondary, background }
 } = theme;
 
 const HeaderContainer = styled(Container)({
@@ -32,7 +32,7 @@ const HeaderLink = styled(Link)({
   height: "90px",
   display: "flex",
   alignItems: "center",
-  color: secondary.dark,
+  color: secondary.contrastText,
   textDecoration: "none",
   margin: "0 20px",
   gap: "20px",
@@ -48,7 +48,7 @@ const HeaderButton = styled(Button)({
 });
 
 const HeaderButtonSignIn = styled(HeaderButton)({
-  color: secondary.dark,
+  color: secondary.contrastText,
   "&:hover": {
     borderColor: secondary.dark,
     backgroundColor: secondary.light
@@ -57,26 +57,29 @@ const HeaderButtonSignIn = styled(HeaderButton)({
 
 const HeaderButtonLinkSignIn = styled(Link)({
   textDecoration: "none",
-  color: secondary.dark,
+  color: secondary.contrastText,
   "&:hover": {
     color: primary.main
   }
 });
 
 const HeaderButtonSignUp = styled(HeaderButton)({
-  backgroundColor: primary.main,
+  backgroundColor: background.paper,
   "&:hover": {
-    backgroundColor: primary.dark
+    backgroundColor: primary.main
   }
 });
 
 const HeaderButtonLinkSignUp = styled(Link)({
   textDecoration: "none",
-  color: secondary.contrastText
+  color: primary.main,
+  "&:hover": {
+    color: primary.contrastText
+  }
 });
 
 const HeaderIconLink = styled(Link)({
-  color: secondary.dark,
+  color: secondary.contrastText,
   padding: "10px",
   fontSize: "2rem"
 });
