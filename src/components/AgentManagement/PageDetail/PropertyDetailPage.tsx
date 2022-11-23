@@ -8,6 +8,44 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import Carousel from "react-material-ui-carousel";
 import { useRouter } from "next/router";
 import axiosClient from "../../../utils/axios";
+import { number, string } from "yup";
+import { boolean, date } from "yup/lib/locale";
+import { AxiosResponse } from "axios";
+
+interface Image {
+  id: number;
+  url: string;
+  tag: string;
+}
+
+interface Agent {
+  id: number;
+  icon: string;
+  email: string;
+}
+
+interface Property {
+  id: number;
+  propertyType: string;
+  title: string;
+  price: number;
+  livingRoom: number;
+  bedroom: number;
+  bathroom: number;
+  garage: number;
+  landSize: number;
+  description: string;
+  state: string;
+  street: string;
+  suburb: string;
+  postcode: number;
+  latitude: number;
+  longitude: number;
+  indoor: string;
+  outdoor: string;
+  propertyIsNew: boolean;
+  status: string;
+}
 
 const MainContainer = styled(Box)({
   width: "100vw",
@@ -86,17 +124,24 @@ const DescriptionBox = styled(Box)({
 
 const PropertyDetailPage = () => {
   const router = useRouter();
-  const [data, setData] = useState({ hits: [] });
+  const [property, setProperty] = useState<Property>();
+  const [images, setImages] = useState<Image[]>([]);
+  const [agent, setAgent] = useState<Agent>();
+
   useEffect(() => {
     const idString = router.query.id?.toString();
     if (idString) {
-      console.log(idString);
-      const res = async () => {
-        await axiosClient.get("/properties/" + idString);
-        console.log(res);
+      const fetchData = async () => {
+        const res: AxiosResponse = await axiosClient.get("/properties/" + idString);
+        const { image } = res;
+        setProperty(res);
+        setImages(image);
+        setAgent(res.agent);
       };
+      fetchData();
     }
-  }, [router.query.id]);
+  });
+
   const Items = [
     {
       key: "",
