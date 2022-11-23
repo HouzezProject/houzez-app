@@ -1,18 +1,16 @@
 import styled from "@emotion/styled";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import Header from "../../Common/Header";
-import Footer from "../../Common/Footer";
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import Carousel from "react-material-ui-carousel";
 import { useRouter } from "next/router";
-import axiosClient from "../../../utils/axios";
-import { number, string } from "yup";
-import { boolean, date } from "yup/lib/locale";
+import axiosClient from "../../utils/axios";
 import { AxiosResponse } from "axios";
 
-interface Image {
+interface PropertyImage {
   id: number;
   url: string;
   tag: string;
@@ -20,6 +18,7 @@ interface Image {
 
 interface Agent {
   id: number;
+  name: string;
   icon: string;
   email: string;
 }
@@ -59,9 +58,24 @@ const ContentContainer = styled(Container)({
   position: "relative",
   width: "960px",
   display: "flex",
-  alignItems: "center",
   flexDirection: "column",
   margin: "0px 20px"
+});
+
+const AgentContainer = styled(Container)({
+  width: "960px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: "50px"
+});
+
+const AgentBox = styled(Box)({
+  width: "960px",
+  display: "flex",
+  alignItems: "start",
+  flexDirection: "column",
+  margin: "20px 80px"
 });
 
 const HouseNameTypo = styled(Typography)({
@@ -125,7 +139,7 @@ const DescriptionBox = styled(Box)({
 const PropertyDetailPage = () => {
   const router = useRouter();
   const [property, setProperty] = useState<Property>();
-  const [images, setImages] = useState<Image[]>([]);
+  const [propertyImage, setPropertyImage] = useState<PropertyImage[]>([]);
   const [agent, setAgent] = useState<Agent>();
 
   useEffect(() => {
@@ -133,61 +147,13 @@ const PropertyDetailPage = () => {
     if (idString) {
       const fetchData = async () => {
         const res: AxiosResponse = await axiosClient.get("/properties/" + idString);
-        const { image } = res;
-        setProperty(res);
-        setImages(image);
-        setAgent(res.agent);
+        setProperty(res.data);
+        setPropertyImage(res.data.image);
+        setAgent(res.data.agent);
       };
       fetchData();
     }
   });
-
-  const Items = [
-    {
-      key: "",
-      image: "data.image.ur",
-      text: "data.image.tag"
-    }
-  ];
-
-  const propertyDetails = {
-    "Property ID:": 0,
-    "Property Type:": "1",
-    "Price:": 0,
-    "Bedrooms:": 0,
-    "Bathrooms:": 0,
-    "Garage:": 0,
-    "Land Size": 0,
-    "Pre-own:": false,
-    "State:": "",
-    "Street:": "",
-    "Suburb:": "",
-    "Postcode:": 0,
-    "Status:": ""
-  };
-
-  const indoor = [
-    "Ensuite",
-    "Dishwasher",
-    "Study",
-    "Built in robes",
-    "Alarm system",
-    "Broadband",
-    "Floorboards",
-    "Gym",
-    "Rumpus",
-    "Workshop"
-  ];
-  const outdoor = [
-    "Swimming pool",
-    "Balcony",
-    "Outdoor area",
-    "Undercover parking",
-    "shed",
-    "Fully fenced",
-    "Outdoor spa",
-    "Tennis court"
-  ];
 
   return (
     <MainContainer>
@@ -195,110 +161,93 @@ const PropertyDetailPage = () => {
       <ContentContainer>
         <DetailBox>
           <InfoBox>
-            <HouseNameTypo variant="h3">Luxury Family Home</HouseNameTypo>
-            <Typography variant="body1">166 welling street, Hobart, vic 3066</Typography>
+            <HouseNameTypo variant="h3">{property?.id}</HouseNameTypo>
+            <Typography variant="body1">
+              {property?.street}
+              {property?.suburb}
+              {property?.state}
+              {property?.postcode}
+            </Typography>
           </InfoBox>
           <InfoBox>
-            <HouseNameTypo variant="h3">Price</HouseNameTypo>
-            <Typography variant="body1">Icon</Typography>
+            <HouseNameTypo variant="h3">{property?.price}</HouseNameTypo>
+            <Typography variant="body1">{property?.propertyType}</Typography>
           </InfoBox>
         </DetailBox>
         <ImageCarousel NextIcon={<MdKeyboardArrowRight />} PrevIcon={<MdKeyboardArrowLeft />}>
-          {Items.map(({ key, image, text }) => (
-            <Image key={key} src={image} alt={text} width="724px" height="600px" />
+          {propertyImage?.map((item) => (
+            <Image key={item.id} src={item.url} alt={item.tag} width="724px" height="600px" />
           ))}
         </ImageCarousel>
         <DescriptionBox>
           <InfoTypo variant="h5">Description</InfoTypo>
-          <DetailTypo variant="body2">
-            House description:Evans Tower very high demand corner junior one bedroom plus a large balcony boasting full
-            open NYC views. You need to see the views to believe them. Mint condition with new hardwood floors. Lots of
-            closets plus washer and dryer.
-          </DetailTypo>
+          <DetailTypo variant="body2">{property?.description}</DetailTypo>
           <InfoTypo variant="h5">Property Details</InfoTypo>
           <Grid container>
-            <Grid item xs={4} key={"Property ID:"}>
+            <Grid item xs={4} key={property?.id}>
+              <TitleTypo>Property ID:{property?.id}</TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.propertyType}>
+              <TitleTypo>Property Type:{property?.propertyType}</TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.price}>
+              <TitleTypo>Price:{property?.price}</TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.bedroom}>
+              <TitleTypo> Bedrooms: {property?.bedroom} </TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.bathroom}>
+              <TitleTypo> Bathrooms: {property?.bathroom}</TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.garage}>
+              <TitleTypo>Garage:{property?.garage}</TitleTypo>
+            </Grid>
+            <Grid item xs={4} key={property?.landSize}>
               <TitleTypo>
-                {"Property ID:"}
-                {propertyDetails["Property ID:"]}
+                Land Size:
+                {property?.landSize}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Property Type:"}>
+            <Grid item xs={4} key={property?.propertyIsNew.toString()}>
               <TitleTypo>
-                {"Property Type:"}
-                {propertyDetails["Property Type:"]}
+                Pre-own:
+                {property?.propertyIsNew}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Price:"}>
+            <Grid item xs={4} key={property?.state}>
               <TitleTypo>
-                {"Price:"}
-                {propertyDetails["Price:"]}
+                State:
+                {property?.state}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Bedrooms:"}>
+            <Grid item xs={4} key={property?.street}>
               <TitleTypo>
-                {"Bedrooms:"}
-                {propertyDetails["Bedrooms:"]}
+                Street:
+                {property?.street}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Bathrooms:"}>
+            <Grid item xs={4} key={property?.suburb}>
               <TitleTypo>
-                {"Bathrooms:"}
-                {propertyDetails["Bathrooms:"]}
+                Suburb:
+                {property?.suburb}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Garage:"}>
+            <Grid item xs={4} key={property?.postcode}>
               <TitleTypo>
-                {"Garage:"}
-                {propertyDetails["Garage:"]}
+                Postcode:
+                {property?.postcode}
               </TitleTypo>
             </Grid>
-            <Grid item xs={4} key={"Land Size:"}>
+            <Grid item xs={4} key={property?.status}>
               <TitleTypo>
-                {"Land Size:"}
-                {propertyDetails["Land Size"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"Pre-own:"}>
-              <TitleTypo>
-                {"Pre-own:"}
-                {propertyDetails["Pre-own:"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"State:"}>
-              <TitleTypo>
-                {"State:"}
-                {propertyDetails["State:"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"Street:"}>
-              <TitleTypo>
-                {"Street:"}
-                {propertyDetails["Street:"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"Suburb:"}>
-              <TitleTypo>
-                {"Suburb:"}
-                {propertyDetails["Suburb:"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"Postcode:"}>
-              <TitleTypo>
-                {"Postcode:"}
-                {propertyDetails["Postcode:"]}
-              </TitleTypo>
-            </Grid>
-            <Grid item xs={4} key={"Status:"}>
-              <TitleTypo>
-                {"Status:"}
-                {propertyDetails["Status:"]}
+                Status:
+                {property?.status}
               </TitleTypo>
             </Grid>
           </Grid>
           <InfoTypo variant="h5">Indoor</InfoTypo>
           <Grid container>
-            {indoor.map((value, key) => (
+            {property?.indoor.split(",").map((value, key) => (
               <Grid item xs={4} key={key}>
                 <FeatureTypo>{value}</FeatureTypo>
               </Grid>
@@ -306,7 +255,7 @@ const PropertyDetailPage = () => {
           </Grid>
           <InfoTypo variant="h5">Outdoor</InfoTypo>
           <Grid container>
-            {outdoor.map((value, key) => (
+            {property?.indoor.split(",").map((value, key) => (
               <Grid item xs={4} key={key}>
                 <FeatureTypo>{value}</FeatureTypo>
               </Grid>
@@ -314,6 +263,14 @@ const PropertyDetailPage = () => {
           </Grid>
           <InfoTypo variant="h5">Location</InfoTypo>
           <InfoTypo variant="h5">What is Nearby</InfoTypo>
+          <InfoTypo variant="h5">Agent information</InfoTypo>
+          <AgentContainer>
+            <Image key={agent?.id} src={agent?.icon} alt="Agent Icon" width="200px" height="200px" />
+            <AgentBox>
+              <TitleTypo>Name: {agent?.name}</TitleTypo>
+              <TitleTypo>Email: {agent?.email}</TitleTypo>
+            </AgentBox>
+          </AgentContainer>
         </DescriptionBox>
       </ContentContainer>
       <Footer />
