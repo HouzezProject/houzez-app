@@ -110,7 +110,7 @@ const Header = () => {
               <HomeIcon />
               Home
             </HeaderLink>
-            <HeaderLink href="/">
+            <HeaderLink href="/property-list">
               <SegmentIcon />
               List
             </HeaderLink>
