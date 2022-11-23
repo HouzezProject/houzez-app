@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import Header from "../../Common/Header";
-import Footer from "../../Common/Footer";
+import Header from "../Common/Header";
+import Footer from "../Common/Footer";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import Carousel from "react-material-ui-carousel";
 import { useRouter } from "next/router";
-import axiosClient from "../../../utils/axios";
+import axiosClient from "../../utils/axios";
 import { AxiosResponse } from "axios";
 
 interface PropertyImage {
