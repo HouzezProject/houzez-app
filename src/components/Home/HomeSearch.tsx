@@ -6,19 +6,26 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import theme from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
-import { getPropertyData } from "../../pages/api/get-property";
+import Router from "next/router";
+import { propertyValueFormat } from "../../utils/property-value-formatter";
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
-  minPrice: string | null;
-  maxPrice: string | null;
-  bedroom: string | null;
-  livingroom: string | null;
-  bathroom: string | null;
-  garage: string | null;
+  minPrice: string;
+  maxPrice: string;
+  bedroom: string;
+  livingroom: string;
+  bathroom: string;
+  garage: string;
 }
 
 const initialPropertyFilter: PropertyFilter = {
+  suburb: "any",
+  postcode: "any",
+  state: "any",
   propertyType: "any",
   minPrice: "any",
   maxPrice: "any",
@@ -132,8 +139,8 @@ const HomeSearch = () => {
   };
 
   const getMapData = () => {
-    getPropertyData(propertyFilter, null).then((data: any) => {
-      console.log(data);
+    Promise.resolve(propertyValueFormat("/property-list", "20", propertyFilter, null)).then((url) => {
+      Router.push(url);
     });
   };
 

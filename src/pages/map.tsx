@@ -13,6 +13,9 @@ const {
 } = theme;
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
   minPrice: string;
   maxPrice: string;
@@ -23,6 +26,9 @@ interface PropertyFilter {
 }
 
 const initialPropertyFilter: PropertyFilter = {
+  suburb: "any",
+  postcode: "any",
+  state: "any",
   propertyType: "any",
   minPrice: "any",
   maxPrice: "any",
@@ -52,7 +58,7 @@ const MapPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    getPropertyData(propertyFilter, bounds).then((data) => {
+    getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
   }, [coordinates, bounds]);

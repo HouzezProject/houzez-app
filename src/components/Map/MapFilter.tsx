@@ -17,6 +17,9 @@ interface Props {
 }
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
   minPrice: string;
   maxPrice: string;
@@ -113,7 +116,7 @@ const MapFilter = ({ bounds, setProperties, propertyFilter, setPropertyFilter }:
   };
 
   const getMapData = () => {
-    getPropertyData(propertyFilter, bounds).then((data: any) => {
+    getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
   };
