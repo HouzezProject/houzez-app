@@ -16,7 +16,7 @@ const priceFormatter = (price: string) => price.substring(1, price.length).repla
 export const getPropertyData = async (filterValue: PropertyFilter, bounds: any) => {
   const size = 20;
   let url = "/properties?size=" + size;
-  url = `${url}"&ne_lat="${bounds?.ne.lat}"&ne_lng="${bounds?.ne.lng}"&sw_lat="${bounds?.sw.lat}"&sw_lng="${bounds?.sw.lng}`;
+  url = `${url}&ne_lat=${bounds?.ne.lat}&ne_lng=${bounds?.ne.lng}&sw_lat=${bounds?.sw.lat}&sw_lng=${bounds?.sw.lng}`;
 
   Object.keys(filterValue).forEach((k) => {
     const key = k as keyof PropertyFilter;
@@ -31,14 +31,6 @@ export const getPropertyData = async (filterValue: PropertyFilter, bounds: any) 
       }
     }
   });
-
-  // filterValue.propertyType === "any" ? "" : (url = url + "&filter_property_type=" + filterValue.propertyType);
-  // filterValue.minPrice === "any" ? "" : (url = url + "&filter_min_price=" + priceToString(filterValue.minPrice));
-  // filterValue.maxPrice === "any" ? "" : (url = url + "&filter_max_price=" + priceToString(filterValue.maxPrice));
-  // filterValue.bedroom === "any" ? "" : (url = url + "&filter_bedroom=" + filterValue.bedroom.substring(0, 1));
-  // filterValue.livingroom === "any" ? "" : (url = url + "&filter_livingroom=" + filterValue.livingroom.substring(0, 1));
-  // filterValue.bathroom === "any" ? "" : (url = url + "&filter_bathroom=" + filterValue.bathroom.substring(0, 1));
-  // filterValue.garage === "any" ? "" : (url = url + "&filter_garage=" + filterValue.garage.substring(0, 1));
 
   const res = await axiosClient.get(url);
   return res.data.propertyGetDtoList;
