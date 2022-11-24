@@ -12,7 +12,7 @@ interface PropertyFilter {
 
 export const getPropertyData = async (filterValue: PropertyFilter, bounds: null) => {
   const size = 20;
-  let url = `/properties?size=` + size;
+  let url = `/properties?sizee=` + size;
   url =
     url +
     "&ne_lat=" +
