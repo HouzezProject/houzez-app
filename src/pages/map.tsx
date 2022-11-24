@@ -47,7 +47,9 @@ const MapBody = styled(Box)({
 const MapPage: NextPage = () => {
   const [properties, setProperties] = useState([]);
   const [coordinates, setCoordinates] = useState({ lat: -37.878563, lng: 145.170187 });
-  const [bounds, setBounds] = useState(null);
+  const [bounds, setBounds] = useState(
+    "" as unknown as { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } }
+  );
 
   const [propertyFilter, setPropertyFilter] = useState(initialPropertyFilter);
 
@@ -61,6 +63,7 @@ const MapPage: NextPage = () => {
     getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coordinates, bounds]);
 
   return (

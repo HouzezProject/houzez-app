@@ -14,7 +14,12 @@ interface PropertyFilter {
   garage: string;
 }
 
-export const getPropertyData = async (targetUrl: string, size: string, filterValue: PropertyFilter, bounds: any) => {
+export const getPropertyData = async (
+  targetUrl: string,
+  size: string,
+  filterValue: PropertyFilter,
+  bounds: { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } }
+) => {
   const url = propertyValueFormat(targetUrl, size, filterValue, bounds);
 
   const res = await axiosClient.get(url);

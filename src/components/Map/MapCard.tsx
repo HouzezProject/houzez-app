@@ -15,6 +15,7 @@ const {
 } = theme;
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cardData: any;
   setCardStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -97,6 +98,7 @@ const MapCard = ({ cardData, setCardStatus }: Props) => {
   const propertyDetailURL = () => {
     router.push("/property-detail?id=" + cardData.id);
   };
+  console.log(cardData);
 
   return (
     <MapCardBox>

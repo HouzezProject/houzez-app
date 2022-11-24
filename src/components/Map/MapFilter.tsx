@@ -10,7 +10,7 @@ const {
 } = theme;
 
 interface Props {
-  bounds: any;
+  bounds: { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } };
   setProperties: React.Dispatch<React.SetStateAction<never[]>>;
   propertyFilter: PropertyFilter;
   setPropertyFilter: React.Dispatch<React.SetStateAction<PropertyFilter>>;
