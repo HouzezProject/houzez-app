@@ -51,28 +51,16 @@ const HeaderButton = styled(Button)({
 const HeaderButtonSignIn = styled(HeaderButton)({
   color: secondary.contrastText,
   "&:hover": {
-    borderColor: secondary.dark,
-    backgroundColor: secondary.light
-  }
-});
-
-const HeaderButtonLinkSignIn = styled.div({
-  color: secondary.contrastText,
-  "&:hover": {
+    backgroundColor: secondary.light,
     color: primary.main
   }
 });
 
 const HeaderButtonSignUp = styled(HeaderButton)({
   backgroundColor: background.paper,
-  "&:hover": {
-    backgroundColor: primary.main
-  }
-});
-
-const HeaderButtonLinkSignUp = styled.div({
   color: primary.main,
   "&:hover": {
+    backgroundColor: primary.main,
     color: primary.contrastText
   }
 });
@@ -143,16 +131,12 @@ const Header = () => {
             </>
           ) : (
             <>
-              <HeaderButtonSignIn variant="text">
-                <Link href="/sign-in">
-                  <HeaderButtonLinkSignIn>Sign in</HeaderButtonLinkSignIn>
-                </Link>
-              </HeaderButtonSignIn>
-              <HeaderButtonSignUp variant="contained">
-                <Link href="/sign-up">
-                  <HeaderButtonLinkSignUp>Sign up</HeaderButtonLinkSignUp>
-                </Link>
-              </HeaderButtonSignUp>
+              <Link href="/sign-in">
+                <HeaderButtonSignIn variant="text">Sign in</HeaderButtonSignIn>
+              </Link>
+              <Link href="/sign-up">
+                <HeaderButtonSignUp variant="contained">Sign up</HeaderButtonSignUp>
+              </Link>
             </>
           )}
         </HeaderGrid>
