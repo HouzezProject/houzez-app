@@ -10,7 +10,7 @@ const {
 } = theme;
 
 interface Props {
-  bounds: null;
+  bounds: any;
   setProperties: React.Dispatch<React.SetStateAction<never[]>>;
   propertyFilter: PropertyFilter;
   setPropertyFilter: React.Dispatch<React.SetStateAction<PropertyFilter>>;

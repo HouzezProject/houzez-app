@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import styled from "@emotion/styled";
-import { Box, Button, Container, InputBase, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Container, Input, InputBase, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -8,6 +9,7 @@ import theme from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import Router from "next/router";
 import { propertyValueFormat } from "../../utils/property-value-formatter";
+import Autocomplete from "react-google-autocomplete";
 
 interface PropertyFilter {
   suburb: string;
@@ -133,14 +135,45 @@ const propertyTypes = [
 
 const HomeSearch = () => {
   const [propertyFilter, setPropertyFilter] = useState(initialPropertyFilter);
+  const [bounds, setBounds] = useState(
+    "" as unknown as { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } }
+  );
+  const [address, setAddress] = useState("Search suburb, postcode or state..." as string | undefined);
 
   const handleChange = ({ target: { value, name } }: SelectChangeEvent<unknown>) => {
     setPropertyFilter((data) => ({ ...data, [name]: value }));
   };
 
   const getMapData = () => {
-    Promise.resolve(propertyValueFormat("/property-list", "20", propertyFilter, null)).then((url) => {
+    Promise.resolve(propertyValueFormat("/property-list", "20", propertyFilter, bounds)).then((url) => {
       Router.push(url);
+    });
+  };
+
+  const locationResolution = (
+    address_components: google.maps.GeocoderAddressComponent[] | undefined,
+    formatted_address: string | undefined,
+    geometry: google.maps.places.PlaceGeometry | undefined
+  ) => {
+    setBounds({
+      ne: { lat: geometry?.viewport?.Za.hi, lng: geometry?.viewport?.Ia.hi },
+      sw: { lat: geometry?.viewport?.Za.lo, lng: geometry?.viewport?.Ia.lo }
+    });
+    setAddress(formatted_address?.toString());
+    address_components?.map((addressComponentsValue: any) => {
+      switch (addressComponentsValue.types[0]) {
+        case "postal_code":
+          propertyFilter.postcode = addressComponentsValue.long_name;
+          break;
+        case "locality":
+          propertyFilter.suburb = addressComponentsValue.long_name;
+          break;
+        case "administrative_area_level_1":
+          propertyFilter.state = addressComponentsValue.short_name;
+          break;
+        default:
+          break;
+      }
     });
   };
 
@@ -151,7 +184,25 @@ const HomeSearch = () => {
         Houzez Will Assist You In The Best And Comfortable Property Services For You.
       </DetailTypography>
       <HomeSearchBox>
-        <HomeInputBase placeholder="Search suburb, postcode or state"></HomeInputBase>
+        <HomeInputBase
+          inputComponent={({ ...props }) => (
+            <Autocomplete
+              apiKey={process.env.NEXT_PUBLIC_GOOGLE_ADDRESS_API_KEY}
+              {...props}
+              options={{
+                // types: [],
+                componentRestrictions: { country: "au" },
+                fields: ["address_components", "formatted_address", "geometry"]
+              }}
+              language={"en"}
+              onPlaceSelected={({ address_components, formatted_address, geometry }) => {
+                locationResolution(address_components, formatted_address, geometry);
+              }}
+            />
+          )}
+          // value={address}
+          placeholder={address}
+        />
         <FormControl>
           <HomeFilterSelectRoom name="propertyType" value={propertyFilter.propertyType} onChange={handleChange}>
             {propertyTypes.map((propertyType) => (
