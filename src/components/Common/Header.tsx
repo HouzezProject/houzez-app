@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { Breadcrumbs, Button, Container, Grid, Link } from "@mui/material";
+import { Box, Breadcrumbs, Button, Container, Grid } from "@mui/material";
 import theme from "../../styles/theme";
 import Image from "next/image";
 import LogoImg from "../../../public/assets/logo/logo_white.png";
@@ -9,6 +9,7 @@ import SegmentIcon from "@mui/icons-material/Segment";
 import MapIcon from "@mui/icons-material/Map";
 import StarsIcon from "@mui/icons-material/Stars";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Link from "next/link";
 
 const {
   palette: { primary, secondary, background }
@@ -28,15 +29,15 @@ const HeaderGrid = styled(Grid)({
   justifyContent: "center"
 });
 
-const HeaderLink = styled(Link)({
+const HeaderLink = styled(Box)({
   height: "90px",
   display: "flex",
   alignItems: "center",
   color: secondary.contrastText,
-  textDecoration: "none",
   margin: "0 20px",
   gap: "20px",
-  fontWeight: "700"
+  fontWeight: "700",
+  cursor: "pointer"
 });
 
 const HeaderButton = styled(Button)({
@@ -55,8 +56,7 @@ const HeaderButtonSignIn = styled(HeaderButton)({
   }
 });
 
-const HeaderButtonLinkSignIn = styled(Link)({
-  textDecoration: "none",
+const HeaderButtonLinkSignIn = styled.div({
   color: secondary.contrastText,
   "&:hover": {
     color: primary.main
@@ -70,15 +70,14 @@ const HeaderButtonSignUp = styled(HeaderButton)({
   }
 });
 
-const HeaderButtonLinkSignUp = styled(Link)({
-  textDecoration: "none",
+const HeaderButtonLinkSignUp = styled.div({
   color: primary.main,
   "&:hover": {
     color: primary.contrastText
   }
 });
 
-const HeaderIconLink = styled(Link)({
+const HeaderIconLink = styled.div({
   color: secondary.contrastText,
   padding: "10px",
   fontSize: "2rem"
@@ -99,48 +98,62 @@ const Header = () => {
     <HeaderContainer>
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
-          <Link href="/">
-            <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
-          </Link>
+          <Box>
+            <Link href="/">
+              <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+            </Link>
+          </Box>
         </HeaderGrid>
-
         <HeaderGrid item xs={6}>
           <Breadcrumbs separator="">
-            <HeaderLink href="/">
+            <HeaderLink>
               <HomeIcon />
-              Home
+              <Link href="/">
+                <div>Home</div>
+              </Link>
             </HeaderLink>
-            <HeaderLink href="/property-list">
+            <HeaderLink>
               <SegmentIcon />
-              List
+              <Link href="/property-list">
+                <div>List</div>
+              </Link>
             </HeaderLink>
-            <HeaderLink href="/map">
+            <HeaderLink>
               <MapIcon />
-              Map
+              <Link href="/map">
+                <div>Map</div>
+              </Link>
             </HeaderLink>
           </Breadcrumbs>
         </HeaderGrid>
 
         <HeaderGrid item xs={3}>
-          {!loginStatus && (
-            <HeaderButtonSignIn variant="text">
-              <HeaderButtonLinkSignIn href="/sign-in">Sign in</HeaderButtonLinkSignIn>
-            </HeaderButtonSignIn>
-          )}
-          {!loginStatus && (
-            <HeaderButtonSignUp variant="contained">
-              <HeaderButtonLinkSignUp href="/sign-up">Sign up</HeaderButtonLinkSignUp>
-            </HeaderButtonSignUp>
-          )}
-          {loginStatus && (
-            <HeaderIconLink href="/agent-management/account-setting">
-              <StarsIcon fontSize="inherit" />
-            </HeaderIconLink>
-          )}
-          {loginStatus && (
-            <HeaderIconLink href="/agent-management/account-setting">
-              <AccountCircleIcon fontSize="inherit" />
-            </HeaderIconLink>
+          {loginStatus ? (
+            <>
+              <Link href="/agent-management/account-setting">
+                <HeaderIconLink>
+                  <StarsIcon fontSize="inherit" />
+                </HeaderIconLink>
+              </Link>
+              <Link href="/agent-management/account-setting">
+                <HeaderIconLink>
+                  <AccountCircleIcon fontSize="inherit" />
+                </HeaderIconLink>
+              </Link>
+            </>
+          ) : (
+            <>
+              <HeaderButtonSignIn variant="text">
+                <Link href="/sign-in">
+                  <HeaderButtonLinkSignIn>Sign in</HeaderButtonLinkSignIn>
+                </Link>
+              </HeaderButtonSignIn>
+              <HeaderButtonSignUp variant="contained">
+                <Link href="/sign-up">
+                  <HeaderButtonLinkSignUp>Sign up</HeaderButtonLinkSignUp>
+                </Link>
+              </HeaderButtonSignUp>
+            </>
           )}
         </HeaderGrid>
       </Grid>

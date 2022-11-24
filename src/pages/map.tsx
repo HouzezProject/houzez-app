@@ -6,7 +6,7 @@ import theme from "../styles/theme";
 import Header from "../components/Common/Header";
 import Map from "../components/Map/Map";
 import MapFilter from "../components/Map/MapFilter";
-import { getPropertyData } from "./api/get-property";
+import { getPropertyData } from "../utils/get-property";
 
 const {
   palette: { primary }
