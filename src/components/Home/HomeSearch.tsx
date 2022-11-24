@@ -3,9 +3,30 @@ import { Box, Button, Container, InputBase, Typography } from "@mui/material";
 import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import theme from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
+import { getPropertyData } from "../../pages/api/get-property";
+
+interface PropertyFilter {
+  propertyType: string;
+  minPrice: string | null;
+  maxPrice: string | null;
+  bedroom: string | null;
+  livingroom: string | null;
+  bathroom: string | null;
+  garage: string | null;
+}
+
+const initialPropertyFilter: PropertyFilter = {
+  propertyType: "any",
+  minPrice: "any",
+  maxPrice: "any",
+  bedroom: "any",
+  livingroom: "any",
+  bathroom: "any",
+  garage: "any"
+};
 
 const {
   palette: {
@@ -64,11 +85,6 @@ const HomeInputBase = styled(InputBase)({
   justifyContent: "center",
   borderRadius: "0"
 });
-const CategoriesBox = styled(Box)({
-  width: "25%",
-  height: "60px",
-  backgroundColor: paper
-});
 
 const SearchButton = styled(Button)({
   width: "25%",
@@ -80,13 +96,7 @@ const SearchButton = styled(Button)({
   gap: "6px"
 });
 
-const CategFormControl = styled(FormControl)({
-  width: "220px",
-  borderLeft: "0.1px groove",
-  backgroundColor: paper
-});
-
-const CategSelect = styled(Select)({
+const HomeFilterSelect = styled(Select)({
   borderRadius: "0",
   height: "60px",
   paddingLeft: "20px",
@@ -96,20 +106,36 @@ const CategSelect = styled(Select)({
   }
 });
 
+const HomeFilterSelectRoom = styled(HomeFilterSelect)({
+  width: "12vw",
+  minWidth: "100px"
+});
+
+const propertyTypes = [
+  "any",
+  "House",
+  "Apartment",
+  "Townhouse",
+  "Villa",
+  "Land",
+  "Acreage",
+  "Rural",
+  "Block Of Units",
+  "Retirement Living"
+];
+
 const HomeSearch = () => {
-  const options = [
-    { label: "All types", value: "All types" },
-    { label: "House", value: "House" },
-    { label: "Apartment", value: "Apartment" },
-    { label: "Townhouse", value: "Townhouse" },
-    { label: "Villa", value: "Villa" },
-    { label: "Land", value: "Land" },
-    { label: "Acreage", value: "Acreage" },
-    { label: "Rural", value: "Rural" },
-    { label: "Block of Units", value: "Block of Units" },
-    { label: "Retirement Living", value: "Retirement Living" }
-  ];
-  const [value, setValue] = useState("All types");
+  const [propertyFilter, setPropertyFilter] = useState(initialPropertyFilter);
+
+  const handleChange = ({ target: { value, name } }: SelectChangeEvent<unknown>) => {
+    setPropertyFilter((data) => ({ ...data, [name]: value }));
+  };
+
+  const getMapData = () => {
+    getPropertyData(propertyFilter, null).then((data: any) => {
+      console.log(data);
+    });
+  };
 
   return (
     <HomeSearchContainer>
@@ -118,29 +144,17 @@ const HomeSearch = () => {
         Houzez Will Assist You In The Best And Comfortable Property Services For You.
       </DetailTypography>
       <HomeSearchBox>
-        <HomeInputBase placeholder="Search home"></HomeInputBase>
-        <CategoriesBox>
-          <CategFormControl>
-            <CategSelect
-              labelId="types"
-              id="types"
-              label="types"
-              disableUnderline
-              variant="standard"
-              value={value}
-              onChange={(event) => setValue(event.target.value as string)}
-            >
-              {options.map((option) => {
-                return (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                );
-              })}
-            </CategSelect>
-          </CategFormControl>
-        </CategoriesBox>
-        <SearchButton variant="contained">
+        <HomeInputBase placeholder="Search suburb, postcode or state"></HomeInputBase>
+        <FormControl>
+          <HomeFilterSelectRoom name="propertyType" value={propertyFilter.propertyType} onChange={handleChange}>
+            {propertyTypes.map((propertyType) => (
+              <MenuItem key={propertyType} value={propertyType}>
+                {propertyType}
+              </MenuItem>
+            ))}
+          </HomeFilterSelectRoom>
+        </FormControl>
+        <SearchButton variant="contained" onClick={getMapData}>
           <SearchIcon sx={{ color: paper }} />
           Search
         </SearchButton>
