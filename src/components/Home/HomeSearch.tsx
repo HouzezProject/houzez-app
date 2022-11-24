@@ -164,7 +164,6 @@ const HomeSearch = () => {
     });
     setAddress(formatted_address?.toString());
     address_components?.map((addressComponentsValue: { long_name: string; short_name: string; types: string[] }) => {
-      console.log(addressComponentsValue);
       switch (addressComponentsValue.types[0]) {
         case "postal_code":
           propertyFilter.postcode = addressComponentsValue.long_name;

@@ -98,7 +98,6 @@ const MapCard = ({ cardData, setCardStatus }: Props) => {
   const propertyDetailURL = () => {
     router.push("/property-detail?id=" + cardData.id);
   };
-  console.log(cardData);
 
   return (
     <MapCardBox>
