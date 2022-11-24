@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable camelcase */
 import styled from "@emotion/styled";
 import { Box, Button, Container, InputBase, Typography } from "@mui/material";
@@ -156,7 +157,9 @@ const HomeSearch = () => {
     geometry: google.maps.places.PlaceGeometry | undefined
   ) => {
     setBounds({
+      // @ts-ignore
       ne: { lat: geometry?.viewport?.Za.hi, lng: geometry?.viewport?.Ia.hi },
+      // @ts-ignore
       sw: { lat: geometry?.viewport?.Za.lo, lng: geometry?.viewport?.Ia.lo }
     });
     setAddress(formatted_address?.toString());
