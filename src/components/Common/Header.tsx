@@ -87,7 +87,7 @@ const Header = () => {
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
           <Box>
-            <Link href="/">
+            <Link href="/" passHref>
               <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
             </Link>
           </Box>
@@ -96,19 +96,19 @@ const Header = () => {
           <Breadcrumbs separator="">
             <HeaderLink>
               <HomeIcon />
-              <Link href="/">
+              <Link href="/" passHref>
                 <div>Home</div>
               </Link>
             </HeaderLink>
             <HeaderLink>
               <SegmentIcon />
-              <Link href="/property-list">
+              <Link href="/property-list" passHref>
                 <div>List</div>
               </Link>
             </HeaderLink>
             <HeaderLink>
               <MapIcon />
-              <Link href="/map">
+              <Link href="/map" passHref>
                 <div>Map</div>
               </Link>
             </HeaderLink>
@@ -118,12 +118,12 @@ const Header = () => {
         <HeaderGrid item xs={3}>
           {loginStatus ? (
             <>
-              <Link href="/agent-management/account-setting">
+              <Link href="/agent-management/account-setting" passHref>
                 <HeaderIconLink>
                   <StarsIcon fontSize="inherit" />
                 </HeaderIconLink>
               </Link>
-              <Link href="/agent-management/account-setting">
+              <Link href="/agent-management/account-setting" passHref>
                 <HeaderIconLink>
                   <AccountCircleIcon fontSize="inherit" />
                 </HeaderIconLink>
@@ -131,10 +131,10 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link href="/sign-in">
+              <Link href="/sign-in" passHref>
                 <HeaderButtonSignIn variant="text">Sign in</HeaderButtonSignIn>
               </Link>
-              <Link href="/sign-up">
+              <Link href="/sign-up" passHref>
                 <HeaderButtonSignUp variant="contained">Sign up</HeaderButtonSignUp>
               </Link>
             </>
