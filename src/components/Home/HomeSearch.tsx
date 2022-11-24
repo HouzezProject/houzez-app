@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import styled from "@emotion/styled";
-import { Box, Button, Container, Input, InputBase, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Container, InputBase, Typography } from "@mui/material";
+import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -160,7 +160,8 @@ const HomeSearch = () => {
       sw: { lat: geometry?.viewport?.Za.lo, lng: geometry?.viewport?.Ia.lo }
     });
     setAddress(formatted_address?.toString());
-    address_components?.map((addressComponentsValue: any) => {
+    address_components?.map((addressComponentsValue: { long_name: string; short_name: string; types: string[] }) => {
+      console.log(addressComponentsValue);
       switch (addressComponentsValue.types[0]) {
         case "postal_code":
           propertyFilter.postcode = addressComponentsValue.long_name;
