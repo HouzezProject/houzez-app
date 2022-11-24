@@ -190,7 +190,7 @@ const HomeSearch = () => {
               apiKey={process.env.NEXT_PUBLIC_GOOGLE_ADDRESS_API_KEY}
               {...props}
               options={{
-                // types: [],
+                types: [],
                 componentRestrictions: { country: "au" },
                 fields: ["address_components", "formatted_address", "geometry"]
               }}
