@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import theme from "../../styles/theme";
 import SearchIcon from "@mui/icons-material/Search";
-import { getPropertyData } from "../../pages/api/get-property";
+import { getPropertyData } from "../../utils/get-property";
 
 const {
   palette: { primary, background }

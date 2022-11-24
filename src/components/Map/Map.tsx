@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import React, { useState } from "react";
@@ -69,6 +70,7 @@ const Map = ({ setCoordinates, coordinates, setBounds, properties }: Props) => {
         }}
       >
         {properties?.map((property: { latitude: string; longitude: string }, i: any) => (
+          // @ts-ignore
           <Box key={i} lat={Number(property.latitude)} lng={Number(property.longitude)} component="span">
             <MapHouseIcon />
           </Box>
@@ -77,7 +79,9 @@ const Map = ({ setCoordinates, coordinates, setBounds, properties }: Props) => {
           <MapCard
             cardData={cardData}
             setCardStatus={setCardStatus}
+            // @ts-ignore
             lat={Number(cardData?.latitude)}
+            // @ts-ignore
             lng={Number(cardData?.longitude)}
           />
         )}
