@@ -10,9 +10,11 @@ interface PropertyFilter {
   garage: string;
 }
 
+let url = `/properties?size=`;
+
 export const getPropertyData = async (filterValue: PropertyFilter, bounds: null) => {
   const size = 20;
-  let url = `/properties?size=` + size;
+  url = url + size;
   url =
     url +
     "&ne_lat=" +
