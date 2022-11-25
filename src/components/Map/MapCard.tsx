@@ -15,6 +15,7 @@ const {
 } = theme;
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cardData: any;
   setCardStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -10,13 +10,16 @@ const {
 } = theme;
 
 interface Props {
-  bounds: null;
+  bounds: { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } };
   setProperties: React.Dispatch<React.SetStateAction<never[]>>;
   propertyFilter: PropertyFilter;
   setPropertyFilter: React.Dispatch<React.SetStateAction<PropertyFilter>>;
 }
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
   minPrice: string;
   maxPrice: string;
@@ -113,7 +116,7 @@ const MapFilter = ({ bounds, setProperties, propertyFilter, setPropertyFilter }:
   };
 
   const getMapData = () => {
-    getPropertyData(propertyFilter, bounds).then((data: any) => {
+    getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
   };

@@ -22,8 +22,19 @@ interface Props {
     lat: number;
     lng: number;
   };
-  setBounds: any;
-  properties: any;
+  setBounds: React.Dispatch<
+    React.SetStateAction<{
+      ne: {
+        lat: unknown;
+        lng: unknown;
+      };
+      sw: {
+        lat: unknown;
+        lng: unknown;
+      };
+    }>
+  >;
+  properties: never[];
 }
 
 const MapContainer = styled(Box)({
@@ -42,7 +53,7 @@ const MapHouseIcon = styled(HouseIcon)({
 
 const Map = ({ setCoordinates, coordinates, setBounds, properties }: Props) => {
   const [cardStatus, setCardStatus] = useState(false);
-  const [cardData, setCardData] = useState(null);
+  const [cardData, setCardData] = useState({} as unknown);
 
   const options = () => ({
     mapId: "5af9dc285f149839",
@@ -69,7 +80,7 @@ const Map = ({ setCoordinates, coordinates, setBounds, properties }: Props) => {
           setCardStatus(true);
         }}
       >
-        {properties?.map((property: { latitude: string; longitude: string }, i: any) => (
+        {properties?.map((property: { latitude: string; longitude: string }, i: number) => (
           // @ts-ignore
           <Box key={i} lat={Number(property.latitude)} lng={Number(property.longitude)} component="span">
             <MapHouseIcon />
