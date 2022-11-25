@@ -28,6 +28,7 @@ interface PropertyFilter {
   bathroom: string;
   garage: string;
 }
+
 const MapFilterContainer = styled(Box)({
   padding: "20px 50px",
   backgroundColor: background.paper,
@@ -54,12 +55,12 @@ const MapFilterSelect = styled(Select)({
 });
 
 const MapFilterSelectRoom = styled(MapFilterSelect)({
-  width: "12vw",
+  width: "8vw",
   minWidth: "100px"
 });
 
 const MapFilterSearchButton = styled(Button)({
-  width: "6vw",
+  width: "11vw",
   minWidth: "95px",
   height: "3.5rem",
   marginTop: "10px",
