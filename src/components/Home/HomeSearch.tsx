@@ -168,12 +168,6 @@ const HomeSearch = () => {
         case "postal_code":
           propertyFilter.postcode = addressComponentsValue.long_name;
           break;
-        case "locality":
-          propertyFilter.suburb = addressComponentsValue.long_name;
-          break;
-        case "administrative_area_level_1":
-          propertyFilter.state = addressComponentsValue.short_name;
-          break;
         default:
           break;
       }
