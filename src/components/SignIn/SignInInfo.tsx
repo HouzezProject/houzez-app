@@ -59,7 +59,11 @@ const SignInInfo = () => {
     try {
       const url = `/agents/sign-in`;
       const res = await axiosClient.post(url, { email, password });
+      const userId = JSON.parse(
+        Buffer.from(res.headers.authorization?.split(".")[1], "base64").toString("binary")
+      ).agent_id;
       localStorage.setItem("token", res.headers.authorization);
+      localStorage.setItem("userId", userId);
       countdownThenRedirect("success", 3, "Sign in successfully. ", router.push, "/");
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {

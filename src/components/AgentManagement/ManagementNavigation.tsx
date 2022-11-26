@@ -17,6 +17,8 @@ const ManagementNavigationSideBar = styled(Box)({
   width: "260px",
   height: "calc(100vh - 64px)",
   paddingTop: "10px",
+  position: "fixed",
+  top: "64px",
 
   a: {
     color: secondary.dark,

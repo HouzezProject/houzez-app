@@ -48,7 +48,8 @@ pipeline {
       
         stage('Create Build Artifacts') {
           steps {
-            sh 'npm run build'
+//            sh 'npm run build'
+              sh 'echo no build now'
           }
         }
       }
@@ -57,8 +58,8 @@ pipeline {
 stage('Production') {
   steps {
     withAWS(region:"$region",credentials:"$aws_credential") {
-      sh 'aws s3 sync $repo_path s3://"$bucket"/' 
-      sh 'aws s3 sync $repo_path s3://"$test_bucket"/'
+//      sh 'aws s3 sync $repo_path s3://"$bucket"/' 
+//      sh 'aws s3 sync $repo_path s3://"$test_bucket"/'
       //--include "$include_file"
       //--exclude "$exclude_file"
       
