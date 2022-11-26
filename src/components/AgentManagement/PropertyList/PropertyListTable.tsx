@@ -12,12 +12,13 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { Property, NewProperty } from "./config";
+import { Property } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import axiosClient from "../../../utils/axios";
 import { useRouter } from "next/router";
+import HOUSEAVATAR from "../../../../public/assets/images/defaulthouse.jpg";
 
 const {
   palette: { primary }
@@ -82,27 +83,13 @@ const PropertyListTable = () => {
   const [page, setPage] = useState(0);
   const [totalNumber, setTotalNumber] = useState(0);
   const rowsPerPage = 10;
-  const [propertyDataRows, setPropertyDataRows] = useState<NewProperty[]>([]);
+  const [propertyDataRows, setPropertyDataRows] = useState<Property[]>([]);
 
   const getAgentProperties = async (pid: number) => {
     const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${pid}&size=${pageSize}`);
-
-    setTotalNumber(res.data.propertyGetDtoList.length);
+    // setTotalNumber(res.data.propertyGetDtoList.length);
     const properyList = res.data.propertyGetDtoList;
-
-    const selectImage = (propertyId: number) => {
-      const imageFilter = res.data.imageGetDtoList.filter((img: any) => img.property.id === propertyId);
-      console.log(imageFilter);
-      return imageFilter[0].url;
-    };
-
-    const newPropertyList = properyList.map((obj: Property) => ({
-      ...obj,
-      image: selectImage(obj.id),
-      totalPageNumber: res.data.totalPageNumber
-    }));
-    console.log(newPropertyList);
-    setPropertyDataRows(newPropertyList);
+    setPropertyDataRows(properyList);
   };
 
   useEffect(() => {
@@ -153,7 +140,13 @@ const PropertyListTable = () => {
               propertyDataRows.map((row) => (
                 <PropertyTableBodyRow key={row.id}>
                   <TableCell>
-                    <Image src={row.image} alt="house image" width="80px" height="40px" objectFit="contain" />
+                    <Image
+                      src={row.image.length === 0 ? HOUSEAVATAR : row.image[0].url}
+                      alt="house image"
+                      width="80px"
+                      height="40px"
+                      objectFit="contain"
+                    />
                   </TableCell>
                   <TableCell>
                     <Box>
