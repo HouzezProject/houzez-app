@@ -81,13 +81,13 @@ const PropertyListTable = () => {
   const pageSize = 10;
   const [userInfoId, setUserInfoId] = useState("");
   const [page, setPage] = useState(0);
-  const [totalNumber, setTotalNumber] = useState(0);
+  const [totalPropertyNumber, setTotalPropertyNumber] = useState(0);
   const rowsPerPage = 10;
   const [propertyDataRows, setPropertyDataRows] = useState<Property[]>([]);
 
   const getAgentProperties = async (pid: number) => {
     const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${pid}&size=${pageSize}`);
-    // setTotalNumber(res.data.propertyGetDtoList.length);
+    setTotalPropertyNumber(res.data.totalPropertyNumber);
     const properyList = res.data.propertyGetDtoList;
     setPropertyDataRows(properyList);
   };
@@ -181,7 +181,7 @@ const PropertyListTable = () => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                count={11}
+                count={totalPropertyNumber}
                 page={page}
                 rowsPerPageOptions={[10]}
                 rowsPerPage={rowsPerPage}
