@@ -21,7 +21,7 @@ const HeaderContainer = styled(Container)(({ backgroundColor = "white" }: { back
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor
+  backgroundColor: backgroundColor
 }));
 
 const HeaderGrid = styled(Grid)({

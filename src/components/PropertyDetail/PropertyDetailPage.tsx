@@ -108,7 +108,6 @@ const DescriptionBox = styled(Box)({
 const propertyDetailList: Array<keyof Property> = [
   "id",
   "propertyType",
-  "price",
   "bedroom",
   "bathroom",
   "garage",
@@ -147,7 +146,7 @@ const PropertyDetailPage = ({ property }: { property: Property }) => {
             <Typography variant="body1">{`${street} ${suburb} ${state} ${postcode}`}</Typography>
           </InfoBox>
           <InfoBox>
-            <HouseNameTypo variant="h3">{price}</HouseNameTypo>
+            <HouseNameTypo variant="h3">{`$ ${price}`}</HouseNameTypo>
             <Typography variant="body1">{propertyType}</Typography>
           </InfoBox>
         </DetailBox>
@@ -187,7 +186,7 @@ const PropertyDetailPage = ({ property }: { property: Property }) => {
           <InfoTypo variant="h5">What is Nearby</InfoTypo>
           <InfoTypo variant="h5">Agent information</InfoTypo>
           <AgentContainer>
-            <Image key={agent.id} src={agent.icon} alt="Agent Icon" width="200px" height="200px" />
+            {agent.icon && <Image key={agent.id} src={agent.icon} alt="Agent Icon" width="200px" height="200px" />}
             <AgentBox>
               <TitleTypo>Name: {agent.name}</TitleTypo>
               <TitleTypo>Email: {agent.email}</TitleTypo>
