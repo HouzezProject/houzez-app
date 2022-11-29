@@ -52,28 +52,16 @@ const HeaderButton = styled(Button)({
 const HeaderButtonSignIn = styled(HeaderButton)({
   color: secondary.contrastText,
   "&:hover": {
-    borderColor: secondary.dark,
-    backgroundColor: secondary.light
-  }
-});
-
-const HeaderButtonLinkSignIn = styled.div({
-  color: secondary.contrastText,
-  "&:hover": {
+    backgroundColor: secondary.light,
     color: primary.main
   }
 });
 
 const HeaderButtonSignUp = styled(HeaderButton)({
   backgroundColor: background.paper,
-  "&:hover": {
-    backgroundColor: primary.main
-  }
-});
-
-const HeaderButtonLinkSignUp = styled.div({
   color: primary.main,
   "&:hover": {
+    backgroundColor: primary.main,
     color: primary.contrastText
   }
 });
@@ -100,7 +88,7 @@ const Header = ({ backgroundColor }: { backgroundColor: string }) => {
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
           <Box>
-            <Link href="/">
+            <Link href="/" passHref>
               <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
             </Link>
           </Box>
@@ -109,19 +97,19 @@ const Header = ({ backgroundColor }: { backgroundColor: string }) => {
           <Breadcrumbs separator="">
             <HeaderLink>
               <HomeIcon />
-              <Link href="/">
+              <Link href="/" passHref>
                 <div>Home</div>
               </Link>
             </HeaderLink>
             <HeaderLink>
               <SegmentIcon />
-              <Link href="/property-list">
+              <Link href="/property-list" passHref>
                 <div>List</div>
               </Link>
             </HeaderLink>
             <HeaderLink>
               <MapIcon />
-              <Link href="/map">
+              <Link href="/map" passHref>
                 <div>Map</div>
               </Link>
             </HeaderLink>
@@ -131,12 +119,12 @@ const Header = ({ backgroundColor }: { backgroundColor: string }) => {
         <HeaderGrid item xs={3}>
           {loginStatus ? (
             <>
-              <Link href="/agent-management/account-setting">
+              <Link href="/agent-management/account-setting" passHref>
                 <HeaderIconLink>
                   <StarsIcon fontSize="inherit" />
                 </HeaderIconLink>
               </Link>
-              <Link href="/agent-management/account-setting">
+              <Link href="/agent-management/account-setting" passHref>
                 <HeaderIconLink>
                   <AccountCircleIcon fontSize="inherit" />
                 </HeaderIconLink>
@@ -144,16 +132,12 @@ const Header = ({ backgroundColor }: { backgroundColor: string }) => {
             </>
           ) : (
             <>
-              <HeaderButtonSignIn variant="text">
-                <Link href="/sign-in">
-                  <HeaderButtonLinkSignIn>Sign in</HeaderButtonLinkSignIn>
-                </Link>
-              </HeaderButtonSignIn>
-              <HeaderButtonSignUp variant="contained">
-                <Link href="/sign-up">
-                  <HeaderButtonLinkSignUp>Sign up</HeaderButtonLinkSignUp>
-                </Link>
-              </HeaderButtonSignUp>
+              <Link href="/sign-in" passHref>
+                <HeaderButtonSignIn variant="text">Sign in</HeaderButtonSignIn>
+              </Link>
+              <Link href="/sign-up" passHref>
+                <HeaderButtonSignUp variant="contained">Sign up</HeaderButtonSignUp>
+              </Link>
             </>
           )}
         </HeaderGrid>

@@ -13,6 +13,9 @@ const {
 } = theme;
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
   minPrice: string;
   maxPrice: string;
@@ -23,6 +26,9 @@ interface PropertyFilter {
 }
 
 const initialPropertyFilter: PropertyFilter = {
+  suburb: "any",
+  postcode: "any",
+  state: "any",
   propertyType: "any",
   minPrice: "any",
   maxPrice: "any",
@@ -41,7 +47,9 @@ const MapBody = styled(Box)({
 const MapPage: NextPage = () => {
   const [properties, setProperties] = useState([]);
   const [coordinates, setCoordinates] = useState({ lat: -37.878563, lng: 145.170187 });
-  const [bounds, setBounds] = useState(null);
+  const [bounds, setBounds] = useState(
+    "" as unknown as { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } }
+  );
 
   const [propertyFilter, setPropertyFilter] = useState(initialPropertyFilter);
 
@@ -52,9 +60,10 @@ const MapPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    getPropertyData(propertyFilter, bounds).then((data) => {
+    getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coordinates, bounds]);
 
   return (

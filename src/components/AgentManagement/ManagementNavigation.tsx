@@ -51,7 +51,7 @@ const ManagementNavigation = () => {
       <NavLink href="/agent-management/account-setting">Account setting</NavLink>
       <ManagementNavigationSideBarDivider />
       <NavLink href="/agent-management/property-add">Add property</NavLink>
-      <NavLink href="/agent-management/property-list">My property list</NavLink>
+      <NavLink href="/agent-management/property-list?page=1">My property list</NavLink>
     </ManagementNavigationSideBar>
   );
 };

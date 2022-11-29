@@ -10,13 +10,16 @@ const {
 } = theme;
 
 interface Props {
-  bounds: null;
+  bounds: { ne: { lat: unknown; lng: unknown }; sw: { lat: unknown; lng: unknown } };
   setProperties: React.Dispatch<React.SetStateAction<never[]>>;
   propertyFilter: PropertyFilter;
   setPropertyFilter: React.Dispatch<React.SetStateAction<PropertyFilter>>;
 }
 
 interface PropertyFilter {
+  suburb: string;
+  postcode: string;
+  state: string;
   propertyType: string;
   minPrice: string;
   maxPrice: string;
@@ -25,6 +28,7 @@ interface PropertyFilter {
   bathroom: string;
   garage: string;
 }
+
 const MapFilterContainer = styled(Box)({
   padding: "20px 50px",
   backgroundColor: background.paper,
@@ -51,12 +55,12 @@ const MapFilterSelect = styled(Select)({
 });
 
 const MapFilterSelectRoom = styled(MapFilterSelect)({
-  width: "12vw",
+  width: "8vw",
   minWidth: "100px"
 });
 
 const MapFilterSearchButton = styled(Button)({
-  width: "6vw",
+  width: "11vw",
   minWidth: "95px",
   height: "3.5rem",
   marginTop: "10px",
@@ -113,7 +117,7 @@ const MapFilter = ({ bounds, setProperties, propertyFilter, setPropertyFilter }:
   };
 
   const getMapData = () => {
-    getPropertyData(propertyFilter, bounds).then((data: any) => {
+    getPropertyData("/properties", "20", propertyFilter, bounds).then((data) => {
       setProperties(data);
     });
   };
