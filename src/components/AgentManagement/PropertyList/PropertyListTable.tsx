@@ -12,10 +12,13 @@ import {
   TablePagination,
   Button
 } from "@mui/material";
-import { CreateData, PropertyDatarows } from "./config";
+import { Property } from "./config";
 import theme from "../../../styles/theme";
 import Image from "next/image";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import axiosClient from "../../../utils/axios";
+import { useRouter } from "next/router";
+import HOUSEAVATAR from "../../../../public/assets/images/defaulthouse.jpg";
 
 const {
   palette: { primary }
@@ -73,19 +76,46 @@ const EditButton = styled(Button)({
 });
 
 const PropertyListTable = () => {
+  const router = useRouter();
+
+  const pageSize = 10;
+  const [userInfoId, setUserInfoId] = useState("");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalPropertyNumber, setTotalPropertyNumber] = useState(0);
+  const rowsPerPage = 10;
+  const [propertyDataRows, setPropertyDataRows] = useState<Property[]>([]);
 
-  const [data, setData] = useState<Array<CreateData>>([]);
+  const getAgentProperties = async (pid: number) => {
+    const res = await axiosClient.get(`/agents/${userInfoId}/properties?page=${pid}&size=${pageSize}`);
+    setTotalPropertyNumber(res.data.totalPropertyNumber);
+    const properyList = res.data.propertyGetDtoList;
+    setPropertyDataRows(properyList);
+  };
 
-  useEffect(() => setData(PropertyDatarows), []);
+  useEffect(() => {
+    const token = localStorage.getItem("token")?.split(".")[1];
+    const getUserInfo = async () => {
+      if (token) {
+        const userId = JSON.parse(Buffer.from(token, "base64").toString("binary")).agent_id;
+        const userInfo = await axiosClient.get("/agents/" + userId);
+        setUserInfoId(userInfo.data.id);
+      }
+    };
+    getUserInfo();
+  }, []);
+
+  useEffect(() => {
+    const pagequery: number = router.query.page ? +router.query.page - 1 : 0;
+    setPage(+pagequery);
+    if (userInfoId) {
+      getAgentProperties(+pagequery);
+    }
+  }, [userInfoId, router.query.page]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    getAgentProperties(newPage);
+    router.push({ pathname: `/agent-management/property-list`, query: { page: newPage + 1 } });
   };
 
   return (
@@ -106,49 +136,56 @@ const PropertyListTable = () => {
             </PropertyTableHeadRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data).map((row) => (
-              <PropertyTableBodyRow key={row.id}>
-                <TableCell>
-                  <Image src={row.img} alt="house image" width="80px" height="40px" objectFit="contain" />
-                </TableCell>
-                <TableCell>
-                  <Box>
-                    <Box>{row.name}</Box>
-                    <AddressDiv>
-                      <LocationOnOutlinedIcon />
-                      <Box>{`${row.street}, ${row.state}, ${row.post}`}</Box>
-                    </AddressDiv>
-                  </Box>
-                </TableCell>
-                <TableCell>{row.beds}</TableCell>
-                <TableCell>{row.baths}</TableCell>
-                <TableCell>{row.landSize}</TableCell>
-                <TableCell>{row.type}</TableCell>
-                <PriceTableCell>{row.price}</PriceTableCell>
-                {row.status === "for sale" && (
+            {propertyDataRows.length > 0 &&
+              propertyDataRows.map((row) => (
+                <PropertyTableBodyRow key={row.id}>
                   <TableCell>
-                    <ForSellDiv>{row.status}</ForSellDiv>
+                    <Image
+                      src={row.image.length === 0 ? HOUSEAVATAR : row.image[0].url}
+                      alt="house image"
+                      width="80px"
+                      height="40px"
+                      objectFit="contain"
+                    />
                   </TableCell>
-                )}
-                {row.status === "for rent" && (
                   <TableCell>
-                    <ForRentDiv>{row.status}</ForRentDiv>
+                    <Box>
+                      <Box>{row.title}</Box>
+                      <AddressDiv>
+                        <LocationOnOutlinedIcon />
+                        <Box>{`${row.street}, ${row.state}, ${row.postcode}`}</Box>
+                      </AddressDiv>
+                    </Box>
                   </TableCell>
-                )}
-                <TableCell>
-                  <EditButton variant="contained"> Edit </EditButton>
-                </TableCell>
-              </PropertyTableBodyRow>
-            ))}
+                  <TableCell>{row.bedroom}</TableCell>
+                  <TableCell>{row.bathroom}</TableCell>
+                  <TableCell>{row.landSize}</TableCell>
+                  <TableCell>{row.propertyType}</TableCell>
+                  <PriceTableCell>{row.price}</PriceTableCell>
+                  {row.status === "for sale" && (
+                    <TableCell>
+                      <ForSellDiv>{row.status}</ForSellDiv>
+                    </TableCell>
+                  )}
+                  {row.status === "for rent" && (
+                    <TableCell>
+                      <ForRentDiv>{row.status}</ForRentDiv>
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    <EditButton variant="contained"> Edit </EditButton>
+                  </TableCell>
+                </PropertyTableBodyRow>
+              ))}
           </TableBody>
           <TableFooter>
             <TableRow>
               <TablePagination
-                count={data.length}
+                count={totalPropertyNumber}
                 page={page}
+                rowsPerPageOptions={[10]}
                 rowsPerPage={rowsPerPage}
                 onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableRow>
           </TableFooter>

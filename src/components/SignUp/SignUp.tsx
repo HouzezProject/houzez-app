@@ -61,7 +61,9 @@ const SignUp = () => {
     <SignUpContainer>
       <SignUpCard>
         <SignUpBox>
-          <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+          <Link href="/">
+            <Image src={LogoImg} alt="Houzez" width="200px" height="50px" />
+          </Link>
           <Typography variant="h4" mt="25px" mb="15px" sx={{ fontSize: "28px" }}>
             Create account
           </Typography>

@@ -1,165 +1,44 @@
-export interface CreateData {
+export interface Image {
   id: number;
-  img: string;
-  name: string;
-  state: string;
-  suburd: string;
-  street: string;
-  post: string;
-  price: string;
-  beds: number;
-  baths: number;
-  garages: number;
+  url: string;
+  tag: string;
+}
+export interface Property {
+  id: number;
+  propertyType: string;
+  title: string;
+  price: number;
+  livingRoom: number;
+  bedroom: number;
+  bathroom: number;
+  garage: number;
   landSize: number;
-  type: string;
+  description: string;
+  state: string;
+  street: string;
+  suburd: string;
+  postcode: string;
+  latitude: number;
+  longitude: number;
+  indoor: string;
+  outdoor: string;
   status: string;
-  inspectionDate: string;
-  inspectionTime: string;
+  createdTime: string;
+  updatedTime: string;
+  agent: {
+    id: number;
+    name: string;
+    email: string;
+    deleted: boolean;
+    activated: boolean;
+    createdTime: string;
+    updatedTime: string;
+    icon: string;
+  };
+  image: Image[];
 }
 
-export const PropertyDatarows: CreateData[] = [
-  {
-    id: 1,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 2,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 3,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 4,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 5,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 6,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 7,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  },
-  {
-    id: 8,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    name: "Luxury Family Home",
-    state: "CA 90015",
-    suburd: "Los Angeles",
-    street: "San Pdro Street",
-    post: "1421",
-    price: "$13,000",
-    beds: 3,
-    baths: 2,
-    garages: 2,
-    landSize: 1440,
-    type: "Apartment",
-    status: "for sale",
-    inspectionDate: "5 Apr",
-    inspectionTime: "PM 5:00"
-  }
-];
+// export interface NewProperty extends Property {
+//   image: string;
+//   totalPageNumber: number;
+// }

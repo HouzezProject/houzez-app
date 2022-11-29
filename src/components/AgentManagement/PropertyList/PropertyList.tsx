@@ -23,7 +23,10 @@ const AgentManagementBody = styled(Box)({
 });
 
 const PropertyListContainer = styled(Box)({
-  width: "calc(100vw - 260px)"
+  width: "calc(100vw - 260px)",
+  position: "fixed",
+  left: "260px",
+  top: "64px"
 });
 
 const PropertyList = () => {

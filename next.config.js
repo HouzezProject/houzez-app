@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   images: {
-    unoptimized: true
-  },
-  trailingSlash: true
+    domains: [process.env.NEXT_PUBLIC_S3_IMAGE_SERVICE_HOST],
+  }
 }
 
 module.exports = nextConfig
