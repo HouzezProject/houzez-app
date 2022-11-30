@@ -20,15 +20,13 @@ const AgentManagementBody = styled(Box)({
   justifyContent: "start"
 });
 
-
-
 const PropertyAdd = () => {
   return (
     <AgentManagementContainer>
       <ManagementHeader />
       <AgentManagementBody>
-        <ManagementNavigation/>
-        <PropertyAddBody/>
+        <ManagementNavigation />
+        <PropertyAddBody />
       </AgentManagementBody>
     </AgentManagementContainer>
   );

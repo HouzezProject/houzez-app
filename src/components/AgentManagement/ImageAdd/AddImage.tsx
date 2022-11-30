@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
-import { Container } from "@mui/material";
-import React, { useState } from "react";
-import axiosClient from "../../../utils/axios";
+import { Button, Container, InputLabel, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, useState } from "react";
+import { FormTextField } from "../PropertyAdd/components/FormTextField";
+import FormData from "form-data";
+import axios from "axios";
 
 const HomeContainer = styled(Container)({
   width: "1050px",
@@ -9,33 +12,71 @@ const HomeContainer = styled(Container)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItem: "center"
+  alignItem: "center",
+  margin: "20px",
+  gap: "20px"
+});
+
+const InputButton = styled(Button)({
+  width: "50px",
+  marginTop: "20px"
+});
+
+const LabelStyle = styled(InputLabel)({
+  width: "100px",
+  marginBottom: "20px"
 });
 
 const AddImage = () => {
-  const [url, setUrl] = useState("");
-  const [imageName, setImageName] = useState("");
-  const uploadImages = () => {
-    const onSelectFile = async (event: any) => {
-      const file = event.target.files;
-      const res = await axiosClient.post("/properties/s3", { file });
-      setUrl(res.data.url);
-    };
-    onSelectFile(event);
+  const router = useRouter();
+  const { query } = router;
+  const { agentId, propertyId } = query;
+  const [result, setResult] = useState("");
+  const [files, setFile] = useState<FileList | null>();
 
-    const saveURL = async (url: string, imageName: string) => {
-      const res = await axiosClient.post("/agents/{agentId}/properties/{propertyId}/images", { url, imageName });
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (files) {
+      for (let i = 0; i < files?.length; i++) {
+        formData.append("file", files[i], files[i].name);
+      }
+    }
+
+    const onSelectFile = async () => {
+      const token = localStorage.getItem("token") as string;
+      const res = await axios.post(
+        `http://localhost:8080/api/v1/agents/${agentId}/properties/${propertyId}/s3/images`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token
+          }
+        }
+      );
       console.log(res.data);
+      setResult(res.data);
     };
-    saveURL(url, imageName);
+    onSelectFile();
   };
 
   return (
     <HomeContainer>
-      <input type="text" onChange={(event) => setImageName(event.target.value)}>
-        Image description: {imageName}
-      </input>
-      <input type="file" accept="image/*" onChange={uploadImages} />;
+      <form noValidate onSubmit={onSubmit} encType="multipart/form-data">
+        <LabelStyle htmlFor="files">Select files:</LabelStyle>
+        <FormTextField
+          type="file"
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setFile(event.target.files)}
+          inputProps={{
+            multiple: true
+          }}
+        />
+        <InputButton variant="contained" type={"submit"}>
+          Upload
+        </InputButton>
+      </form>
+      {result && <Typography>Upload Success</Typography>}
     </HomeContainer>
   );
 };
