@@ -15,13 +15,14 @@ const {
   palette: { primary, secondary, background }
 } = theme;
 
-const HeaderContainer = styled(Container)({
+const HeaderContainer = styled(Container)(({ backgroundColor = "white" }: { backgroundColor?: string }) => ({
   width: "1050px",
   height: "90px",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center"
-});
+  justifyContent: "center",
+  backgroundColor: backgroundColor
+}));
 
 const HeaderGrid = styled(Grid)({
   display: "flex",
@@ -71,7 +72,7 @@ const HeaderIconLink = styled.div({
   fontSize: "2rem"
 });
 
-const Header = () => {
+const Header = ({ backgroundColor }: { backgroundColor: string }) => {
   const [loginStatus, setLoginStatus] = useState(false);
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const Header = () => {
   }, []);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer backgroundColor={backgroundColor}>
       <Grid container spacing={2}>
         <HeaderGrid item xs={3}>
           <Box>

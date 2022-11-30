@@ -24,10 +24,13 @@
     "fast-equals": "^4.0.3",
     "formik": "^2.2.9",
     "google-map-react": "^2.2.0",
+    "lodash": "^4.17.21",
     "next": "12.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-autocomplete": "^2.7.0",
+    "react-icons": "^4.6.0",
+    "react-material-ui-carousel": "^3.4.2",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "yup": "^0.32.11"
