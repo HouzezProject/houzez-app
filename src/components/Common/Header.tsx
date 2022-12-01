@@ -15,7 +15,7 @@ const {
   palette: { primary, secondary, background }
 } = theme;
 
-const HeaderContainer = styled(Container)(({ backgroundColor = "white" }: { backgroundColor?: string }) => ({
+const HeaderContainer = styled(Container)(({ backgroundColor = "" }: { backgroundColor?: string }) => ({
   width: "1050px",
   height: "90px",
   display: "flex",
