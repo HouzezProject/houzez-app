@@ -176,7 +176,7 @@ const PropertyDetailPage = ({ property }: { property: Property }) => {
           </Grid>
           <InfoTypo variant="h5">Outdoor</InfoTypo>
           <Grid container>
-            {outdoor.split(",").map((value, key) => (
+            {outdoor?.split(",").map((value, key) => (
               <Grid item xs={4} key={key}>
                 <FeatureTypo>{value}</FeatureTypo>
               </Grid>
